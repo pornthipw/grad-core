@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="gs_core">
+<head>
+  <title>{{title}}</title>  
+  <base href="{{ baseHref }}">
+  
+  <link href="bootstrap/css/bootstrap.css" rel="stylesheet">   
+  <style type="text/css">
+  body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+  }
+  </style>
+  
+
+  <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="javascript/vendor/bootstrap-datepicker.css" rel="stylesheet">
+  <script src="javascript/vendor/jquery-1.7.2.min.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <script src="javascript/vendor/angular.min.js"></script>
+  <script src="javascript/vendor/angular-resource.js"></script>
+  <script src="javascript/vendor/bootstrap-datepicker.js"></script>
+  <script src="javascript/vendor/angular-strap.min.js"></script>
+  <script src="javascript/db_service.js"></script>   
+  <script src="javascript/app.js"></script>   
+  <script src="javascript/gradstaff.js"></script>   
+
+</head>
+
+<body >   
+  <div class="navbar navbar-inverse navbar-fixed-top" >
+    <div class="navbar-inner">
+      <div class="container"> 
+        <a class="brand" href="#">GS Core System </a>
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <div class="navbar navbar-static-top">
+          <ul class="nav">
+            <li><a href="#/">Home</a></li> 
+            <li><a href="#/list">List</a></li>  
+          </ul>
+        </div>
+        
+        <div class="nav-collapse collapse">
+          <ul class="nav pull-left">
+           <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" dropdown>
+            ข้อมูลสารสนเทศ
+            </a>
+            <ul class="dropdown-menu">
+             <li>
+               <a href="#/gradstaff">ข้อมูลคณาจารย์</a> 
+             </li>
+             <li> 
+               <a href="#/student">ข้อมูลนิสิต</a>
+             </li>
+             <li>
+               <a href="#/faculty">สารสนเทศสำหรับคณะ</a> 
+             </li>
+            </ul>
+           </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+  <div class="container">    
+    <div ng-view>
+    </div>  
+  </div>
+</body>
+</html>

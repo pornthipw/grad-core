@@ -1,0 +1,15 @@
+{
+  "name" : "grad-core",
+  "version" : "0.0.1",
+  "user": "pornthipw",
+  "dependencies" : {
+    "express" : "*",    
+    "hbs" : "*",    
+    "generic-pool" : "*",    
+    "db-oracle" : "*",    
+    "db-mysql" : "*"    
+  },
+  "scripts": {
+    "start":"server.js"
+  } 
+}
