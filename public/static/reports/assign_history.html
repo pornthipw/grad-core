@@ -1,0 +1,21 @@
+
+<table class="table table-condensed">
+ <tr ng-repeat="staff in staff_list|orderBy:['-percent','-finish_total']">
+   <td> 
+     <span ng-show="staff.nustaff.phd">ดร.</span>
+     {{staff.json.first_name}} 
+     {{staff.json.last_name}}
+     {{staff.nustaff.json.POSITION}}
+    </td>
+   <td>
+     <span ng-hide="staff.loading">
+     {{staff.finish_intime}} / {{staff.finish_total}}
+     </span>
+   </td>
+   <td>
+     <span ng-hide="staff.loading">
+     {{staff.percent|number:2}}
+     </span>
+   </td>
+ </tr>
+</table>

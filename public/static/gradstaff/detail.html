@@ -1,3 +1,82 @@
-Hello {{grad_staff.prefix}}
-{{grad_staff.first_name}}
-{{grad_staff.last_name}}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span12 well">
+        <div class="row-fluid">
+          <div class="span2">
+           <span class="pull-right"> ชื่อ-สกุล</span>
+          </div>
+          <div class="span10">
+            {{staff.json.FNAME}}  {{staff.json.LNAME}}
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span2">
+           <span class="pull-right"> ภาควิชา</span>
+          </div>
+          <div class="span10">
+            {{staff.json.WORK}}
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span2">
+          <span class="pull-right"> คณะที่สังกัด</span> 
+          </div>
+          <div class="span10">
+            {{staff.json.FAC}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <legend>ประวัติการศึกษา</legend>
+        <ul>
+          <li ng-repeat="edu in staff.education_list"> 
+            {{edu.json.BYTEDES}}-({{edu.json.DEGREENAMEABB}})
+            {{edu.json.DEGREENAME}},{{edu.json.UNIVERSITYNAME}}
+            {{edu.json.COUNTRYNAME}} 
+          </li>
+        </ul>
+      </div>    
+    </div>
+   <div class="row-fluid">
+     <div class="span12">
+       <legend>นิสิตในความรับผิดชอบ</legend>
+       <ol>
+         <li ng-repeat="student in staff.active_assign_list">
+          <a href="#/student/{{student.json.STUDENTCODE}}">
+            {{student.json.STUDENTCODE}}
+          </a>
+          {{student.json.PREFIXNAME}}
+          {{student.json.STUDENTNAME}}
+          {{student.json.STUDENTSURNAME}}
+          {{student.json.LEVELID}}
+         </li>
+       </ol>
+     </div>
+   </div>
+   <div class="row-fluid">
+     <div class="span12">
+       <legend>ประวัติการคุมนิสิต</legend>
+       <ol>
+       {{finish_intime}}/{{staff.finish_assign_list.length}}
+       {{finish_intime*100/staff.finish_assign_list.length|number:2}}%
+         <li ng-repeat="student in staff.finish_assign_list">
+<!--{{student}}
+-->
+          <a href="#/student/{{student.json.STUDENTCODE}}">
+            {{student.json.STUDENTCODE}}
+          </a>
+          {{student.json.PREFIXNAME}}
+          {{student.json.STUDENTNAME}}
+          {{student.json.STUDENTSURNAME}}
+          {{student.json.LEVELID}}
+         </li>
+       </ol>
+     </div>
+   </div>
+  </div> 
+</div>
+<!--{{staff}} {{staff.name()}}
+-->

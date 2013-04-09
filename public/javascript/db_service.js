@@ -33,23 +33,32 @@ app.factory('Student', function($resource) {
 app.factory('Staff', function($resource) {
     var Staff = $resource(
       prefix + '/hrnu/pundit/', 
+      {},{});                         
+    return Staff;    
+});
+
+
+app.factory('Education', function($resource) {
+    var Education = $resource(
+      prefix + '/hrnu/educationhis/', 
       {},{
         query:{
           method:'GET',
           params: {
            'select': JSON.stringify([
               'STAFFID',
-              'PREFIXNAME',
-              'FNAME',
-              'LNAME',
-              'POSITION',
-              'FAC'
+              'BYTEDES',
+              'DEGREENAMEABB',
+              'DEGREENAME',
+              'MAJORNAME',
+              'UNIVERSITYNAME',
+              'COUNTRYNAME'
            ])
          },
          isArray:true
         }
       });                         
-    return Staff;    
+    return Education;    
 });
 
 
@@ -74,4 +83,12 @@ app.factory('GradStaff', function($resource) {
       }
     );                         
     return GradStaff;    
+});
+
+
+app.factory('AdvisorAssignment', function($resource) {
+    var AdvisorAssignment = $resource(
+      prefix + '/gradnu/regnu_grad_advisorassignment/', 
+      {},{});                         
+    return AdvisorAssignment;    
 });

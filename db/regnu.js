@@ -27,8 +27,12 @@ var Regnu = function(config) {
     pool.acquire(function(err, db) {
       console.log(req.query.select);
       var c_db =  db.query()
-        .select(JSON.parse(req.query.select))
-        .from('AVSREG.GRAD_'+req.params.table.toUpperCase());
+      if(req.query.select) {
+        c_db.select(JSON.parse(req.query.select));
+      } else {
+        c_db.select('*');
+      }
+      c_db.from('AVSREG.GRAD_'+req.params.table.toUpperCase());
       if(req.query.where) {
         var where_obj = JSON.parse(req.query.where);
         c_db.where(where_obj.str,where_obj.json);

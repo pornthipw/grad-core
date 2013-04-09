@@ -28,8 +28,12 @@ var Gradnu = function(config) {
       console.log(req.query.select);
       db.query('SET names utf8').execute(function(err) {
         var c_db =  db.query()
-          .select(JSON.parse(req.query.select))
-          .from(req.params.table);
+        if(req.query.select) {
+          c_db.select(JSON.parse(req.query.select));
+        } else {
+          c_db.select('*');
+        }
+        c_db.from(req.params.table);
         if(req.query.where) {
           var where_obj = JSON.parse(req.query.where);
           c_db.where(where_obj.str,where_obj.json);

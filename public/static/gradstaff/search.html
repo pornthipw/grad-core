@@ -2,49 +2,57 @@
 <div class="row-fluid">
  <div class="span12">
   <div class="row-fluid">  
-   <div class="span6">
+   <div class="span12">
     <div class="input-prepend input-append">
      <span class="add-on"><i class="icon-search"></i></span>   
      <input type="text" class="input-medium" ng-model="search_text">
-     <!--
-       <button ng-click="search()" class="btn btn-success"> Search </button>
-     -->
+     <button ng-click="search(search_text)" 
+       class="btn btn-success"> Search </button>
     </div>
-    <strong>{{staff_list.length}}</strong> Found
-
-      <ol ng-show="search_text">
-       <li ng-repeat="staff in staff_list|filter:search_text">
-        <span ng-show="staff.grad_staff">
-          <strong>Graduate Staff</strong>
-        </span>
-        <span ng-hide="staff.STAFFID">
-          <strong>อาจารย์ภายนอก</strong>
-         
-         {{staff.prefix}}
-         {{staff.first_name}}
-         {{staff.last_name}}
-         {{staff.position}}
-         ({{staff.faculty}})
-        </span>
-        
-        <span ng-show="staff.STAFFID">
-         <a href="#/gradstaff/{{staff.grad_id}}" ng-show="staff.grad_id">
-         {{staff.PREFIXNAME}}
-         {{staff.FNAME}} 
-         {{staff.LNAME}}
-         </a>
-         <span ng-hide="staff.grad_id">
-          {{staff.PREFIXNAME}}
-          {{staff.FNAME}} 
-          {{staff.LNAME}}
-         </span>
-         {{staff.POSITION}}
-         ({{staff.FAC}})
-        </span>
-
-       </li>
-     </ol>
-
+    <strong>ผลการค้นหา: {{staff_list.length}}</strong> Found
+       <table class="table table-striped table-hover" ng-show="search_text">
+          <thead>
+            <tr>
+              <th>ชื่อ-สกุลอาจารย์</th> 
+              <th>ตำแหน่งทางวิชาการ</th>
+              <th>คณที่สังกัด</th>
+            </tr>
+          </thead>
+          <tr ng-repeat="staff in staff_list">  
+            <td ng-hide="staff.STAFFID"> 
+              <span ng-hide="staff.STAFFID" class="label label-info">O</span>
+              {{staff.prefix}}
+              {{staff.first_name}}
+              {{staff.last_name}}
+            </td>
+            <td ng-hide="staff.STAFFID">
+              {{staff.position}}
+            </td>
+            <td ng-hide="staff.STAFFID">
+              {{staff.faculty}}
+            </td>
+            <td ng-show="staff.STAFFID">
+              <span ng-show="staff.grad_id" class="label label-success">GS</span>
+              <a href="#/gradstaff/{{staff.grad_id}}" ng-show="staff.grad_id">
+                {{staff.PREFIXNAME}}
+                {{staff.FNAME}} 
+                {{staff.LNAME}}
+              </a>
+              <span ng-hide="staff.grad_id" class="label label-warning">NU</span>
+              <span ng-hide="staff.grad_id"> 
+                {{staff.PREFIXNAME}}
+                {{staff.FNAME}} 
+                {{staff.LNAME}}
+              </span>
+            </td>
+            <td ng-show="staff.STAFFID">
+              {{staff.POSITION}}
+            </td>
+            <td ng-show="staff.STAFFID">
+              {{staff.FAC}}
+            </td>
+          </tr>
+        </table>
    </div>
   </div>
  </div>

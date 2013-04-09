@@ -8,12 +8,12 @@ app.config(function($routeProvider) {
   });
 });
 
-app.config(function($routeProvider) {
-  $routeProvider.when('/student/', {
-    controller:StudentController, 
-    templateUrl:'static/student_info.html'
-  });
-});
+//app.config(function($routeProvider) {
+//  $routeProvider.when('/student/', {
+//    controller:StudentController, 
+//    templateUrl:'static/student_info.html'
+//  });
+//});
 
 app.config(function($routeProvider) {
   $routeProvider.when('/faculty/', {
@@ -27,21 +27,21 @@ function MainController($scope,Student,Staff,GradStaff) {
 }
 
 
-function StudentController($scope,Student) {  
-  $scope.search = function() {
-    var query = {
-      'select': JSON.stringify(['STUDENTCODE','STUDENTNAME', 'STUDENTSURNAME']),
-      'where': JSON.stringify({
-        'str':"STUDENTNAME LIKE '%"+$scope.search_text+"%' OR STUDENTSURNAME LIKE '%"+$scope.search_text+"%'",
-        'json':[]
-      })
-    };
-    Student.query(query, function(response) {
-      console.log(response);
-      $scope.student_list = response;
-    });
-  }
-}
+//function StudentController($scope,Student) {  
+//  $scope.search = function() {
+//    var query = {
+//      'select': JSON.stringify(['STUDENTCODE','STUDENTNAME', 'STUDENTSURNAME']),
+//      'where': JSON.stringify({
+//        'str':"STUDENTNAME LIKE '%"+$scope.search_text+"%' OR STUDENTSURNAME LIKE '%"+$scope.search_text+"%'",
+//        'json':[]
+//      })
+//    };
+//    Student.query(query, function(response) {
+//      console.log(response);
+//      $scope.student_list = response;
+//    });
+//  }
+//}
 
 function FacultyController($scope,Student,Staff,GradStaff) {  
   
