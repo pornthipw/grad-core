@@ -35,13 +35,49 @@ function StudentModel() {
       'json':[id]
     });
     Student.query({where:where_str}, function(res) {
-      //console.log(res);
       if(res.length==1){      
         self.json = res[0];
       }
       callback(self);
     });
   };
+  
+  this.get_englishtest = function(EnglishTest,callback){ 
+    var e_model = new EnglishResultModel() ; 
+    e_model.get_by_student(EnglishTest,self,function(english_list) {
+      console.log(english_list);
+      angular.forEach(english_list, function(english) {
+        //if(english.json.  == ' ') {
+        //  self. =true;
+       // }
+      });
+     callback(english_list); 
+     //console.log(res);
+    });  
+  };  
+
 }
 
 
+function EnglishResultModel(){
+  var self = this;
+  this.json = null;
+
+  this.get_by_student= function(EnglishTest,student, callback) {
+    console.log(student);
+    var where_str = JSON.stringify({
+      'str':'STUDENTCODE = ?',
+      'json':[student.json.STUDENTCODE]
+    });
+
+    EnglishTest.query({where:where_str}, function(res){    
+      var english_list = []; 
+      angular.forEach(res, function(english) {
+        var tmp = new EnglishResultModel(); 
+        tmp.json = english; 
+        english_list.push(tmp);
+      });
+      callback(english_list);
+    });
+  }
+}

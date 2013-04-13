@@ -23,6 +23,15 @@ app.factory('Level', function($resource) {
     return Level;    
 });
 
+
+app.factory('Faculty', function($resource) {
+    var Faculty = $resource(
+      prefix + '/reg/faculty/:id', 
+      {},{});                         
+    return Faculty;    
+});
+
+
 app.factory('Student', function($resource) {
     var Student = $resource(
       prefix + '/reg/studentinfo/:id', 
@@ -30,12 +39,28 @@ app.factory('Student', function($resource) {
     return Student;    
 });
 
+app.factory('EnglishTest', function($resource) {
+    var EnglishTest = $resource(
+      prefix + '/reg/studentenglishtest/:id', 
+      {},{});                         
+    return EnglishTest;    
+});
+
+//app.factory('Transcript', function($resource) {
+//    var Transcript = $resource(
+//      prefix + '/reg/studentranscript/:id', 
+//      {},{});                         
+//    return Transcript;    
+//});
+
 app.factory('Staff', function($resource) {
     var Staff = $resource(
       prefix + '/hrnu/pundit/', 
       {},{});                         
     return Staff;    
 });
+
+
 
 
 app.factory('Education', function($resource) {
@@ -91,4 +116,12 @@ app.factory('AdvisorAssignment', function($resource) {
       prefix + '/gradnu/regnu_grad_advisorassignment/', 
       {},{});                         
     return AdvisorAssignment;    
+});
+
+
+app.factory('Permit', function($resource) {
+    var Permit = $resource(
+      prefix + '/gradnu/regnu_grad_permit/', 
+      {},{});                         
+    return Permit;    
 });

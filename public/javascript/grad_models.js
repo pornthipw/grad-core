@@ -10,7 +10,7 @@ function GradStaffModel() {
       if(response.length == 1) {
         self.json = response[0];
       }
-      callback(self);
+     callback(self);
     });
   };
 
@@ -64,8 +64,21 @@ function AdvisorAssignmentModel() {
    }
  }
 
- 
 }
 
-
-      
+function PermitModel(){
+  var self = this;
+  this.json = null;
+  this.get_permit_by_student = function(Permit, id, callback){
+    var where_str = JSON.stringify({
+      'str':'student = ?',
+      'json':[id]
+    });
+    Permit.query({where:where_str},function(response) {
+      if(response.length == 1) {
+        self.json = response[0];
+      }
+      callback(self);
+    });
+  }
+}      
