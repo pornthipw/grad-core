@@ -82,3 +82,58 @@ function PermitModel(){
     });
   }
 }      
+
+function ExamModel(){
+  var self = this;
+  this.json = null;
+  this.get_exam_by_student = function(Exam, id, callback){
+    var where_str = JSON.stringify({
+      'str':'student = ?',
+      'json':[id]
+    });
+    Exam.query({where:where_str},function(response) {
+      if(response.length == 1) {
+        self.json = response[0];
+      }
+      callback(self);
+    });
+  }
+}
+
+function QualifyingExamModel(){
+  var self = this;
+  this.json = null;
+  this.get_groupqe = function(QualifyingExam, groupqualifyingexam, callback){
+    var where_str = JSON.stringify({
+      'str':'id = ?',
+      'json':[qroupqualifyingexam.json.qe]
+    });
+    QualifyingExam.query({where:where_str},function(response) {
+      if(response.length == 1) {
+        self.json = response[0];
+      }
+      callback(self);
+    });
+  }
+}
+
+
+function GroupQualifyingExamModel(){
+  var self = this;
+  this.json = null;
+  this.get_qe_by_student = function(GroupQualifyingExam, id, callback){
+    var where_str = JSON.stringify({
+      'str':'student = ?',
+      'json':[id]
+    });
+    GroupQualifyingExam.query({where:where_str},function(response) {
+      var qe_list = []; 
+      angular.forEach(response,function(groupqualifyingexam){  
+        var tmp = new GroupQualifyingExam(); 
+        tmp.json = groupqualifyingexam;
+        qe_list.push(tmp);
+      });
+      callback(qe_list);
+    });
+  }
+}

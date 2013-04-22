@@ -32,6 +32,7 @@ function StaffModel() {
     var e_model = new EducationModel();
     e_model.get_by_staff(Education,self,function(education_list) {
       angular.forEach(education_list, function(education) {
+      //  console.log($.tis620.encode(education.json.COUNTRYNAME));
         if(education.json.BYTEDES == 'ปริญญาเอก') {
           self.phd=true;
         }

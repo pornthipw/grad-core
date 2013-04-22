@@ -1,21 +1,22 @@
 
 app.config(function($routeProvider) {
-  $routeProvider.when('/reports/assign_history', {
+  $routeProvider.when('/reports/assign_history/:admityear', {
     controller:AssignHistoryController, 
     templateUrl:'static/reports/assign_history.html'
   });
 });
 
 
-function AssignHistoryController($scope,GradStaff,Staff,Education,AdvisorAssignment,Student) {
+function AssignHistoryController($scope,$routeParams,GradStaff,Staff,
+   Education,AdvisorAssignment,Student) {
   
   var where_str = JSON.stringify({
     'str':'id = ?',
     'json':[136]
   });
   
-  //GradStaff.query(function(gstaff_list) {
-  GradStaff.query({where:where_str},function(gstaff_list) {
+  GradStaff.query(function(gstaff_list) {
+ // GradStaff.query({where:where_str},function(gstaff_list) {
     $scope.staff_list = [];
     angular.forEach(gstaff_list, function(gstaff) {
       var g_model = new GradStaffModel();
@@ -42,7 +43,7 @@ function AssignHistoryController($scope,GradStaff,Staff,Education,AdvisorAssignm
             angular.forEach(g_model.assign_list, function(assign) {
               assign.get_student(Student, function(student) {
                 g_model.count++;
-                if(student.json.ADMITACADYEAR > 2551) {
+                if(student.json.ADMITACADYEAR > parseInt($routeParams.admityear)) {
                   if(student.finish()) {
                     if(student.in_time()) {
                       g_model.finish_intime++;

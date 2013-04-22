@@ -10,7 +10,9 @@ var Hrnu = function(config) {
        hostname: config.hrnu_config.hostname,
        user: config.hrnu_config.user,
        password: config.hrnu_config.password,
-       database: config.hrnu_config.database
+       database: config.hrnu_config.database,
+       //charset: 'TH8TISASCII',
+       //ncharset: 'AL32UTF8'
       }).connect(function(error) {
         if(error) {
           console.log("CONNECTION ERROR: " + error);

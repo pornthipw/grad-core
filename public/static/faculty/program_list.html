@@ -1,0 +1,28 @@
+<div class="row-fluid">
+ <div class="span12">
+  {{faculty.json.FACULTYID}} - {{faculty.json.FACULTYNAME}} 
+  Total Program = {{faculty.total_program}}
+  <div class="row-fluid">
+   <ul>
+    <li>ติดตามนิสิตตามหลักสูตร</li>
+    <li>Program List</li>
+   </ul>
+  </div>
+  <table class="table table-condensed">
+   <tr>
+    <th>Program Name</th>
+    <th>#Active Student</th>
+   </tr>
+   <tr ng-repeat="program in faculty.program_list|orderBy:'-active'" 
+       ng-hide="active==0">
+    <td>
+      <a href="#/program/{{program.id}}">{{program.name}}</a>
+    </td>
+    <td>
+      {{program.active}}
+    </td>
+   </tr>
+  </table>
+  
+ </div>
+</div>

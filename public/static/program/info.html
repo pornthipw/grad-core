@@ -1,0 +1,18 @@
+{{program.json.PROGRAMNAME}}
+<div class="row-fluid">
+ <div class="span12">
+  <div class="row-fluid">
+   <div class="span12">
+     <ul>
+       <li ng-repeat= "student in program.student_active_list">
+         <a href="#/student/{{student.json.STUDENTCODE}}">
+         {{student.json.STUDENTCODE}} 
+         </a>
+         {{student.json.STUDENTNAME}} 
+         {{student.json.STUDENTSURNAME}}
+       </li>
+     </ul>
+   </div>
+  </div>
+ </div>
+</div>

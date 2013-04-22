@@ -32,6 +32,13 @@ app.factory('Faculty', function($resource) {
 });
 
 
+app.factory('Program', function($resource) {
+    var Program = $resource(
+      prefix + '/reg/program_new/:id', 
+      {},{});                         
+    return Program;    
+});
+
 app.factory('Student', function($resource) {
     var Student = $resource(
       prefix + '/reg/studentinfo/:id', 
@@ -125,3 +132,27 @@ app.factory('Permit', function($resource) {
       {},{});                         
     return Permit;    
 });
+
+
+app.factory('Exam', function($resource) {
+    var Exam = $resource(
+      prefix + '/gradnu/regnu_grad_exam/', 
+      {},{});                         
+    return Exam;    
+});
+
+
+app.factory('QualifyingExam', function($resource) {
+    var QualifyingExam = $resource(
+      prefix + '/gradnu/regnu_grad_qualifyingexamination/', 
+      {},{});                         
+    return QualifyingExam;    
+});
+
+app.factory('GroupQualifyingExam', function($resource) {
+    var GroupQualifyingExam = $resource(
+      prefix + '/gradnu/regnu_grad_groupqualifyingexamination/', 
+      {},{});                         
+    return GroupQualifyingExam;    
+});
+

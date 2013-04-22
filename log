@@ -1,0 +1,537 @@
+Mongo Express server listening on port 30000
+["id","prefix","first_name","last_name","position","faculty","nu_staff"]
+SELECT `id`,`prefix`,`first_name`,`last_name`,`position`,`faculty`,`nu_staff` FROM `hrnu_grad_gradstaff` WHERE id = ?
+Open Connection by PK
+!this->environment is TRUE
+charset.c_str() = .TH8TISASCII
+ncharset.c_str() = .TH8TISASCII
+undefined
+SELECT * FROM "PROMIS"."V_NU_PUNDIT" WHERE STAFFID = ?
++totalColumns = 9
+Name = PREFIXNAME
+Data Type = 1
+Name = FNAME
+Data Type = 1
+Name = LNAME
+Data Type = 1
+Name = POSITION
+Data Type = 1
+Name = POSITION_TYPE
+Data Type = 1
+Name = UNIT
+Data Type = 1
+Name = WORK
+Data Type = 1
+Name = FAC
+Data Type = 1
+Name = STAFFID
+Data Type = 2
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> นาย
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> เอกสิทธิ์
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> เทียมแก้ว
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> อาจารย์
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ข้าราชการ
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ภาควิชาวิทยาการคอมพิวเตอร์และเทคโนโลยีสารสนเทศ
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ภาควิชาวิทยาการคอมพิวเตอร์และเทคโนโลยีสารสนเทศ
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> คณะวิทยาศาสตร์
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 195
+["STAFFID","BYTEDES","DEGREENAMEABB","DEGREENAME","MAJORNAME","UNIVERSITYNAME","COUNTRYNAME"]
+SELECT "STAFFID","BYTEDES","DEGREENAMEABB","DEGREENAME","MAJORNAME","UNIVERSITYNAME","COUNTRYNAME" FROM "PROMIS"."V_NU_EDUCATIONHIS" WHERE STAFFID = ?
++totalColumns = 7
+Name = STAFFID
+Data Type = 2
+Name = BYTEDES
+Data Type = 1
+Name = DEGREENAMEABB
+Data Type = 1
+Name = DEGREENAME
+Data Type = 1
+Name = MAJORNAME
+Data Type = 1
+Name = UNIVERSITYNAME
+Data Type = 1
+Name = COUNTRYNAME
+Data Type = 1
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 195
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ปริญญาตรี
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> วศ.บ.
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> วิศวกรรมศาสตรบัณฑิต
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> วิศวกรรมคอมพิวเตอร์
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> สถาบันเทคโนโลยีพระเจ้าเกล้าธนบุรี
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ไทย
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 195
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ปริญญาโท
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> M.S.
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> Master of Science
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> Computer Engineering
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> University of Massachusetts
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> สหรัฐอเมริกา
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 195
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ปริญญาเอก
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> Ph.D.
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> Doctor of Philosophy
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> Computer Engineering
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> University of Nevada. Reno
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> สหรัฐอเมริกา
+undefined
+SELECT * FROM `regnu_grad_advisorassignment` WHERE advisor_id = ?
+Open Connection by PK
+!this->environment is TRUE
+charset.c_str() = 
+undefined
+SELECT * FROM "AVSREG"."GRAD_STUDENTINFO" WHERE STUDENTCODE = ?
++totalColumns = 40
+Name = STUDENTCODE
+Data Type = 1
+Name = STUDENTNAME
+Data Type = 1
+Name = STUDENTSURNAME
+Data Type = 1
+Name = STUDENTNAMEENG
+Data Type = 1
+Name = STUDENTSURNAMEENG
+Data Type = 1
+Name = PREFIXNAME
+Data Type = 1
+Name = LEVELID
+Data Type = 2
+Name = CAMPUSID
+Data Type = 2
+Name = CAMPUSNAME
+Data Type = 1
+Name = FACULTYID
+Data Type = 2
+Name = FACULTYNAME
+Data Type = 1
+Name = PROGRAMID
+Data Type = 2
+Name = PROGRAMNAME
+Data Type = 1
+Name = ADMITACADYEAR
+Data Type = 2
+Name = ADMITSEMESTER
+Data Type = 2
+Name = STUDENTEMAIL
+Data Type = 1
+Name = STUDENTSTATUS
+Data Type = 2
+Name = STUDENTSTATUSDES
+Data Type = 1
+Name = BARCODECODE
+Data Type = 1
+Name = CITIZENID
+Data Type = 1
+Name = BIRTHDATE
+Data Type = 12
+Name = BLOODGROUP
+Data Type = 1
+Name = STUDENTSEX
+Data Type = 1
+Name = NATIONNAME
+Data Type = 1
+Name = ORIGIONNAME
+Data Type = 1
+Name = RELIGIONNAME
+Data Type = 1
+Name = ENTRYDEGREE
+Data Type = 1
+Name = ENTRYDEGREEENG
+Data Type = 1
+Name = HOMEADDRESS
+Data Type = 1
+Name = HOMEDISTRICT
+Data Type = 1
+Name = HOMEPROVINCE
+Data Type = 1
+Name = HOMEZIPCODE
+Data Type = 1
+Name = CONTACTADDRESS
+Data Type = 1
+Name = CONTACTDISTRICT
+Data Type = 1
+Name = CONTRACTPROVINCE
+Data Type = 1
+Name = CONTACTZIPCODE
+Data Type = 1
+Name = CONTACTPHONENO
+Data Type = 1
+Name = FINISHDATE
+Data Type = 12
+Name = ENDACADYEAR
+Data Type = 1
+Name = ENDSEMESTER
+Data Type = 1
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 52063591
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> กฤติน
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> วรรณเกษม
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> KITTIN
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> WANAKASEM
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> นาย
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 23
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 65
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> พิษณุโลก
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 102
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> บัณฑิตวิทยาลัย
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 12302053552
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> วิทยาศาสตร์ศึกษา (วิทยาการคอมพิวเตอร์ศึกษา) - (แผน ก แบบ ก 2)
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 2552
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 1
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 40
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> สำเร็จการศึกษา
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 21001520635916
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 3679900141872
+string ==> 1982-01-15 00:00:00
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> A
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> M
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ไทย
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ไทย
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> คริสต์
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> วท.บ
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> B.Sc.
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 78 ถ.หลักเมือง ในเมือง
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> เมือง
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> เพชรบูรณ์
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 67000
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 19/20  ม.13 สะเดียง
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> เมือง
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> เพชรบูรณ์
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 67000
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 67000
+string ==> 2012-05-11 00:00:00
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 2554
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 3
+undefined
+SELECT * FROM "AVSREG"."GRAD_STUDENTINFO" WHERE STUDENTCODE = ?
++totalColumns = 40
+Name = STUDENTCODE
+Data Type = 1
+Name = STUDENTNAME
+Data Type = 1
+Name = STUDENTSURNAME
+Data Type = 1
+Name = STUDENTNAMEENG
+Data Type = 1
+Name = STUDENTSURNAMEENG
+Data Type = 1
+Name = PREFIXNAME
+Data Type = 1
+Name = LEVELID
+Data Type = 2
+Name = CAMPUSID
+Data Type = 2
+Name = CAMPUSNAME
+Data Type = 1
+Name = FACULTYID
+Data Type = 2
+Name = FACULTYNAME
+Data Type = 1
+Name = PROGRAMID
+Data Type = 2
+Name = PROGRAMNAME
+Data Type = 1
+Name = ADMITACADYEAR
+Data Type = 2
+Name = ADMITSEMESTER
+Data Type = 2
+Name = STUDENTEMAIL
+Data Type = 1
+Name = STUDENTSTATUS
+Data Type = 2
+Name = STUDENTSTATUSDES
+Data Type = 1
+Name = BARCODECODE
+Data Type = 1
+Name = CITIZENID
+Data Type = 1
+Name = BIRTHDATE
+Data Type = 12
+Name = BLOODGROUP
+Data Type = 1
+Name = STUDENTSEX
+Data Type = 1
+Name = NATIONNAME
+Data Type = 1
+Name = ORIGIONNAME
+Data Type = 1
+Name = RELIGIONNAME
+Data Type = 1
+Name = ENTRYDEGREE
+Data Type = 1
+Name = ENTRYDEGREEENG
+Data Type = 1
+Name = HOMEADDRESS
+Data Type = 1
+Name = HOMEDISTRICT
+Data Type = 1
+Name = HOMEPROVINCE
+Data Type = 1
+Name = HOMEZIPCODE
+Data Type = 1
+Name = CONTACTADDRESS
+Data Type = 1
+Name = CONTACTDISTRICT
+Data Type = 1
+Name = CONTRACTPROVINCE
+Data Type = 1
+Name = CONTACTZIPCODE
+Data Type = 1
+Name = CONTACTPHONENO
+Data Type = 1
+Name = FINISHDATE
+Data Type = 12
+Name = ENDACADYEAR
+Data Type = 1
+Name = ENDSEMESTER
+Data Type = 1
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 52091945
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ศิริขวัญ
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> วงค์ชุมพันธ์
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> SIRIKHUAN
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> WONGCHUMPHANT
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> นาง
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 21
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 65
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> พิษณุโลก
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 102
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> บัณฑิตวิทยาลัย
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 12102052552
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> วิทยาศาสตร์ศึกษา (วิทยาการคอมพิวเตอร์ศึกษา) - แผน ก แบบ ก 2
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 2551
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 3
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> sirikhuanw52
+getCharSet() ==> TH8TISASCII
+Type = 3
+string ==> 11
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> รักษาสภาพ
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 21001520919450
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 3560300368666
+string ==> 1982-05-19 00:00:00
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> O
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> F
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ไทย
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ไทย
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> พุทธ
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> วท.บ.
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> -
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 132 หมู่ 10 สบบง
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ภูซาง
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> พะเยา
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 56110
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 132 หมู่ 10 สบบง
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> ภูซาง
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> พะเยา
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 56110
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 081-1805534
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 
+getCharSet() ==> TH8TISASCII
+Type = 0
+string ==> 
