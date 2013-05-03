@@ -40,6 +40,40 @@ function StaffModel() {
       callback(education_list);
     });
   };
+
+  this.list_by_faculty = function(HrDB, facultyModel, callback) {
+    var where_str = JSON.stringify({
+      'str':'FAC = ?',
+      'json':[facultyModel.json.FACULTYNAME]
+    });
+    HrDB.query({table:'pundit',where:where_str}, function(res){
+      var staff_list = [];
+      angular.forEach(res, function(staff) {
+        var tmp = new StaffModel();
+        tmp.json=staff;
+        staff_list.push(tmp);
+      });
+      callback(staff_list);
+    });
+  };
+  
+ this.faculty_list = function(HrDB, callback) { 
+    var select_str = JSON.stringify(['FAC']);
+    HrDB.query({select:select_str,table:'pundit'}, function(res) {
+      var faculty_dict = {};
+      var faculty_list = [];
+      angular.forEach(res, function(obj) { 
+        if(!(obj.FAC in faculty_dict)) {
+          faculty_dict[obj.FAC] = {};
+        }
+      });
+      angular.forEach(faculty_dict, function(value, key) { 
+        faculty_list.push(key);
+        console.log(key);
+      });
+      callback(faculty_list);
+    });
+ };
 }
 
 

@@ -25,36 +25,37 @@ function GradStaffModel() {
     }
   };
 
-  this.advisor_assign_list = function(AdvisorAssignment,callback){
-    var advisor = new AdvisorAssignmentModel();
-    advisor.list_by_advisor(AdvisorAssignment,self, function(res){
+  this.advisorassign_list = function(GradDB,callback){
+    AdvisorAssignmentModel.list_by_advisor(GradDB,self, function(res) {
+      console.log(res);
       callback(res);
     });
   };
   
+    
+  this.list_by_name = function(GradStaff,facultyModel,callback) {
+    var where_str = JSON.stringify({
+      'str':'faculty = ?',
+      'json':[facultyModel.json.FACULTYNAME]
+    });
+    GradStaff.query({where:where_str},function(res) {
+      var gradstaff_list = [];
+      angular.forEach(res,function(gradstaff){
+        var tmp = new GradStaffModel();
+        tmp.json = gradstaff;
+        gradstaff_list.push(tmp);
+      });
+      callback(gradstaff_list);
+    });
+  };
+  
+
 }
 
 function AdvisorAssignmentModel() {
-  var self = this;
-  this.json = null;
-
-  this.list_by_advisor = function(AdvisorAssignment, GradStaffModel, callback) {
-    var where_str = JSON.stringify({
-      'str':'advisor_id = ?',
-      'json':[GradStaffModel.json.id]
-    });
-
-    AdvisorAssignment.query({where:where_str}, function(res) {
-      var advisor_assign_list = [];  
-      angular.forEach(res, function(result) {
-        var tmp = new AdvisorAssignmentModel(); 
-        tmp.json = result; 
-        advisor_assign_list.push(tmp);
-    });
-    callback(advisor_assign_list);
-  });
- }
-
+ var self = this;
+ this.json = null;
+  
  this.get_student = function(Student,callback){
    if(self.json){
      var student = new StudentModel();   
@@ -63,20 +64,61 @@ function AdvisorAssignmentModel() {
      });
    }
  }
-
 }
+
+AdvisorAssignmentModel.list_by_advisor = function(GradDB, 
+  GradStaffModel, callback) {
+  var where_str = JSON.stringify({
+    'str':'advisor_id = ?',
+    'json':[GradStaffModel.json.id]
+  });
+
+  GradDB.query({table:'regnu_grad_advisorassignment'
+    ,where:where_str}, function(res) {
+    var advisor_assign_list = [];  
+    angular.forEach(res, function(result) {
+      var tmp = new AdvisorAssignmentModel(); 
+      tmp.json = result; 
+      advisor_assign_list.push(tmp);
+    });
+    callback(advisor_assign_list);
+  });
+}
+
+
+
+AdvisorAssignmentModel.get_by_student = function(GradDB, 
+  studentModel, callback) {
+  var where_str = JSON.stringify({
+    'str':'student = ?',
+    'json':[studentModel.json.STUDENTCODE]
+  });
+
+  GradDB.query({table:'regnu_grad_advisorassignment',where:where_str}, 
+    function(res) {
+    var model = new AdvisorAssignmentModel();
+    if(res.length == 1) {
+      model.json=res[0];
+    }
+    callback(model);
+  });
+};
 
 function PermitModel(){
   var self = this;
   this.json = null;
-  this.get_permit_by_student = function(Permit, id, callback){
+  this.get_by_student = function(GradDB, student_id, callback){
     var where_str = JSON.stringify({
       'str':'student = ?',
-      'json':[id]
+      'json':[student_id]
     });
-    Permit.query({where:where_str},function(response) {
+    GradDB.query({table:'regnu_grad_permit',
+      where:where_str},function(response) {
       if(response.length == 1) {
         self.json = response[0];
+        if(self.json.permit_date) {
+          self.json.permit_date = new Date(self.json.permit_date);
+        }
       }
       callback(self);
     });
@@ -86,12 +128,12 @@ function PermitModel(){
 function ExamModel(){
   var self = this;
   this.json = null;
-  this.get_exam_by_student = function(Exam, id, callback){
+  this.get_by_student = function(GradDB, studentModel, callback){
     var where_str = JSON.stringify({
       'str':'student = ?',
-      'json':[id]
+      'json':[studentModel.json.STUDENTCODE]
     });
-    Exam.query({where:where_str},function(response) {
+    GradDB.query({table:'regnu_grad_exam',where:where_str},function(response) {
       if(response.length == 1) {
         self.json = response[0];
       }
@@ -103,12 +145,12 @@ function ExamModel(){
 function QualifyingExamModel(){
   var self = this;
   this.json = null;
-  this.get_groupqe = function(QualifyingExam, groupqualifyingexam, callback){
+  this.get_by_groupqe = function(GradDB, groupqualifyingexam, callback){
     var where_str = JSON.stringify({
       'str':'id = ?',
-      'json':[qroupqualifyingexam.json.qe]
+      'json':[qroupqualifyingexam.json.qe_id]
     });
-    QualifyingExam.query({where:where_str},function(response) {
+    GradDB.query({table:'regnu_grad_qualifyingexamination',where:where_str},function(response) {
       if(response.length == 1) {
         self.json = response[0];
       }
@@ -121,15 +163,15 @@ function QualifyingExamModel(){
 function GroupQualifyingExamModel(){
   var self = this;
   this.json = null;
-  this.get_qe_by_student = function(GroupQualifyingExam, id, callback){
+  this.get_by_student = function(GradDB, studentModel, callback){
     var where_str = JSON.stringify({
       'str':'student = ?',
-      'json':[id]
+      'json':[studentModel.json.STUDENTCODE]
     });
-    GroupQualifyingExam.query({where:where_str},function(response) {
+    GradDB.query({table:'regnu_grad_groupqualifyingexamination',where:where_str},function(response) {
       var qe_list = []; 
       angular.forEach(response,function(groupqualifyingexam){  
-        var tmp = new GroupQualifyingExam(); 
+        var tmp = new GroupQualifyingExamModel(); 
         tmp.json = groupqualifyingexam;
         qe_list.push(tmp);
       });
@@ -137,3 +179,47 @@ function GroupQualifyingExamModel(){
     });
   }
 }
+
+
+function ThesisCompleteModel(){
+  var self = this;
+  this.json = null;
+  this.get_by_student = function(GradDB, studentModel, callback){
+    var where_str = JSON.stringify({
+      'str':'student = ?',
+      'json':[studentModel.json.STUDENTCODE]
+    });
+    GradDB.query({table:'regnu_grad_thesiscomplete',where:where_str},function(response) {
+      if(response.length == 1) {
+        self.json = response[0];
+      }
+      callback(self);
+    });
+  }
+}
+
+
+function EnglishResultModel(){
+  var self = this;
+  this.json = null;
+
+  this.get_by_student = function(GradDB, studentModel, callback){
+    var where_str = JSON.stringify({
+      'str':'STUDENTCODE = ?',
+      'json':[studentModel.json.STUDENTCODE]
+    });
+
+    GradDB.query({table:'regnu_grad_englishresult',where:where_str},function(response) {
+      
+      var englishresult_list = [];
+      angular.forEach(response, function(englishresultModel){
+        var tmp = new EnglishResultModel();
+        tmp.json = englishresultModel;           
+        englishresult_list.push(tmp);
+      });
+      callback(englishresult_list);
+    });
+  }
+}
+
+

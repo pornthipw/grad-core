@@ -14,6 +14,56 @@ app.config(function($routeProvider) {
 });
 
 
+app.config(function($routeProvider) {
+  $routeProvider.when('/faculty/:facid/gradstaff', {
+    controller:GradStaffByFacultyController,
+    templateUrl:'static/faculty/gradstaff_list.html'
+  });
+});
+
+function GradStaffByFacultyController($scope, $routeParams, Faculty, 
+  GradStaff, HrDB,Staff, GradDB){
+  var staff_model = new StaffModel();
+  var unit_list = {'อาจารย์ภายนอก':{'staff':[]}};
+  $scope.unit_list = unit_list;
+  var faculty_model = new FacultyModel();
+  faculty_model.get(Faculty, $routeParams.facid, function(faculty){
+    $scope.faculty = faculty;
+    faculty_model.list_gradstaff(GradStaff, function(gradstaff_list) {
+      $scope.gradstaff_list = gradstaff_list;
+      angular.forEach(gradstaff_list, function(gradstaff) {
+        gradstaff.nustaff_info(Staff, function(staff_model) {
+          gradstaff.nustaff = staff_model
+          if(staff_model.json) {
+            if(!(staff_model.json.UNIT in unit_list)) {
+              unit_list[staff_model.json.UNIT] = {
+               'name':staff_model.json.UNIT,
+               'staff':[]
+              };
+            }
+            unit_list[staff_model.json.UNIT]['staff'].push(gradstaff);
+          } else {
+            unit_list['อาจารย์ภายนอก']['staff'].push(gradstaff);
+          }
+        });
+      });
+    });
+
+  });
+  
+  $scope.select_unit = function(unit){
+    $scope.selected_unit = unit;
+    angular.forEach(unit.staff, function(gradStaff) {
+      gradStaff.advisorassign_list(GradDB, function(res) {
+         gradStaff.advisorassign_list = res;
+         angular.forEach(res, function(assign){
+          //var student_model = new StudentModel();
+         });  
+      });
+    });
+  };
+}
+
 function GradStaffController($scope, $routeParams, 
   GradStaff, Staff, Education, AdvisorAssignment, Student) {
   var g_model = new GradStaffModel();

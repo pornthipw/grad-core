@@ -67,7 +67,15 @@ app.factory('Staff', function($resource) {
     return Staff;    
 });
 
+app.factory('HrDB', function($resource) {
+  var HrDB = $resource(prefix + '/hrnu/:table/', {},{}); 
+  return HrDB;    
+});
 
+app.factory('RegDB', function($resource) {
+  var RegDB = $resource(prefix + '/reg/:table/', {},{}); 
+  return RegDB;    
+});
 
 
 app.factory('Education', function($resource) {
@@ -117,28 +125,12 @@ app.factory('GradStaff', function($resource) {
     return GradStaff;    
 });
 
-
-app.factory('AdvisorAssignment', function($resource) {
-    var AdvisorAssignment = $resource(
-      prefix + '/gradnu/regnu_grad_advisorassignment/', 
-      {},{});                         
-    return AdvisorAssignment;    
-});
-
-
-app.factory('Permit', function($resource) {
-    var Permit = $resource(
-      prefix + '/gradnu/regnu_grad_permit/', 
-      {},{});                         
-    return Permit;    
-});
-
-
-app.factory('Exam', function($resource) {
-    var Exam = $resource(
-      prefix + '/gradnu/regnu_grad_exam/', 
-      {},{});                         
-    return Exam;    
+app.factory('GradDB', function($resource) {
+  var GradDB = $resource(
+    prefix + '/gradnu/:table/', 
+    {},{}
+  );                         
+  return GradDB;
 });
 
 

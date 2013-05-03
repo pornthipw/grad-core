@@ -1,0 +1,32 @@
+<div class="row-fluid">
+ <div class="span6">
+  รายชื่อคณาจารย์ประจำบัณฑิต สังกัด{{faculty.json.FACULTYNAME}} 
+  <ul>
+   <li ng-repeat="(key,value) in unit_list">
+    <a href = "" ng-click = "select_unit(value)">{{key}}</a>
+    <ol>
+     <li ng-repeat="staff in value.staff">
+       {{staff.json.first_name}}  {{staff.json.last_name}}
+     </li>
+    </ol>
+   </li>
+  </ul>
+ </div>
+ <div class="span6">
+  {{selected_unit.name}}
+  <table class="table">
+   <tr>
+    <th>Name</th>
+    <th>#Student</th>
+    <th>A</th>
+   </tr>
+   <tr ng-repeat="staff in selected_unit.staff">
+    <td>{{staff.json.first_name}} {{staff.json.last_name}}</td>
+    <td>{{staff.advisorassign_list.length}}</td>
+    <td></td>
+   </tr>
+  </table>
+ </div>
+</div>
+
+

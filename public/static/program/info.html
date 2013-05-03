@@ -1,17 +1,68 @@
-{{program.json.PROGRAMNAME}}
 <div class="row-fluid">
  <div class="span12">
   <div class="row-fluid">
    <div class="span12">
-     <ul>
-       <li ng-repeat= "student in program.student_active_list">
-         <a href="#/student/{{student.json.STUDENTCODE}}">
-         {{student.json.STUDENTCODE}} 
-         </a>
-         {{student.json.STUDENTNAME}} 
-         {{student.json.STUDENTSURNAME}}
-       </li>
-     </ul>
+     <div class="row-fluid">
+       <table class="table table-condensed table-striped">
+         <caption>
+           <p class="lead">หลักสูตร/สาขาวิชา <br> {{program.json.PROGRAMNAME}}</p>
+         </caption>
+         <tr>
+           <th>#Student</th>
+           <th><span class="badge badge-success">A</span></th>
+           <th><span class="badge badge-info">R</span></th>
+           <th ng-hide="level.master"><span class="badge badge-warning">Q</span></th>
+           <th><span class="badge badge-inverse">O</span></th>
+           <th><span class="badge">T</span></th>
+           <th><span class="badge badge-success">E</span></th>
+           <th><span class="badge badge-important">P</span></th>
+         </tr>
+         <tr ng-repeat="student in program.student_active_list">
+           <td class="span1">{{student.json.STUDENTCODE}}</td>
+           <td class="span2">
+             <i class="icon-ok" ng-show="student.assign.json"></i>
+             {{student.assign.json.assign_date|date:"d-MM-yyyy"}}
+           </td>
+           <td class="span2">
+             <i class="icon-ok" ng-show="student.permit.json"></i>
+             {{student.permit.json.permit_date|date:"d-MM-yyyy"}}
+           </td>
+           <td class="span1">
+             <i class="icon-ok" ng-show="student.qeExam"></i>
+           </td>
+           <td class="span2">
+             <i class="icon-ok" ng-show="student.exam.json"></i>
+             {{student.exam.json.exam_date|date:"d-MM-yyyy"}}
+           </td>
+           <td class="span2">
+             <i class="icon-ok" ng-show="student.thesiscomplete.json"></i>
+             {{student.thesiscomplete.json.thesiscomplete_date|date:"d-MM-yyyy"}}
+           </td>
+           <td class="span1">
+             <i class="icon-ok" ng-show="student.engresult"></i>
+           </td>
+           <td class="span1"></td>
+         </tr>
+       </table>
+     </div>
+     <div class="row-fluid" >
+       <p class="pull-left">
+         <span class="badge badge-success">A</span> - Advisor assigned :
+           การแต่งตั้งคณะกรรมการที่ปรึกษาวิทยานิพนธ์<br>
+         <span class="badge badge-info">R</span> - Research proposal approved :
+           การส่งโครงร่างวิทยานิพนธ์เพื่อขออนุมัติทำวิทยานิพนธ์<br>
+         <span class="badge badge-inverse">O</span> - Oral defended :
+           การสอบวิทยานิพนธ์่<br>
+         <span class="badge badge-warning">Q</span> - Passed Qualifying Examination :
+           ผ่านการสอบวัดคุณสมบัติสำหรับนิสิตระดับปริญญาเอก<br>
+         <span class="badge">T</span> - Thesis submitted :
+           การส่งเล่มวิทยานิพนธ์ฉบับสมบูรณ์ <br>
+         <span class="badge badge-success">E</span> - Passed English :
+           ผ่านการสอบภาษาอังกฤษ<br>
+         <span class="badge badge-important">P</span> - Publication :
+           การตีพิมพ์ผลงานวิทยานิพนธ์
+       </p>
+     </div>
    </div>
   </div>
  </div>
