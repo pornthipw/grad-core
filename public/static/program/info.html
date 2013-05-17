@@ -5,10 +5,12 @@
      <div class="row-fluid">
        <table class="table table-condensed table-striped">
          <caption>
-           <p class="lead">หลักสูตร/สาขาวิชา <br> {{program.json.PROGRAMNAME}}</p>
+           <p class="lead">หลักสูตร/สาขาวิชา.. <br> {{program.json.PROGRAMNAME}}</p>
          </caption>
          <tr>
            <th>#Student</th>
+           <th>Name</th>
+           <th>Advisor</th>
            <th><span class="badge badge-success">A</span></th>
            <th><span class="badge badge-info">R</span></th>
            <th ng-hide="level.master"><span class="badge badge-warning">Q</span></th>
@@ -17,31 +19,34 @@
            <th><span class="badge badge-success">E</span></th>
            <th><span class="badge badge-important">P</span></th>
          </tr>
+ 
          <tr ng-repeat="student in program.student_active_list">
-           <td class="span1">{{student.json.STUDENTCODE}}</td>
-           <td class="span2">
-             <i class="icon-ok" ng-show="student.assign.json"></i>
-             {{student.assign.json.assign_date|date:"d-MM-yyyy"}}
+           <td>{{student.json.STUDENTCODE}}</td>
+           <td>{{student.json.STUDENTNAME}} {{student.json.STUDENTSURNAME}}</td>
+           <td>{{student.assign.advisor_name}}<!--{{student.assign.advisor.display_name()}}--></td>
+           <td>
+             <!--<i class="icon-ok" ng-show="student.assign.json"></i>-->
+             {{student.assign.json.assign_date|date:"dd-MM-yyyy"}}
            </td>
-           <td class="span2">
-             <i class="icon-ok" ng-show="student.permit.json"></i>
-             {{student.permit.json.permit_date|date:"d-MM-yyyy"}}
+           <td>
+             <!--<i class="icon-ok" ng-show="student.permit.json"></i>-->
+             {{student.permit.json.permit_date|date:"dd-MM-yyyy"}}
            </td>
-           <td class="span1">
+           <td>
              <i class="icon-ok" ng-show="student.qeExam"></i>
            </td>
-           <td class="span2">
-             <i class="icon-ok" ng-show="student.exam.json"></i>
+           <td>
+            <!-- <i class="icon-ok" ng-show="student.exam.json"></i>-->
              {{student.exam.json.exam_date|date:"d-MM-yyyy"}}
            </td>
-           <td class="span2">
-             <i class="icon-ok" ng-show="student.thesiscomplete.json"></i>
+           <td>
+             <!--<i class="icon-ok" ng-show="student.thesiscomplete.json"></i>-->
              {{student.thesiscomplete.json.thesiscomplete_date|date:"d-MM-yyyy"}}
            </td>
-           <td class="span1">
+           <td>
              <i class="icon-ok" ng-show="student.engresult"></i>
            </td>
-           <td class="span1"></td>
+           <td></td>
          </tr>
        </table>
      </div>

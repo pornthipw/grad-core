@@ -1,6 +1,12 @@
 function GradStaffModel() {
   var self = this;
   this.json = null;
+  
+  this.display_name = function() {
+    var js = self.json;
+    return js.first_name + ' ' + js.last_name;
+  }
+
   this.get = function(GradStaff,id,callback) {
     var where_str = JSON.stringify({
      'str':'id = ?',
@@ -14,10 +20,9 @@ function GradStaffModel() {
     });
   };
 
-  this.nustaff_info = function(Staff,callback) {
+  this.nustaff_info = function(HrDB,callback) {
     if(self.json) {
-      var staff = new StaffModel();
-      staff.get(Staff, self.json.nu_staff, function(staff_model) {
+      StaffModel.get(HrDB, self.json.nu_staff, function(staff_model) {
         callback(staff_model);
       });
     } else {
@@ -27,7 +32,7 @@ function GradStaffModel() {
 
   this.advisorassign_list = function(GradDB,callback){
     AdvisorAssignmentModel.list_by_advisor(GradDB,self, function(res) {
-      console.log(res);
+      //console.log(res);
       callback(res);
     });
   };
@@ -48,9 +53,22 @@ function GradStaffModel() {
       callback(gradstaff_list);
     });
   };
-  
-
 }
+
+
+GradStaffModel.get = function(GradDB, id, callback) {
+  var where_str = JSON.stringify({
+   'str':'id = ?',
+   'json':[id]
+  });
+  GradDB.query({table:'hrnu_grad_gradstaff',where:where_str},function(response) {
+    var model = new GradStaffModel();
+    if(response.length == 1) {
+      model.json = response[0];
+    }
+    callback(model);
+  });
+};
 
 function AdvisorAssignmentModel() {
  var self = this;
@@ -134,6 +152,24 @@ function ExamModel(){
       'json':[studentModel.json.STUDENTCODE]
     });
     GradDB.query({table:'regnu_grad_exam',where:where_str},function(response) {
+      if(response.length == 1) {
+        self.json = response[0];
+      }
+      callback(self);
+    });
+  }
+}
+
+function QExamModel(){
+  var self = this;
+  this.json = null;
+  this.get = function(GradDB, studentModel, callback){
+    var where_str = JSON.stringify({
+      'str':'student = ?',
+      'json':[studentModel.json.STUDENTCODE]
+    });
+    GradDB.query({table:'regnu_grad_qualifyingexam',where:where_str},function(response) {
+      //console.log(response);
       if(response.length == 1) {
         self.json = response[0];
       }

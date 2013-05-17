@@ -1,0 +1,160 @@
+<div class="row-fluid">
+ <div class="span6">
+  <div class="row-fluid">
+   <div class="span6">
+    <div class="input-prepend input-append pull-left">
+     <span class="add-on"><i class="icon-search"></i></span>   
+     <input type="text" class="input-medium" 
+       ng-change="currentPage=1"
+       ng-model="search">
+    </div>
+   </div>
+   <div class="span6">
+    <span class="pull-right" ng-init="currentPage=1">
+      Page {{currentPage}}/{{totalPage}}
+     <button class="btn" 
+       ng-click="currentPage=currentPage-1"
+       ng-disabled="currentPage==1">
+       &laquo;</button>
+     <button class="btn"
+       ng-click="currentPage=currentPage+1"
+       ng-disabled="currentPage==totalPage">
+       &raquo;</button>
+     <button class="btn" ng-click="insert_form()">
+       <i class="icon-plus"></i>
+     </button>
+    </span>
+   </div>
+  </div>
+
+  <div class="row-fluid">
+   <table class="table table-striped table-condensed">
+    <tr>
+     <th>Title</th>
+     <!--<th>Author</th>-->
+    </tr>
+    <tr ng-repeat="entry in entry_list|orderBy:'title'| filter:search |skip:(currentPage-1)*limit|limitTo:limit"
+        ng-class="{'warning':entry.selected}"
+     >
+     <td>
+      <a href="" ng-click="selected(entry)">{{entry.title}}</a>
+      <br>
+      {{entry.author}}
+      </span>
+     </td>
+    </tr>
+   </table>
+  </div>
+ </div>
+   
+ <div class="span6" ng-show="entry" ng-hide="form">
+  <h4>{{entry.title}}</h4>
+  <a href="" ng-click="edit(entry)" ng-show="entry">Edit</a>
+  <table class="table table-condensed table-striped">
+   <!--
+    <tr ng-repeat="(key,value) in entry" ng-show="entry[key]">
+     <td class="span2"><strong>{{key}}</strong></td>
+     <td>{{value}}</td>
+    </tr>
+    -->
+    <tr ng-show="entry.author">
+     <th>Author</th>
+     <td>{{entry.author}}</td>
+    </tr>
+    <tr ng-show="entry.year">
+     <th>Year</th>
+     <td>{{entry.year}}</td>
+    </tr>
+    <tr ng-show="entry.journal">
+     <th>Journal</th>
+     <td>{{entry.journal}}</td>
+    </tr>
+    <tr ng-show="entry.publisher">
+     <th>Publisher</th>
+     <td>{{entry.publisher}}</td>
+    </tr>
+    <tr ng-show="entry.booktitle">
+     <th>Book Title</th>
+     <td>{{entry.booktitle}}</td>
+    </tr>
+    <tr ng-show="entry.organization">
+     <th>Organization</th>
+     <td>{{entry.organization}}</td>
+    </tr>
+    <tr ng-show="entry.month">
+     <th>Month</th>
+     <td>{{entry.month}}</td>
+    </tr>
+    <tr ng-show="entry.volume">
+     <th>Volume</th>
+     <td>{{entry.volume}}</td>
+    </tr>
+    <tr ng-show="entry.number">
+     <th>Number</th>
+     <td>{{entry.number}}</td>
+    </tr>
+    <tr ng-show="entry.pages">
+     <th>Pages</th>
+     <td>{{entry.pages}}</td>
+    </tr>
+    <tr ng-show="entry.keyword">
+     <th>KeyWord</th>
+     <td>{{entry.keyword}}</td>
+    </tr>
+    <tr ng-show="entry.note">
+     <th>Note</th>
+     <td>{{entry.note}}</td>
+    </tr>
+    <tr ng-show="entry.dateconference">
+     <th>Date Conference</th>
+     <td>{{entry.dateconference}}</td>
+    </tr>
+    <tr ng-show="entry.entry_type">
+     <th>Entry Type</th>
+     <td>{{entry.entry_type}}</td>
+    </tr>
+   </table>
+   <ol>
+    <li ng-repeat="student in entry.student_map">
+     {{student.json.STUDENTCODE}} {{student.json.STUDENTNAME}}
+    </li>
+   </ol>
+ </div>
+ 
+ <div class="span6" ng-show="form">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr><th colspan="2">เพิ่มข้อมูลประเภทผลงานตีพิมพ์วารสาร (Journal)</th></tr>
+    </thead>
+    <tr>
+      <td>ประเภทการเผยแพร่</td>
+      <td>
+        <select ng-model="selected_type" ng-change="change_type()"
+           ng-options="e.display for e in entrytype_list"></select> 
+      </td>
+    </tr>
+
+    <tr ng-repeat="(key, value) in entry_fields" 
+        ng-show="value.selected">
+      <td>
+        <span ng-show="value.display.th">{{value.display.th}}</span>
+        <span ng-hide="value.display.th">{{key}}</span>
+      </td>
+      <td><input type="text" ng-model="form[key]"></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <button class="btn" ng-click="add()" >Save</button>
+        <button class="btn" ng-click="update()" >Update</button>
+      </td>
+    </tr>
+  </table>
+  <span ng-repeat="field in entry_fields">
+    <span ng-hide="">
+      <a href="" ng-click="field.selected=true">
+         {{field.display.th}}
+      </a>
+    </span>
+  </span>
+ </div>
+</div>

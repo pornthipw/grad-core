@@ -7,9 +7,10 @@
     "hbs" : "*",    
     "generic-pool" : "*",    
     "db-oracle" : "*",    
+    "jshashes" : "*",    
     "db-mysql" : "*"    
   },
   "scripts": {
-    "start":"server.js"
+    "start":"core_server.js"
   } 
 }

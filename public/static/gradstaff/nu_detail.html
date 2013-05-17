@@ -1,0 +1,45 @@
+
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span12 well">
+        <div class="row-fluid">
+          <div class="span2">
+           <span class="pull-right"> ชื่อ-สกุล</span>
+          </div>
+          <div class="span10">
+            {{staff.json.FNAME}}  {{staff.json.LNAME}}
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span2">
+           <span class="pull-right"> ภาควิชา</span>
+          </div>
+          <div class="span10">
+            {{staff.json.WORK}}
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span2">
+          <span class="pull-right"> คณะที่สังกัด</span> 
+          </div>
+          <div class="span10">
+            {{staff.json.FAC}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <legend>ประวัติการศึกษา</legend>
+        <ul>
+          <li ng-repeat="edu in staff.education_list"> 
+            {{edu.json.BYTEDES}}-({{edu.json.DEGREENAMEABB}})
+            {{edu.json.DEGREENAME}},{{edu.json.UNIVERSITYNAME}}
+            {{edu.json.COUNTRYNAME}} 
+          </li>
+        </ul>
+      </div>    
+    </div>
+  </div>
+</div>

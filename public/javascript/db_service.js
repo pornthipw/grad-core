@@ -3,6 +3,32 @@ var app = angular.module('db_service', ['ngResource']);
 var prefix = '/apps/core';
 //var prefix = '';
 
+app.factory('HMAC', function() {
+  var generate = {
+    run : function(req) {
+      var key = 'nook123';
+      var json_obj = {};
+      var key_list = [];
+      var str = '';
+      for(var key in req.query) {
+        key_list.push(key);
+      };
+      key_list.sort();
+      key_list.forEach(function(key) {
+        if(key in req.query) {
+          json_obj[key] = req.query[key];
+        } 
+      });
+
+      str += req.path+'/n'+JSON.stringify(json_obj);
+      console.log("Client-->"+str);
+      var MD5 = new Hashes.MD5;
+      console.log('ClientMD5 -> '+MD5.b64_hmac(str,key));
+    }
+  };
+  return generate;
+});
+
 app.factory('Level', function($resource) {
     var Level = $resource(
       prefix + '/reg/levelid/:id', 
@@ -125,10 +151,22 @@ app.factory('GradStaff', function($resource) {
     return GradStaff;    
 });
 
+app.factory('BibTex', function($resource) {
+  var BibTex = $resource(
+    prefix + '/gradnu/bibtex_entry/', 
+    {},{
+     'update':{'method':'PUT'}
+    }
+  );                         
+  return BibTex;
+});
+
 app.factory('GradDB', function($resource) {
   var GradDB = $resource(
     prefix + '/gradnu/:table/', 
-    {},{}
+    {},{
+     'post':{method:'POST'}
+    }
   );                         
   return GradDB;
 });
@@ -147,4 +185,5 @@ app.factory('GroupQualifyingExam', function($resource) {
       {},{});                         
     return GroupQualifyingExam;    
 });
+
 

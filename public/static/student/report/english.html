@@ -4,6 +4,28 @@
   <div class="row-fluid">
    <div class="span4">
     <div class="accordion" id="level_accordion">
+
+     <div class="accordion-group">
+      <div class="accordion-heading">
+       <a class="accordion-toggle" 
+          data-toggle="collapse" 
+          data-parent="#accordion2" 
+          href="#collapseZero">
+          Type
+       </a>
+      </div>
+      <div id="collapseZero" class="accordion-body collapse in">
+       <div class="accordion-inner">
+        <ul class="unstyled">
+         <li ng-repeat="type in type_list">
+          <label class="checkbox">
+           <input type="checkbox" ng-model="type.selected">{{type.name}}</label>
+         </li>
+        </ul>
+       </div>
+      </div>
+     </div>
+
      <div class="accordion-group">
       <div class="accordion-heading">
        <a class="accordion-toggle" 
@@ -55,57 +77,67 @@
     <p>
      English Report for current  
      <span class="badge badge-info">{{total_student|number}}</span>
-     students. (<strong>{{retrieved_student|number}}</strong> Retrieved)
+     students. (<strong>{{retrieved_student/count_type|number}}</strong> 
+     Retrieved)
      <a href="" ng-click="export_data()">Export</a>
     </p>
     <div class="row-fluid">
      <div class="progress progress-striped">
       <div class="bar" 
-        style="width: {{retrieved_student*100/total_student}}%;">
+        style="width: {{(retrieved_student/count_type)*100/total_student}}%;">
       </div>
      </div>
     </div>
     <div class="row-fluid">
      <button class="btn btn-primary" ng-click="execute()">Query</button>
     </div>
-    
 
     <div class="row-fluid">
-     <table class="table">
-       <tbody ng-repeat="faculty in faculty_list">
-       <tr>
-         <td class="span2">
-           {{faculty.model.json.FACULTYNAME}}
-          </td>
-         <td ng-repeat="level in faculty.level_list">
-           {{level.name}}
-         </td> 
-        </tr>
-       <!--<tbody ng-repeat="faculty in faculty_list">
-         <tr>
-           <td colspan="12">
-           {{faculty.model.json.FACULTYNAME}}
+     <div class="tabbable">
+      <ul class="nav nav-tabs"> 
+       <li ng-repeat="type in type_list"
+         ng-class="{'active':$first}"  
+         ng-show="type.selected && type.executed" >
+        <a href="#tab{{type.name}}" 
+          data-toggle="tab">{{type.name}}
+        </a>
+       </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class = "tab-pane" ng-repeat="type in type_list" 
+          ng-show="type.selected && type.executed"
+          ng-class="{'active':$first}"  
+          id="tab{{type.name}}">  
+         <p>{{type.name}}</p>
+         {{type.selected.tab}}
+         <table class="table table-bordered table-condensed table-striped"  
+           ng-repeat="faculty in faculty_list">
+          <tr>
+           <td><strong>{{faculty.model.json.FACULTYNAME}}</strong></td>
+           <td ng-repeat="year in year_list">{{year}}</td>
+          </tr>
+          <tr ng-repeat="level in faculty.level_list">
+           <td>{{level.name}}</td>
+           <td ng-repeat="year in year_list">
+             <span ng-hide="type.attr == 'qepass' && level.master">
+               {{level.admit_year[year].students.length - level.admit_year[year][type.attr]}}
+             </span>
+             <span ng-show="type.attr == 'qepass' && level.master">
+              -
+             </span>
            </td>
-           <td ng-repeat="level in faculty.level_list">
-             {{level.name}}
-           </td>
-         </tr>
-         <tr ng-repeat="level in faculty.level_list">
-           <td colspan="12">{{level.name}}</td>
-           <td ng-repeat="(year, english) in level.admit_year">
-             {{year}} 
-            <table>
-              <tr >
-                <td>
-                  {{english.pass|number}}/{{english.students.length|number}}
-                </td> 
-              </tr>
-            </table>
-          </td>
-         </tr>
-         -->
-       </tbody>
-     </table>
+          </tr>
+         </table>
+        </div>
+      </div>
+     </div>    
+    </div>
+   <!-- 
+    <div class="row-fluid">
+    </div>    
+
+    <div class="row-fluid">
      <ul>
       <li ng-repeat="faculty in faculty_list">
        {{faculty.model.json.FACULTYNAME}}
@@ -114,7 +146,9 @@
          {{level.name}}
          <ul>
           <li ng-repeat="(year, english) in level.admit_year">
-           {{year}} {{english.pass|number}}/{{english.students.length|number}}
+           {{year}} 
+             english: {{english.pass|number}}/{{english.students.length|number}}
+             qe: {{english.qepass|number}}/{{english.students.length|number}}
           </li>
          </ul>
         </li>
@@ -125,3 +159,4 @@
    </div>
   </div>
 </div>
+-->

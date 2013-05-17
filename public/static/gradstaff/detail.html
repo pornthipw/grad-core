@@ -43,25 +43,41 @@
    <div class="row-fluid">
      <div class="span12">
        <legend>นิสิตในความรับผิดชอบ</legend>
-       <ol>
-         <li ng-repeat="student in staff.active_assign_list">
-          <a href="#/student/{{student.json.STUDENTCODE}}">
-            {{student.json.STUDENTCODE}}
-          </a>
-          {{student.json.PREFIXNAME}}
-          {{student.json.STUDENTNAME}}
-          {{student.json.STUDENTSURNAME}}
-          {{student.json.LEVELID}}
-         </li>
-       </ol>
+       <table class="table table-striped">
+         <tr>
+           <th>Name</th>
+           <th></th>
+           <th>P</th>
+           <th>Q</th>
+           <th>O</th>
+           <th>T</th>
+           <th>E</th>
+         </tr>
+         <tr ng-repeat="student in staff.active_assign_list">
+           <td>
+             <a href="#/student/{{student.json.STUDENTCODE}}">
+              {{student.json.STUDENTCODE}}
+             </a>
+            {{student.json.PREFIXNAME}} {{student.json.STUDENTNAME}} 
+            {{student.json.STUDENTSURNAME}}
+           </td>
+           <td>{{student.json.LEVELID}}</td>
+           <td><i class='icon-ok' ng-show="student.grad_status.permit.json"></i></td>
+           <td><i class='icon-ok' ng-show="student.grad_status.qe==true"></i></td>
+           <td><i class='icon-ok' ng-show="student.grad_status.exam.json"></i></td>
+           <td><i class='icon-ok' ng-show="student.grad_status.thesiscomplete.json"></i></td>
+           <td><i class='icon-ok' ng-show="student.grad_status.english==true"></i></td>
+         </tr>
+       </table>
      </div>
    </div>
    <div class="row-fluid">
      <div class="span12">
        <legend>ประวัติการคุมนิสิต</legend>
        <ol>
-       {{finish_intime}}/{{staff.finish_assign_list.length}}
+     <!--  {{finish_intime}}/{{staff.finish_assign_list.length}}
        {{finish_intime*100/staff.finish_assign_list.length|number:2}}%
+      -->
          <li ng-repeat="student in staff.finish_assign_list">
 <!--{{student}}
 -->

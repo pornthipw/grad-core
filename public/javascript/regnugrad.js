@@ -69,6 +69,10 @@ function EnglishReportController($scope,RegDB,GradDB) {
       }
     }
   };
+   
+  var level_is_master = function(level_id) {
+    return level_id > 20 && level_id < 30;
+  };
 
   var level_name = function(level_id) {
     for(var i=0;i<$scope.level_list.length;i++) {
@@ -77,7 +81,7 @@ function EnglishReportController($scope,RegDB,GradDB) {
       }
     }
   };
-
+   
   $scope.export_data = function() {
     var result='';
     angular.forEach($scope.faculty_list, function(faculty) {
@@ -100,7 +104,34 @@ function EnglishReportController($scope,RegDB,GradDB) {
     link.click();
   };
   
+  $scope.type_list = [
+    {'name':'EnglishResult', 'attr':'pass'},
+    {'name':'QEResult', 'attr':'qepass'},
+  ];
   $scope.execute = function() {
+    $scope.count_type = 0;
+    var type_english = false;
+    var type_qe = false;
+
+    angular.forEach($scope.type_list, function(type) {
+      //console.log(type);
+      if(type.selected) {
+        if(type.attr == 'pass') {
+          type_english=true;
+        }
+        if(type.attr == 'qepass') {
+          type_qe=true;
+        }
+        $scope.count_type++;
+        type.executed = true;
+        $scope.current = type.name;         
+        console.log($scope.current); 
+      } else {
+        type.executed = false;
+      }
+    });
+    
+    $scope.year_list = [];
     $scope.total_student = 0;
     $scope.retrieved_student = 0;
     var level_criteria = [];
@@ -123,6 +154,7 @@ function EnglishReportController($scope,RegDB,GradDB) {
               if(!(program.json.LEVELID in faculty_view['level_list'])) {
                 faculty_view['level_list'][program.json.LEVELID] = {
                   'name':level_name(program.json.LEVELID),
+                  'master':level_is_master(program.json.LEVELID),
                   'admit_year':{}
                 };
               }
@@ -132,16 +164,34 @@ function EnglishReportController($scope,RegDB,GradDB) {
                 $scope.total_student += student_list.length;
                 angular.forEach(student_list,function(student) {
                   var admit_year = student.json.ADMITACADYEAR;
-                  if(!(admit_year in admit_obj)) {
-                    admit_obj[admit_year] = {'students':[], 'pass':0};
+                  if($scope.year_list.indexOf(admit_year)==-1) {
+                    $scope.year_list.push(admit_year);
+                    $scope.year_list.sort();
                   }
-                  student.is_engresult(GradDB, function(pass) {
-                    $scope.retrieved_student++;
-                    admit_obj[admit_year].students.push(student);
-                    if(pass) {
-                      admit_obj[admit_year].pass++;
-                    }
-                  });
+                  if(!(admit_year in admit_obj)) {
+                    admit_obj[admit_year] = {'students':[], 
+                    'pass':0, 'qepass':0};
+                  }
+
+                  admit_obj[admit_year].students.push(student);
+
+                  if(type_english) {
+                    student.is_engresult(GradDB, function(pass) {
+                      $scope.retrieved_student++;
+                      if(pass) {
+                        admit_obj[admit_year].pass++;
+                      }
+                    });
+                  }
+
+                  if(type_qe) {
+                    student.is_qeExam(GradDB,function(pass) {
+                      $scope.retrieved_student++;
+                      if(pass) {
+                        admit_obj[admit_year].qepass++;
+                      }
+                    });
+                  }
                 });
               });
             }
@@ -178,16 +228,16 @@ function StudentController($scope,$routeParams,Student,
     });
 };
 
-function FacultyListController($scope, Faculty){
+function FacultyListController($scope, Faculty ,HMAC){
   var faculty_model = new FacultyModel();
   faculty_model.list(Faculty, function(faculty_list){
+    console.log(faculty_list);
     $scope.faculty_list = faculty_list;
   });
 } 
 
-function FacultyController($scope, $routeParams, Faculty){
-  var faculty_model = new FacultyModel();
-  faculty_model.get(Faculty, $routeParams.id, function(faculty){
+function FacultyController($scope, $routeParams, RegDB, HMAC){
+  FacultyModel.get(RegDB, $routeParams.id, function(faculty) {
     $scope.faculty = faculty;
   });
 }
@@ -353,7 +403,8 @@ function ProgramListByFacultyController($scope, Student,
   });
 } 
 
-function ProgramController($scope, $routeParams, Student, Program, GradDB){
+function ProgramController($scope, $routeParams, Student, Program, GradDB,
+  Staff,HrDB,Education){
   var program_model = new ProgramModel();
   program_model.get(Program,$routeParams.id,function(program_obj) {
     $scope.program = program_obj;
@@ -365,28 +416,40 @@ function ProgramController($scope, $routeParams, Student, Program, GradDB){
           //console.log(student_list);
           angular.forEach(student_list, function(student){
             if(student.active()){
-              
-              student.get_assign(GradDB, function(res){
-                student.assign = res;
-                student.get_permit(GradDB, function(res){
-                  student.permit = res;
-                  student.get_exam(GradDB,function(res){
-                    student.exam = res;
-                    student.is_qeExam(GradDB,function(res){
-                      student.qeExam = res;
-                      //console.log(res);
-                      student.is_engresult(GradDB,function(res){
-                        student.engresult = res;
-                        student.get_thesiscomplete(GradDB,function(res){
-                          student.thesiscomplete = res;
+              student.get_assign(GradDB, function(a_res){
+                student.assign = a_res;
+                if(student.assign.json) {
+                  GradStaffModel.get(GradDB, student.assign.json.advisor_id,
+                    function(gs) { 
+                     //student.assign.advisor = gs;
+                    //console.log(gs.json.nu_staff);
+                    gs.nustaff_info(Staff, function(staffmodel){
+                      staffmodel.display_name(HrDB, function(result){
+                    //    console.log(result);
+                        student.assign.advisor_name = result;
+                      }); 
+                    });
+                    // nustaff.display_name(HrDB, function(name) {
+                    //   student.assign.advisor_name = name;
+                    // });
+                  });
+                }
+                student.get_permit(GradDB, function(p_res){
+                  student.permit = p_res;
+                  student.get_exam(GradDB,function(e_res){
+                    student.exam = e_res;
+                    student.is_qeExam(GradDB,function(q_res){
+                      student.qeExam = q_res;
+                      student.is_engresult(GradDB,function(eng_res){
+                        student.engresult = eng_res;
+                        student.get_thesiscomplete(GradDB,function(t_res){
+                          student.thesiscomplete = t_res;
                         });
                       });
                     });
                   });
                 });
               });
-              
-
               student_active.push(student);
             } else {
               student_finish.push(student);

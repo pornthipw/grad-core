@@ -15,10 +15,7 @@ function StudentModel() {
   
   this.get_assign = function(GradDB, callback) {
     AdvisorAssignmentModel.get_by_student(GradDB, self, function(model) {
-      if(model.json) {
-       // console.log(model);
-        callback(model);
-      } 
+      callback(model);
     });
   };
 
@@ -30,6 +27,30 @@ function StudentModel() {
         callback(false);
       }
     });
+  };
+
+  this.grad_status = function(GradDB, callback) {
+    var status_model = {};
+    self.get_assign(GradDB, function(a) {
+      status_model['assign'] = a;
+      self.get_permit(GradDB, function(p) {
+        status_model['permit'] = p;
+        self.get_exam(GradDB, function(exam) {
+          status_model['exam'] = exam;
+          self.get_thesiscomplete(GradDB, function(t) {
+            status_model['thesiscomplete'] = t;
+            self.is_qeExam(GradDB,function(qe) {
+              status_model['qe'] = qe;
+              self.is_engresult(GradDB,function(eng) {
+                status_model['english'] = eng;
+                callback(status_model);
+              });
+            });
+          });
+        });
+      });
+    });
+    
   };
 
   this.get_permit = function(GradDB,callback) {
@@ -54,10 +75,7 @@ function StudentModel() {
   this.get_exam = function(GradDB,callback) {
     var exam = new ExamModel();
     exam.get_by_student(GradDB, self, function(res) {
-      if(res.json) {
-        //console.log(res);
-        callback(res);
-      }
+      callback(res);
     });
   };
 
@@ -75,10 +93,7 @@ function StudentModel() {
   this.get_thesiscomplete = function(GradDB,callback) {
     var thesiscomplete = new ThesisCompleteModel();
     thesiscomplete.get_by_student(GradDB, self, function(res) {
-      if(res.json) {
-        //console.log(res);
-        callback(res);
-      }
+      callback(res);
     });
   };
 
@@ -92,7 +107,6 @@ function StudentModel() {
       }
     });
   };
-
 
   this.is_qeExam = function(GradDB,callback) {
     var qeExam = new GroupQualifyingExamModel();
@@ -271,7 +285,34 @@ function FacultyModel(){
     });
   } 
 
+  this.list_staff = function(HrDB, callback){
+    var staff_model = new StaffModel();
+    staff_model.list_by_name(HrDB,self,function(staff_list){
+     //console.log(staff_list);
+     callback(staff_list);
+     
+    });
+  } 
 }
+
+FacultyModel.get= function(RegDB, id, callback) {
+  var where_json = {'str':'FACULTYID = ?','json':[id]};
+  var where_str = JSON.stringify(where_json);
+  var timest = ''+(new Date()).getTime();
+  var sign = Core_HMAC.generate({'query':{'where':where_str,'timestamp':timest},
+    'path':'/reg/faculty'});
+  RegDB.query({'table':'faculty',where:where_str,
+    '_sign':sign,
+    'timestamp':timest,
+    '_apiKey':Core_HMAC.apiKey}, function(res){
+    var model = new FacultyModel();
+    if (res.length == 1) {
+     model.json = res[0]; 
+    }
+    callback(model);
+  }); 
+}
+
 FacultyModel.list_all = function(RegDB, callback) {
   RegDB.query({'table':'faculty'}, function(res) {
     var list = [];

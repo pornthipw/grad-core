@@ -1,0 +1,29 @@
+
+<div class="row-fluid">
+ <div class="span6">
+  รายชื่อคณาจารย์ประจำ สังกัด{{faculty.json.FACULTYNAME}} 
+  <ul>
+   <li ng-repeat="(key,value) in unit_list">
+    <a href = "" >{{key}}</a>
+    <ol>
+     <!--
+     <li ng-repeat="staff in value.staff">
+       {{staff.json.first_name}}  {{staff.json.last_name}}
+     </li>
+    </ol>-->
+    <ol>
+     <li ng-repeat="nustaff in value.staff">
+
+       <a href="#/staff/{{nustaff.json.STAFFID}}" >
+      {{nustaff.json.FNAME}}  {{nustaff.json.LNAME}}</a> 
+     <span ng-show="nustaff.grad_id" class="label label-success">GS</span>
+     </li>
+    </ol>
+   </li>
+  </ul>
+ </div>
+ <div class="span6">
+ </div>
+</div>
+
+

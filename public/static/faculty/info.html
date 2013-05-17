@@ -1,15 +1,23 @@
 <div class="row-fluid">
  <div class="span12">
-  {{faculty.json.FACULTYNAME}} 
+ --> {{faculty.json.FACULTYNAME}} 
   <div class="row-fluid">
    <ul>
     <li>
      <a href="#/faculty/{{faculty.json.FACULTYID}}/programs" >
-      รายงานผลติดตามความก้าวหน้าการทำวิทยานิพนธ์สำหรับนิสิตตามหลักสูตร/สาขาวิชา {{faculty.json.FACULTYNAME}}
+      รายงานผลติดตามความก้าวหน้าการทำวิทยานิพนธ์สำหรับนิสิตตามหลักสูตร
+      /สาขาวิชา {{faculty.json.FACULTYNAME}}
      </a>
     </li>
     <li>
-     <a href="#/faculty/{{faculty.json.FACULTYID}}/gradstaff">คณาจารย์บัณฑิตศึกษา</a> 
+     <a href="#/faculty/{{faculty.json.FACULTYID}}/gradstaff">
+       คณาจารย์บัณฑิตศึกษา
+     </a> 
+    </li>
+    <li>
+     <a href="#/faculty/{{faculty.json.FACULTYID}}/nustaff">
+       คณาจารย์ประจำ       
+     </a>
     </li>
    </ul>
   </div>

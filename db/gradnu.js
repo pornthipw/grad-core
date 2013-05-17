@@ -52,6 +52,56 @@ var Gradnu = function(config) {
     });
   };
 
+  this.insert_table = function(req, res) {
+    pool.acquire(function(err, db) {
+      db.query('SET names utf8').execute(function(err) {
+        var c_db =  db.query()
+        console.log(req.body);
+        c_db.insert(req.params.table, 
+          JSON.parse(req.body.fields), 
+          JSON.parse(req.body.values));
+        c_db.execute(function(err,result) {
+          if(err) {
+            pool.release(db);
+            res.json([]);
+          } else {
+            pool.release(db);
+            res.json(result);
+          }
+        });
+     });
+    });
+  };
+
+  this.update_table = function(req, res) {
+    pool.acquire(function(err, db) {
+      db.query('SET names utf8').execute(function(err) {
+       try {
+        var c_db =  db.query()
+        console.log(req.body);
+        c_db.update(req.params.table);
+        if(req.body.values) {
+          c_db.set(JSON.parse(req.body.values));
+        }
+        var where_obj = JSON.parse(req.body.where);
+        c_db.where(where_obj.str,where_obj.json);
+        console.log(c_db.sql());
+        c_db.execute(function(err,result) {
+          if(err) {
+            pool.release(db);
+            res.json([]);
+          } else {
+            pool.release(db);
+            res.json(result);
+          }
+        });
+       } catch(err) {
+         res.json([]);
+         pool.release(db);
+       }
+     });
+    });
+  };
 };
 
 exports.gradnu = Gradnu;
