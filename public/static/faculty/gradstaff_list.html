@@ -7,6 +7,7 @@
     <ol>
      <li ng-repeat="staff in value.staff">
        {{staff.json.first_name}}  {{staff.json.last_name}}
+       : {{staff.json.nu_staff}}
      </li>
     </ol>
    </li>
@@ -17,13 +18,15 @@
   <table class="table">
    <tr>
     <th>Name</th>
-    <th>#Student</th>
-    <th>A</th>
+    <th>#Current Student</th>
+    <th>#Late Student</th>
    </tr>
    <tr ng-repeat="staff in selected_unit.staff">
-    <td>{{staff.json.first_name}} {{staff.json.last_name}}</td>
-    <td>{{staff.advisorassign_list.length}}</td>
-    <td></td>
+    <td><a href="#/gradstaff/{{staff.json.id}}">
+        {{staff.json.first_name}} {{staff.json.last_name}}
+    </a></td>
+    <td>{{staff.student_active_list.length}}</td>
+    <td><span class="badge badge-important">{{staff.student_late}}<span></td>
    </tr>
   </table>
  </div>

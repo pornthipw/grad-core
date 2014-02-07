@@ -1,6 +1,4 @@
-
 <div class="row-fluid">
- <div class="span6">
   รายชื่อคณาจารย์ประจำ สังกัด{{faculty.json.FACULTYNAME}} 
   <ul>
    <li ng-repeat="(key,value) in unit_list">
@@ -12,18 +10,34 @@
      </li>
     </ol>-->
     <ol>
-     <li ng-repeat="nustaff in value.staff">
-
+     <li ng-repeat="nustaff in value.staff" 
+       ng-show="nustaff.bibtex_list.length">
+       
        <a href="#/staff/{{nustaff.json.STAFFID}}" >
       {{nustaff.json.FNAME}}  {{nustaff.json.LNAME}}</a> 
-     <span ng-show="nustaff.grad_id" class="label label-success">GS</span>
+       <span ng-show="nustaff.grad_id" class="label label-success">
+         GS
+       </span>
+       <ol> 
+        <li ng-repeat="bibtex in nustaff.bibtex_list|orderBy:'-json.year'">
+          {{bibtex.json.year}},
+          <i>{{bibtex.json.author}}</i>,
+          "{{bibtex.json.title}}"
+          <span ng-hide="bibtex.json.booktitle">
+           <u>{{bibtex.json.journal}}</u>,
+           {{bibtex.json.publisher}}
+          </span>
+          <span ng-hide="bibtex.json.journal">
+           <u>{{bibtex.json.booktitle}}</u>
+          </span>
+       
+
+        </li>
+       </ol>
      </li>
     </ol>
    </li>
   </ul>
- </div>
- <div class="span6">
- </div>
 </div>
 
 

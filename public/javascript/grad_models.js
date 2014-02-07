@@ -234,6 +234,22 @@ function ThesisCompleteModel(){
   }
 }
 
+function PublicationModel(){
+  var self = this;
+  this.json = null;
+  this.get_by_student = function(GradDB, studentModel, callback){
+    var where_str = JSON.stringify({
+      'str':'student = ?',
+      'json':[studentModel.json.STUDENTCODE]
+    });
+    GradDB.query({table:'regnu_grad_publication',where:where_str},function(response) {
+      if(response.length == 1) {
+        self.json = response[0];
+      }
+      callback(self);
+    });
+  }
+}
 
 function EnglishResultModel(){
   var self = this;
@@ -258,4 +274,58 @@ function EnglishResultModel(){
   }
 }
 
+
+function BibtexModel() {
+  var self = this;
+  this.json = null;
+  this.display = function() {
+    var str = '';
+    if(self.json) {
+      str+=self.json.author;
+      str+=',';
+      str+=self.json.year;
+      str+=',<b>';
+      str+=self.json.title+'</b>';
+    } 
+    return str;
+    
+  };
+}
+
+BibtexModel.get_by_staff = function(GradDB, nu_staff_id, callback) {
+  var where_str = JSON.stringify({
+    'str':'nu_id = ?',
+    'json':[nu_staff_id]
+  });
+
+  GradDB.query({
+    table:'hrnu_grad_gradstaffpublication',
+    where:where_str}, function(res) {
+    var bibtex_list = [];
+    angular.forEach(res, function(p_map) {
+      BibtexModel.get(GradDB, p_map.bibtex_id, function(b_model) {
+        bibtex_list.push(b_model);
+        if(bibtex_list.length == res.length) {
+          callback(bibtex_list);
+        }
+      });
+    });
+  });
+};
+
+BibtexModel.get = function(GradDB, id, callback) {
+  var where_str = JSON.stringify({
+    'str':'id = ?',
+    'json':[id]
+  });
+
+  GradDB.query({table:'bibtex_entry',where:where_str}, 
+    function(res) {
+    var model = new BibtexModel();
+    if(res.length == 1) {
+      model.json=res[0];
+    }
+    callback(model);
+  });
+};
 

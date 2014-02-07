@@ -40,6 +40,21 @@ app.config(function($routeProvider) {
 });
 
 app.config(function($routeProvider) {
+  $routeProvider.when('/faculty/:id/programs/students', {
+    controller:ProgramListByFacultyStudentController,
+    templateUrl:'static/faculty/program_student_list.html'
+  });
+});
+
+
+app.config(function($routeProvider) {
+  $routeProvider.when('/faculty/:id/programs/students/test', {
+    controller:TestController,
+    templateUrl:'static/faculty/test_list.html'
+  });
+});
+
+app.config(function($routeProvider) {
   $routeProvider.when('/program/:id', {
     controller:ProgramController,
     templateUrl:'static/program/info.html'
@@ -105,13 +120,15 @@ function EnglishReportController($scope,RegDB,GradDB) {
   };
   
   $scope.type_list = [
-    {'name':'EnglishResult', 'attr':'pass'},
-    {'name':'QEResult', 'attr':'qepass'},
+    {'name':'EnglishResult', 'attr':'pass','desc':'การสอบภาษาอังกฤษ'},
+    {'name':'QEResult', 'attr':'qepass','desc':'การสอบวัดคุณสมบัติ'},
+    {'name':'PublicationResult', 'attr':'pubpass','desc':'การตีพิมพ์'},
   ];
   $scope.execute = function() {
     $scope.count_type = 0;
     var type_english = false;
     var type_qe = false;
+    var type_pub = false;
 
     angular.forEach($scope.type_list, function(type) {
       //console.log(type);
@@ -121,6 +138,9 @@ function EnglishReportController($scope,RegDB,GradDB) {
         }
         if(type.attr == 'qepass') {
           type_qe=true;
+        }
+        if(type.attr == 'pubpass') {
+          type_pub=true;
         }
         $scope.count_type++;
         type.executed = true;
@@ -192,6 +212,16 @@ function EnglishReportController($scope,RegDB,GradDB) {
                       }
                     });
                   }
+
+                  if(type_pub) {
+                    student.is_publication(GradDB,function(pass) {
+                      $scope.retrieved_student++;
+                      if(pass) {
+                        admit_obj[admit_year].pubpass++;
+                      }
+                    });
+                  }
+
                 });
               });
             }
@@ -242,6 +272,154 @@ function FacultyController($scope, $routeParams, RegDB, HMAC){
   });
 }
 
+function ProgramListByFacultyStudentController($scope, Student, 
+  Faculty, Program, $routeParams, Level, GradDB, RegDB){
+
+  $scope.year_list = [];
+  var faculty_id = $routeParams.id; 
+  var faculty_model = new FacultyModel();
+  faculty_model.get(Faculty, faculty_id, function(faculty){
+    faculty.list_program(RegDB, function(program_list) {
+      var p_dict = {};
+      angular.forEach(program_list, function(program) {
+        var p_name = program.json.PROGRAMNAME;
+        if(!(p_name in p_dict)) {
+          p_dict[p_name] = [];
+        }
+        p_dict[p_name].push(program);
+        $scope.total_program++;
+      });
+      var p_list = [];
+      angular.forEach(p_dict, function(value, key) {
+        var p_obj = {'name':key, 
+         'id':value[0].json.PROGRAMID, 
+         'list':value,
+         'level_id':value[0].json.LEVELID,
+         'year_list':{},
+         'active':0,
+         'total_student':0,
+        };
+        angular.forEach(value, function(program) {
+          program['active']=0;
+          program.students(Student, function(student_list) {
+            p_obj['total_student']+=student_list.length; 
+
+            angular.forEach(student_list,function(student) {
+              //console.log(student);
+              // Master
+              //if(student.json.LEVELID == 23 || students.json.LEVELID == 24 || student.json.LEVELID == 25 )  {           
+                 var admit_year = student.json.ADMITACADYEAR;
+                 if(!(admit_year in p_obj['year_list'])) {
+                     p_obj['year_list'][admit_year] = {
+                        'active':0,'finish':0,'year':admit_year};
+                 }
+                 if ($scope.year_list.indexOf(admit_year) == -1 ) {
+                   $scope.year_list.push(admit_year);
+                 } 
+                 if(student.active()) {
+                     p_obj['year_list'][admit_year]['active']+=1
+                     p_obj['active']+=1;
+                 }
+                 if(student.finish()) {
+                     p_obj['year_list'][admit_year]['finish']+=1
+                 }
+               //}
+               
+            });
+          });
+        });
+        p_list.push(p_obj);
+      });
+      $scope.program_list=p_list;
+      //console.log($scope.program_list);
+    });
+  });
+}
+
+
+function TestController($scope, Student, 
+  Faculty, Program, $routeParams, Level, GradDB, RegDB){
+    console.log("test");
+    $scope.year_list = [];
+  FacultyModel.list_all(RegDB, function(res) {
+    $scope.faculty_list = res;
+    angular.forEach($scope.faculty_list,function(faculty) {
+      //console.log(faculty);
+      faculty.list_program(RegDB, function(program_list){
+        var program_dict = {};
+        $scope.faculty_dict = {};
+        angular.forEach(program_list,function(program) {
+
+          var p_name = program.json.PROGRAMNAME;
+
+          if (!(p_name in program_dict)) {
+             program_dict[p_name] = [];
+
+          if(!(program.json.FACULTYID in $scope.faculty_dict)) {
+            $scope.faculty_dict[program.json.FACULTYID] = 
+              { 
+                'name':program.json.FACULTYID,
+                'program_list':[],
+                'year_list':[]
+              };                
+           }
+           $scope.faculty_dict[program.json.FACULTYID]['program_list'].push(program_dict[p_name]);                                          
+           
+
+          }
+            program_dict[p_name].push(program); 
+            $scope.total_program++;
+        });
+
+        console.log($scope.faculty_dict);
+        var p_list = [];
+        angular.forEach(program_dict,function(value, key){
+          //console.log("---------");
+          //console.log(value);
+          var p_obj = {'name':key, 
+            'id':value[0].json.PROGRAMID, 
+            'list':value,
+            'level_id':value[0].json.LEVELID,
+            'year_list':{},
+            'active':0,
+            'total_student':0,
+          };
+          angular.forEach(value,function(program){
+            console.log(program);
+            program['active']=0;
+            program.students(Student, function(student_list) {
+              p_obj['total_student']+=student_list.length; 
+              angular.forEach(student_list,function(student) {
+                //console.log(student);  
+                 var admit_year = student.json.ADMITACADYEAR;
+                 if(!(admit_year in p_obj['year_list'])) {
+                     p_obj['year_list'][admit_year] = {
+                        'active':0,'finish':0,'year':admit_year};
+                 }
+                 if ($scope.year_list.indexOf(admit_year) == -1 ) {
+                   $scope.year_list.push(admit_year);
+                 } 
+                 if(student.active()) {
+                     p_obj['year_list'][admit_year]['active']+=1
+                     p_obj['active']+=1;
+                 }
+                 if(student.finish()) {
+                     p_obj['year_list'][admit_year]['finish']+=1
+                 }
+
+              });
+            });
+          });
+          p_list.push(p_obj);
+        });
+        $scope.program_list=p_list;
+        //console.log($scope.program_list);
+        //console.log($scope.faculty_dict);
+      });
+    });
+  });  
+}
+
 function ProgramListByFacultyController($scope, Student, 
   Faculty, Program, $routeParams, Level, GradDB, RegDB){
   var self = this;
@@ -260,7 +438,8 @@ function ProgramListByFacultyController($scope, Student,
         'exam':0,
         'qeexam':0,
         'thesiscomplete':0,
-        'englishresult':0
+        'englishresult':0,
+        'publication':0
       };
     }
 
@@ -284,6 +463,12 @@ function ProgramListByFacultyController($scope, Student,
               if(is_thesiscomplete) {
                 f_status[level_id]['admit_year'][admit_year].thesiscomplete++;
               } 
+
+              student.is_publication(GradDB,function(is_publication) {
+                if(is_publication) {
+                  f_status[level_id]['admit_year'][admit_year].publication++;
+                } 
+
               student.is_engresult(GradDB,function(is_engresult) {
                 if(is_engresult) {
                   f_status[level_id]['admit_year'][admit_year].englishresult++;
@@ -296,6 +481,8 @@ function ProgramListByFacultyController($scope, Student,
                 } else {
                   self.get_student_status(student_list, idx+1,level_id, callback);
                 }
+              });
+
               });
             });
           });
@@ -355,7 +542,7 @@ function ProgramListByFacultyController($scope, Student,
     $scope.retrieved_program = 0;
     $scope.total_program=0;
 
-    faculty.list_program(Program, function(program_list) {
+    faculty.list_program(RegDB, function(program_list) {
       var p_dict = {};
       angular.forEach(program_list, function(program) {
         var p_name = program.json.PROGRAMNAME;
@@ -383,6 +570,7 @@ function ProgramListByFacultyController($scope, Student,
         }
 
         angular.forEach(value, function(program) {
+          //console.log(program);
           program['active']=0;
           program.active_students(RegDB, function(student_list) {
            $scope.retrieved_program++;

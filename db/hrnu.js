@@ -27,7 +27,7 @@ var Hrnu = function(config) {
   
   this.list_table = function(req, res) {
     pool.acquire(function(err, db) {
-      console.log(req.query.select);
+      //console.log(req.query.select);
       var c_db =  db.query();
       if(req.query.select) {
         c_db.select(JSON.parse(req.query.select));
@@ -39,13 +39,14 @@ var Hrnu = function(config) {
         var where_obj = JSON.parse(req.query.where);
         c_db.where(where_obj.str,where_obj.json);
       }
-      console.log(c_db.sql());
+      //console.log(c_db.sql());
       c_db.execute(function(error, rows) {
         pool.release(db);
         if (error) {
           console.log(error);
           res.json([]);
         } else {
+
           res.json(rows);
         }
       });

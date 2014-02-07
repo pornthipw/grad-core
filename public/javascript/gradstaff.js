@@ -48,24 +48,30 @@ function NuStaffByFacultyController($scope, $routeParams, Faculty,
         $scope.gradstaff_list = gradstaff_list;
         $scope.staff_list = staff_list;
         //console.log(staff_list);
+
 	angular.forEach(staff_list, function(m_staff) {
          //console.log(m_staff.json.STAFFID); 
-            if(!(m_staff.json.UNIT in unit_list)){
-              unit_list[m_staff.json.UNIT] = {
-               'name':m_staff.json.UNIT,
-               'staff':[]
-              };
+          if(!(m_staff.json.UNIT in unit_list)){
+            unit_list[m_staff.json.UNIT] = {
+             'name':m_staff.json.UNIT,
+             'staff':[]
+            };
+          }
+          for(var idx=0;idx<gradstaff_list.length;idx++) {
+            var g_staff = gradstaff_list[idx];
+            if(m_staff.json.STAFFID == g_staff.json.nu_staff) {
+              m_staff.grad_staff = true;
+              m_staff.grad_id = g_staff.json.id;
+              //console.log(g_staff);
+              break;
             }
-            for(var idx=0;idx<gradstaff_list.length;idx++) {
-              var g_staff = gradstaff_list[idx];
-              if(m_staff.json.STAFFID == g_staff.json.nu_staff) {
-                m_staff.grad_staff = true;
-                m_staff.grad_id = g_staff.json.id;
-                //console.log(g_staff);
-                break;
-              }
-            }
-            unit_list[m_staff.json.UNIT]['staff'].push(m_staff);
+          }
+          unit_list[m_staff.json.UNIT]['staff'].push(m_staff);
+          BibtexModel.get_by_staff(GradDB, 
+            m_staff.json.STAFFID,function(bibtex_list) { 
+            m_staff.bibtex_list = bibtex_list;
+          });
+
          // } else {
          //   unit_list['อาจารย์ภายนอก']['staff'].push(m_staff);
          // }
@@ -76,7 +82,7 @@ function NuStaffByFacultyController($scope, $routeParams, Faculty,
 }
 
 function GradStaffByFacultyController($scope, $routeParams, Faculty, 
-  GradStaff, HrDB,Staff, GradDB, HrDB){
+  GradStaff, HrDB,Staff, GradDB, HrDB, RegDB){
   var staff_model = new StaffModel();
   var unit_list = {'อาจารย์ภายนอก':{'staff':[]}};
   $scope.unit_list = unit_list;
@@ -107,11 +113,20 @@ function GradStaffByFacultyController($scope, $routeParams, Faculty,
   
   $scope.select_unit = function(unit){
     $scope.selected_unit = unit;
+    console.log(unit);
     angular.forEach(unit.staff, function(gradStaff) {
-      gradStaff.advisorassign_list(GradDB, function(res) {
-         gradStaff.advisorassign_list = res;
-         angular.forEach(res, function(assign){
-          //var student_model = new StudentModel();
+      gradStaff.advisorassign_list(GradDB, function(assign_list) {
+         gradStaff.student_active_list = [];
+         gradStaff.student_late = 0;
+         angular.forEach(assign_list, function(assign){
+           StudentModel.get_student(RegDB,assign.json.student,function(student){
+             if(student.active()){
+               gradStaff.student_active_list.push(student);
+               if(student.finish_late()) {
+                 gradStaff.student_late++;
+               }
+             }   
+           });
          });  
       });
     });
@@ -131,6 +146,7 @@ function StaffController($scope, $routeParams,Student, HrDB, GradDB) {
 function GradStaffController($scope, $routeParams,Student, HrDB, GradDB) {
   GradStaffModel.get(GradDB, parseInt($routeParams.id), function(grad_model) {
     $scope.grad_staff = grad_model;
+    console.log(grad_model);
     grad_model.nustaff_info(HrDB,function(staff) {
       $scope.staff = staff;
       staff.education_list(HrDB, function(e_list) {

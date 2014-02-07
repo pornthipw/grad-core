@@ -1,0 +1,70 @@
+
+<div class="row-fluid">
+ <div class="span12">
+   <div ng-include="'static/bibtex/header.html'"></div>
+   <div class = "page-header">
+     <h3>เพิ่มข้อมูลผลงานวิชาการคณาจารย์มหาวิทยาลัยนเรศวร</h3>
+   </div>
+ </div>
+</div>
+
+<div class="row-fluid">
+ <div class="span12">
+  <div class="row-fluid">
+   <div class="span8">
+    <form class="form-horizontal">
+
+     <div class="control-group"> 
+      <label class="control-label">
+        ประเภทผลงานวิชาการ 
+      </label>
+      <div class="controls">
+       <select ng-model="selected_type" ng-change="change_type()"
+          ng-options="e.display for e in entrytype_list"></select> 
+      </div>
+      <p>
+        <div class = "alert alert-info">
+          <strong>คำเตือน!</strong> กรุณาเลือกประเภทผลงานวิชาการ
+        </div>
+      </p>
+     </div>
+
+     <div class="control-group" 
+        ng-repeat=
+          "(key,value) in entry_fields|orderBy:'value.num':true"
+        ng-show="value.selected">
+      <label class="control-label">
+       <span ng-show="value.display.th"> {{value.display.th}}</span>
+       <span ng-hide="value.display.th">{{key}}</span>
+      </label>
+      <div class="controls controls-row">
+       <input class="span7" type="text"  ng-model="form[key]">
+        <!--<span  ng-bind="form[key]"></span>-->
+      </div>
+     </div>
+
+     <div class="control-group" ng-show="selected_type.name"> 
+      <div class = "controls">
+        <button class="btn btn-primary" ng-click="add()" >บันทึกข้อมูล</button>
+      </div>
+     </div>
+
+    </form>
+   </div>
+
+   <div class="span4">
+    <div class="row-fluid well">
+     <span ng-repeat="field in entry_fields">
+       <span ng-hide="field.selected">
+       <li>
+         <a href="" ng-click="field.selected=true">
+           {{field.display.th}}
+         </a>
+       </li>
+      </span>
+     </span>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>

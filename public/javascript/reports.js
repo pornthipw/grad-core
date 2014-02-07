@@ -9,14 +9,15 @@ app.config(function($routeProvider) {
 
 function AssignHistoryController($scope,$routeParams,GradStaff,Staff,
    Education,AdvisorAssignment,Student) {
-  
+   
   var where_str = JSON.stringify({
     'str':'id = ?',
     'json':[136]
   });
   
-  GradStaff.query(function(gstaff_list) {
- // GradStaff.query({where:where_str},function(gstaff_list) {
+  
+  //GradStaff.query(function(gstaff_list) {
+  GradStaff.query({where:where_str},function(gstaff_list) {
     $scope.staff_list = [];
     angular.forEach(gstaff_list, function(gstaff) {
       var g_model = new GradStaffModel();

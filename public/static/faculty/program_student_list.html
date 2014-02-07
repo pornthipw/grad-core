@@ -1,0 +1,123 @@
+    <div class="row-fluid" >
+       <p class="pull-left">
+         <span class="badge badge-success">A</span> - 
+           จำนวนผู้ที่ไม่สำเร็จการศึกษา<br>
+         <span class="badge badge-info">F</span> - 
+           จำนวนผู้ที่สำเร็จการศึกษา<br>
+         <span class="badge badge-inverse">T</span> - 
+           รวมจำนวนนิสิตทั้งหมด<br>
+       </p>
+     </div>
+
+<div class="row-fluid">
+ <div class="span12">
+  <ul>
+   <li ng-repeat="program in program_list" 
+       ng-hide="program.active == 0">
+       {{program.name}} 
+    <ul>  
+     <li ng-repeat="(year,content) in program.year_list"
+         ng-hide="content.active==0">
+      {{year}} A:{{content.active}}, F:{{content.finish}}
+               T:{{content.active+content.finish}}
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </div>
+</div>
+
+<!--
+      <table class ="table table-striped"> 
+        <thead>
+          <tr class = "success">
+            <th class="span6">
+              <strong>{{program.name}}</strong>
+            </th>
+            <th ng-repeat="year in year_list " class="span3" 
+              ng-hide="year < 2551" >
+              <span "text-algin:center">{{year}}</span> 
+            </th>
+          </tr>
+        </thead>
+         <tbody>
+           <tr>
+             <td class="span6"></td>
+             <td ng-repeat="year in year_list"
+               ng-hide="year < 2551"  >
+               <span class="text-align:left span3">
+                 A</span>
+               <span class="text-align:left span3">
+                 F</span>
+               <span class="text-align:left span3">
+                 T</span>
+             </td>
+            </tr>
+            <tr>
+             <td >
+              ระดับปริญญาเอก 
+             </td>
+            </tr>
+            <tr ng-repeat="program in program_list " 
+              ng-show = "program.active != 0 && program.level_id == 33 || program.level_id == 34 "> 
+              <td class="span6">{{program.name}}</td>
+              <td ng-repeat="(year,content) in program.year_list"
+                ng-hide="year < 2551 " >
+                <span class="text-align:left span3">
+                 {{content.active}}</span>
+                <span class="text-align:left span3">
+                 {{content.finish}}</span>
+                <span class="text-align:left span3">
+                 {{content.active+content.finish}}</span>
+              </td>
+            </tr>
+         </tbody>
+      </table>
+          
+      <table class ="table table-striped"> 
+        <thead>
+          <tr class = "success">
+            <th class="span6">
+              <strong>{{program.name}}</strong>
+            </th>
+            <th ng-repeat="year in year_list " class="span3" 
+              ng-hide="year < 2551" >
+              <span "text-algin:center">{{year}}</span> 
+            </th>
+          </tr>
+        </thead>
+         <tbody>
+           <tr>
+             <td class="span6"></td>
+             <td ng-repeat="year in year_list"
+               ng-hide="year < 2551"  >
+               <span class="text-align:left span3">
+                 A</span>
+               <span class="text-align:left span3">
+                 F</span>
+               <span class="text-align:left span3">
+                 T</span>
+             </td>
+            </tr>
+            <tr>
+            <tr>
+             <td >
+              ระดับปริญญาโท 
+             </td>
+            </tr>
+            <tr ng-repeat="program in program_list " 
+              ng-show = "program.active != 0 && program.level_id == 23 || program.level_id == 24 || program.level_id == 25 "> 
+              <td class="span6">{{program.name}}</td>
+              <td ng-repeat="(year,content) in program.year_list"
+                ng-hide="year < 2551 " >
+                <span class="text-align:left span3">
+                 {{content.active}}</span>
+                <span class="text-align:left span3">
+                 {{content.finish}}</span>
+                <span class="text-align:left span3">
+                 {{content.active+content.finish}}</span>
+              </td>
+            </tr>
+         </tbody>
+      </table>
+-->

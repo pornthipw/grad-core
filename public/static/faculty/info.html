@@ -1,6 +1,6 @@
 <div class="row-fluid">
  <div class="span12">
- --> {{faculty.json.FACULTYNAME}} 
+ <h3> {{faculty.json.FACULTYNAME}}</h3> 
   <div class="row-fluid">
    <ul>
     <li>
@@ -11,12 +11,17 @@
     </li>
     <li>
      <a href="#/faculty/{{faculty.json.FACULTYID}}/gradstaff">
-       คณาจารย์บัณฑิตศึกษา
+       รายชื่อคณาจารย์บัณฑิตศึกษา {{faculty.json.FACULTYNAME}}
      </a> 
     </li>
     <li>
      <a href="#/faculty/{{faculty.json.FACULTYID}}/nustaff">
-       คณาจารย์ประจำ       
+       ผลงานทางวิชาการของคณาจารย์ {{faculty.json.FACULTYNAME}}       
+     </a>
+    </li>
+    <li>
+     <a href="#/faculty/{{faculty.json.FACULTYID}}/programs/students">
+       gum {{faculty.json.FACULTYNAME}}       
      </a>
     </li>
    </ul>

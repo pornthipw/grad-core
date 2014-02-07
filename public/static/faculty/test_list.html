@@ -1,0 +1,66 @@
+<!--
+<div class="row-fluid">
+ <div class="span12">
+  <ul>
+   <li ng-repeat="program in program_list" 
+       ng-hide="program.active == 0">
+       {{program.name}} 
+    <ul>  
+     <li ng-repeat="(year,content) in program.year_list"
+         ng-hide="content.active==0">
+      {{year}} A:{{content.active}}, F:{{content.finish}}
+               T:{{content.active+content.finish}}
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </div>
+</div>
+-->
+<table >
+  <tr ng-repeat = "faculty in faculty_list">  
+   <td>
+      <table class="table"> 
+        <thead>
+          <tr class = "success">
+            <th class="span6">
+              <strong>{{faculty.json.FACULTYNAME}}{{faculty_dict}}</strong>
+            </th>
+            <th ng-repeat="year in year_list | orderBy:year" class="span3" 
+              ng-hide="year < 2551" >
+              <span "text-algin:center">{{year}}</span> 
+            </th>
+          </tr>
+        </thead>
+         <tbody>
+           <tr>
+             <td class="span6"></td>
+             <td ng-repeat="year in year_list "
+               ng-hide="year < 2551 " >
+               <span class="text-align:left span3">
+                 A</span>
+               <span class="text-align:left span3">
+                 F</span>
+               <span class="text-align:left span3">
+                 T</span>
+             </td>
+            </tr>
+            <tr ng-repeat="program in program_list | orderBy:year" 
+              ng-hide = "program.active == 0 "> 
+              <td class="span6">{{program.name}}</td>
+              <td ng-repeat="(year,content) in program.year_list"
+                ng-hide="year < 2551 " >
+                <span class="text-align:left span3">
+                 {{content.active}}</span>
+                <span class="text-align:left span3">
+                 {{content.finish}}</span>
+                <span class="text-align:left span3">
+                 {{content.active+content.finish}}</span>
+              </td>
+            </tr>
+         </tbody>
+      </table>
+    </td>
+  </tr>      
+</table>
+

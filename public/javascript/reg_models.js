@@ -39,6 +39,8 @@ function StudentModel() {
           status_model['exam'] = exam;
           self.get_thesiscomplete(GradDB, function(t) {
             status_model['thesiscomplete'] = t;
+          self.get_publication(GradDB, function(pub) {
+            status_model['publication'] = pub;
             self.is_qeExam(GradDB,function(qe) {
               status_model['qe'] = qe;
               self.is_engresult(GradDB,function(eng) {
@@ -46,6 +48,8 @@ function StudentModel() {
                 callback(status_model);
               });
             });
+            });
+
           });
         });
       });
@@ -108,6 +112,24 @@ function StudentModel() {
     });
   };
 
+  this.get_publication = function(GradDB,callback) {
+    var publication = new PublicationModel();
+    publication.get_by_student(GradDB, self, function(res) {
+      callback(res);
+    });
+  };
+
+  this.is_publication = function(GradDB,callback) {
+    var publication = new PublicationModel();
+    publication.get_by_student(GradDB, self, function(res) {
+      if(res.json) {
+        callback(true);
+      } else {
+        callback(false);
+      }
+    });
+  };
+
   this.is_qeExam = function(GradDB,callback) {
     var qeExam = new GroupQualifyingExamModel();
     qeExam.get_by_student(GradDB, self, function(res) {
@@ -136,6 +158,26 @@ function StudentModel() {
     });
   };
 
+  this.finish_late = function() {
+    var student = self.json;
+    var spend_time = parseInt((new Date()).getFullYear()+543) - student.ADMITACADYEAR;
+    
+    console.log(self.json.STUDENTCODE+' '+spend_time);
+    if(self.active()) {
+      if(master_level.indexOf(student.LEVELID)!=-1) { 
+        if(spend_time > 2) {
+          return true;
+        }
+      } else {
+        if(phd_level.indexOf(student.LEVELID)!=-1) { 
+          if(spend_time > 3) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+  }
 
   this.in_time = function() {
     var student = self.json;
@@ -342,6 +384,7 @@ function ProgramModel(){
     });
   };
   
+  /*
   this.list_by_faculty = function(Program, faculty, callback){
     var where_str = JSON.stringify({
       'str':'FACULTYID = ?',
@@ -358,6 +401,7 @@ function ProgramModel(){
       callback(program_list);
     });
   };
+  */
   
   this.active_students = function(RegDB, callback) {
     var where_str = JSON.stringify({
@@ -424,8 +468,13 @@ ProgramModel.list_by_faculty = function(RegDB, faculty_id, callback) {
   var where_str = JSON.stringify({
     'str':'FACULTYID = ?',
     'json':[faculty_id]
+   // 'str':'LEVELID = ?',
+   // 'json':[63]
   });
-  RegDB.query({table:'program_new',where:where_str}, function(res){
+
+  RegDB.query({'table':'program_new',where:where_str}, function(res){
+    //console.log('XXX 1234');
+    console.log(res);
     var list = [];
     angular.forEach(res, function(obj) {
       var model = new ProgramModel();

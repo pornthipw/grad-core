@@ -37,13 +37,14 @@ var Regnu = function(config) {
         var where_obj = JSON.parse(req.query.where);
         c_db.where(where_obj.str,where_obj.json);
       }
-    //  console.log(c_db.sql());
+      //console.log(c_db.sql());
       c_db.execute(function(error, rows) {
         pool.release(db);
         if (error) {
     //      console.log(error);
           res.json([]);
         } else {
+
           res.json(rows);
         }
       });
@@ -51,5 +52,6 @@ var Regnu = function(config) {
   };
 
 };
+
 
 exports.regnu = Regnu;

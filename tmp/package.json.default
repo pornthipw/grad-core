@@ -4,34 +4,13 @@
   "user": "pornthipw",
   "dependencies" : {
     "express" : "*",    
+    "http" : "*",    
     "hbs" : "*",    
     "generic-pool" : "*",    
     "db-oracle" : "*",    
     "jshashes" : "*",    
     "db-mysql" : "*"    
   },
-  "keywords": [
-    "fs",
-    "file",
-    "file system",
-    "copy",
-    "directory",
-    "extra",
-    "mkdirp",
-    "mkdir",
-    "mkdirs",
-    "recursive",
-    "json",
-    "read",
-    "write",
-    "extra",
-    "delete",
-    "remove",
-    "touch",
-    "create",
-    "text",
-    "output"
-  ],
   "scripts": {
     "start":"core_server.js"
   } 

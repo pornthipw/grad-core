@@ -6,24 +6,36 @@ var prefix = '/apps/core';
 app.factory('HMAC', function() {
   var generate = {
     run : function(req) {
-      var key = 'nook123';
       var json_obj = {};
       var key_list = [];
+      var client = [];
       var str = '';
-      for(var key in req.query) {
+      
+      if (req.query._sign){
+        cleint = req.query;
+        //console.log(client);
+      } else {
+        cleint = req.body;
+      } 
+
+     
+      for(var key in client) {
+      //for(var key in req.query) {
         key_list.push(key);
       };
       key_list.sort();
       key_list.forEach(function(key) {
-        if(key in req.query) {
-          json_obj[key] = req.query[key];
+        if(key in client) {
+        //if(key in req.query) {
+          json_obj[key] = client[key];
+          //json_obj[key] = req.query[key];
         } 
       });
 
       str += req.path+'/n'+JSON.stringify(json_obj);
-      console.log("Client-->"+str);
+      //console.log("Client-->"+str);
       var MD5 = new Hashes.MD5;
-      console.log('ClientMD5 -> '+MD5.b64_hmac(str,key));
+      //console.log('ClientMD5 -> '+MD5.b64_hmac(str,key));
     }
   };
   return generate;
@@ -57,6 +69,19 @@ app.factory('Faculty', function($resource) {
     return Faculty;    
 });
 
+app.factory('Test', function($resource) {
+    var Test = $resource(
+      prefix + '/test/:num', 
+      {},{});                         
+    return Test;    
+});
+
+app.factory('Test2', function($resource) {
+    var Test2 = $resource(
+      prefix + '/test/noauth/:num', 
+      {},{});                         
+    return Test2;    
+});
 
 app.factory('Program', function($resource) {
     var Program = $resource(
@@ -153,19 +178,31 @@ app.factory('GradStaff', function($resource) {
 
 app.factory('BibTex', function($resource) {
   var BibTex = $resource(
-    prefix + '/gradnu/bibtex_entry/', 
+    prefix + '/bibtex/create/', 
     {},{
-     'update':{'method':'PUT'}
+     'save':{'method':'POST'}
     }
   );                         
   return BibTex;
 });
 
+app.factory('GradStaffPublicationDB', function($resource) {
+  var GradStaffPublicationDB = $resource(
+    prefix + '/gradnu/hrnu_grad_gradstaffpublication/', 
+    {},{
+     'save':{method:'POST'}
+    }
+  );                         
+  return GradStaffPublicationDB;
+});
+
 app.factory('GradDB', function($resource) {
   var GradDB = $resource(
-    prefix + '/gradnu/:table/', 
+    prefix + '/gradnu/:table/:mode', 
     {},{
-     'post':{method:'POST'}
+     'save':{method:'POST'},
+     'update':{method:'PUT'},
+     'remove':{method:'POST'},
     }
   );                         
   return GradDB;

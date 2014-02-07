@@ -1,0 +1,19 @@
+<ul class="breadcrumb">
+ <li>
+  <a href="#">Home</a>
+  <span  class="divider">/</span>
+ </li>
+ <li>
+  <a href="#/bibtex">ข้อมูลผลงานวิชาการ : CoreAcademic</a>
+  <span ng-show="entry.id" class="divider">/</span>
+ </li>
+ <li ng-hide="entry_list || entry.id">
+  <span  class="divider">/</span>
+   Insert 
+ </li>
+ <li ng-show="entry.id">
+  <a href="#/bibtex/{{entry.id}}">{{entry.id}}</a>
+ </li>
+ 
+ 
+</ul>
