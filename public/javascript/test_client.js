@@ -83,7 +83,7 @@ function TestProgramController($scope, Student,
   var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
   var max=parseInt($routeParams.loop);
   console.time('atime');
-  for (var i=1; i<max; i++) {
+  //for (var i=1; i<max; i++) {
     var timest = ''+(new Date()).getTime();
 
 
@@ -199,7 +199,14 @@ function TestProgramController($scope, Student,
   var faculty_model = new FacultyModel();
 
     //Test2.get({'num':i},
-  faculty_model.get(Faculty, faculty_id, function(faculty){
+  RegDB.get(Faculty, id, function(faculty){
+    var where_json = {'str':'FACULTYID = ?','json':[faculty_id]};
+    console.log(faculty);
+    //RegDB.query({'table':'faculty',where:where_str,function(res){
+      //if (res.length == 1) {
+       //self.json = res[0]; 
+      //}
+  //faculty_model.get(Faculty, faculty_id, function(faculty){
     $scope.level_list = {};
     $scope.faculty = faculty;
     $scope.faculty.status = f_status;
