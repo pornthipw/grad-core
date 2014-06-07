@@ -199,11 +199,10 @@ function TestProgramController($scope, Student,
   var faculty_model = new FacultyModel();
 
     //Test2.get({'num':i},
-  RegDB.get(Faculty, faculty_id, function(faculty){
-    var where_json = {'str':'FACULTYID = ?','json':[faculty.id]};
+  var where_json = {'str':'FACULTYID = ?','json':[faculty_id]};
+  RegDB.get({'table':'faculty',where:where_str,function(faculty){
     //console.log(faculty);
-    //RegDB.query({'table':'faculty',where:where_str,function(res){
-      //if (res.length == 1) {
+    //if (faculty.length == 1) {
        //self.json = res[0]; 
       //}
   //faculty_model.get(Faculty, faculty_id, function(faculty){
@@ -265,6 +264,7 @@ function TestProgramController($scope, Student,
      });
      $scope.program_list = p_list;
    });
+   //}
   });
   //}
 } 
