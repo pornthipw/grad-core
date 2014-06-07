@@ -3,12 +3,14 @@ var Hashes = require("jshashes");
 var handlebars = require('hbs');
 var config = require('./config');
 var regnu = require('./db/regnu');
+var regnutest = require('./db/regnutest');
 var hrnu = require('./db/hrnu');
 var gradnu = require('./db/gradnu');
 
 var app = express();
 
 var regnudb = new regnu.regnu(config);
+var regnudbtest = new regnutest.regnutest(config);
 var hrnudb = new hrnu.hrnu(config);
 var gradnudb = new gradnu.gradnu(config);
 
@@ -111,6 +113,8 @@ app.get('/auth',queryString, function(req,res) {
 //app.get('/reg/:table',queryString, regnudb.list_table);
 
 app.get('/reg/:table',regnudb.list_table);
+app.get('/regnu/:table/:num',regnudbtest.list_table);
+
 //app.get('/reg/:id',regnudb.get_table);
 app.get('/hrnu/:table', hrnudb.list_table);
 app.get('/gradnu/:table', gradnudb.list_table);

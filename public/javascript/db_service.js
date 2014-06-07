@@ -68,9 +68,15 @@ app.factory('Faculty', function($resource) {
       {},{});                         
     return Faculty;    
 });
+
+app.factory('RegDBTest', function($resource) {
+  var RegDBTest = $resource(prefix + '/regnu/:table/', {},{}); 
+  return RegDBTest;    
+});
+
 app.factory('TestFaculty', function($resource) {
     var TestFaculty = $resource(
-      prefix + '/reg/faculty/:id', 
+      prefix + '/regnu/faculty/:id', 
       {},{});                         
     return TestFaculty;    
 });

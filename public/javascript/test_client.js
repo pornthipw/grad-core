@@ -78,7 +78,7 @@ function TestdbController($scope,$http,$rootScope,$routeParams,Test2) {
 };
 
 function TestProgramController($scope, Student, 
-  Faculty, Program, $routeParams, Level, GradDB, RegDB,$rootScope,$http,TestFaculty){
+  Faculty, Program, $routeParams, Level, GradDB, RegDB,$rootScope,$http,TestFaculty,RegDBTest){
   var count=0;
   var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
   var max=parseInt($routeParams.loop);
@@ -200,7 +200,7 @@ function TestProgramController($scope, Student,
 
     //Test2.get({'num':i},
   var where_json = {'str':'FACULTYID = ?','json':[faculty_id]};
-  TestFaculty.get({'table':'faculty'},faculty_id,function(faculty){
+  RegDBTest.get({'table':'faculty'},where:where_json,function(faculty){
   //var where_json = {'str':'FACULTYID = ?','json':[faculty_id]};
     //console.log(faculty);
     //if (faculty.length == 1) {
