@@ -83,7 +83,7 @@ function TestProgramController($scope, Student,
   var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
   var max=parseInt($routeParams.loop);
   console.time('atime');
-  //for (var i=1; i<max; i++) {
+  for (var i=1; i<max; i++) {
     var timest = ''+(new Date()).getTime();
 
 
@@ -247,14 +247,14 @@ function TestProgramController($scope, Student,
            });
            p_obj.active += program['active'];
          });
-          //nook
-          //count++;   
-            //if (count==max-1) {
-              console.timeEnd('atime');
-          //}
-          //endnook
         });
         p_list.push(p_obj);
+          //nook
+          count++;   
+            if (count==max-1) {
+              console.timeEnd('atime');
+          }
+          //endnook
      });
      $scope.program_list = p_list;
    });
