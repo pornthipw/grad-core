@@ -68,6 +68,12 @@ app.factory('Faculty', function($resource) {
       {},{});                         
     return Faculty;    
 });
+app.factory('TestFaculty', function($resource) {
+    var TestFaculty = $resource(
+      prefix + '/reg/faculty/:id', 
+      {},{});                         
+    return TestFaculty;    
+});
 
 app.factory('Test', function($resource) {
     var Test = $resource(
