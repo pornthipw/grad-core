@@ -266,5 +266,5 @@ function TestProgramController($scope, Student,
      $scope.program_list = p_list;
    });
   });
-  }
+  //}
 } 
