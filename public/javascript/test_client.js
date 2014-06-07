@@ -199,7 +199,7 @@ function TestProgramController($scope, Student,
   var faculty_model = new FacultyModel();
 
     //Test2.get({'num':i},
-  RegDB.get(Faculty, id, function(faculty){
+  RegDB.get(Faculty, faculty_id, function(faculty){
     var where_json = {'str':'FACULTYID = ?','json':[faculty_id]};
     console.log(faculty);
     //RegDB.query({'table':'faculty',where:where_str,function(res){
