@@ -1,0 +1,97 @@
+<div class="row-fluid">
+ <div class="span12">
+ <div class="page-header"> 
+   <h2><small>รายงานผลติดตามความก้าวหน้าการทำวิทยานิพนธ์สำหรับนิสิต </small>{{faculty.json.FACULTYNAME}}</h2> 
+ </div>
+  <div class="row-fluid">
+   <div class="span5 well">
+    <strong>หลักสูตร/สาขาวิชา</strong>
+    <ol>
+     <li ng-repeat="program in program_list" ng-hide="program.active==0">
+       <a href="#/program/{{program.id}}">{{program.name}}</a>
+       : active ({{program.student_active_list.length}})
+     </li>
+    </ol>
+   </div>
+   <div class="span7">
+
+    <div class="row-fluid">
+      <div class="btn-group pull-right">
+        <button class="btn btn-primary">เลือก ระดับการศึกษา/แผนการเรียน</button> 
+        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" 
+          ng-show="total_program > 0 && total_program == retrieved_program">
+          <li ng-repeat="level in level_list" ng-hide="level.active==0">
+            <a href="" ng-click="report_by_level(level.model.json.LEVELID)">
+              ระดับ {{level.model.json.LEVELNAME}} 
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row-fluid" ng-show="total_student>0"><p></p></div>
+    <div class="row-fluid" ng-show="total_student>0">
+     <div class="span3">
+       จำนวนนิสิต {{retrieved_student|number:0}} / {{total_student}} คน 
+     </div>
+     <div class="span9">
+      <div class="progress progress-striped" ng-hide="retrieved_student == total_student">
+       <div class="bar" style="width: {{retrieved_student*100/total_student}}%;"></div>
+      </div>
+     </div>
+    </div>
+
+    <div class="row-fluid">
+     <table class="table table-condensed table-striped" ng-repeat="level in faculty.status">
+      <caption><p class="lead">ระดับ {{level.name}}</p></caption> 
+      <tr>
+       <th>Year</th>
+       <th>#Student</th>
+       <th><span class="badge badge-success">A</span></th>
+       <th><span class="badge badge-info">R</span></th>
+       <th ng-hide="level.master"><span class="badge badge-warning">Q</span></th>
+       <th><span class="badge badge-inverse">O</span></th>
+       <th><span class="badge">T</span></th>
+       <th><span class="badge badge-success">E</span></th>
+       <th><span class="badge badge-important">P</span></th>
+      </tr>
+      <tr ng-repeat="(year,status) in level.admit_year">
+       <td>{{year}}</td>
+       <td>{{status.students}}</td>
+       <td>{{status.assign}}</td>
+       <td>{{status.permit}}</td>
+       <td ng-hide="level.master">{{status.qeexam}} </td>
+       <td>{{status.exam}}</td>
+       <td>{{status.thesiscomplete}}</td>
+       <td>{{status.englishresult}}</td>
+       <td>{{status.publication}}</td>
+      </tr>
+     </table>
+    </div>
+    
+    <div class="row-fluid" ng-show="total_student>0">
+     <p class="pull-left">
+      <span class="badge badge-success">A</span> - Advisor assigned :
+         การแต่งตั้งคณะกรรมการที่ปรึกษาวิทยานิพนธ์<br> 
+      <span class="badge badge-info">R</span> - Research proposal approved : 
+         การส่งโครงร่างวิทยานิพนธ์เพื่อขออนุมัติทำวิทยานิพนธ์<br>
+      <span class="badge badge-inverse">O</span> - Oral defended : 
+         การสอบวิทยานิพนธ์่<br>
+      <span class="badge badge-warning">Q</span> - Passed Qualifying Examination :
+         ผ่านการสอบวัดคุณสมบัติสำหรับนิสิตระดับปริญญาเอก<br>
+      <span class="badge">T</span> - Thesis submitted :
+         การส่งเล่มวิทยานิพนธ์ฉบับสมบูรณ์ <br> 
+      <span class="badge badge-success">E</span> - Passed English :
+         ผ่านการสอบภาษาอังกฤษ<br> 
+      <span class="badge badge-important">P</span> - Publication :
+         การตีพิมพ์ผลงานวิทยานิพนธ์
+     </p>
+    </div>
+
+   </div>
+  </div>
+ </div>
+</div>
