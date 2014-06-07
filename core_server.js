@@ -28,7 +28,7 @@ app.configure(function() {
 
 
 var queryString = function(req, res, next) {
-  var salt_key = 'nook123';
+  var salt_key = 'RimbrpN1979';
   var json_obj = {};
   var json_obj_test = {};
   var key_list = [];

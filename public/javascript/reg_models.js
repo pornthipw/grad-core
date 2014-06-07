@@ -474,7 +474,7 @@ ProgramModel.list_by_faculty = function(RegDB, faculty_id, callback) {
 
   RegDB.query({'table':'program_new',where:where_str}, function(res){
     //console.log('XXX 1234');
-    console.log(res);
+    //console.log(res);
     var list = [];
     angular.forEach(res, function(obj) {
       var model = new ProgramModel();

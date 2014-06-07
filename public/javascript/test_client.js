@@ -17,7 +17,7 @@ function TestController($scope,$http,$rootScope,$routeParams,Test) {
   var count=0;
   var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
   var max=parseInt($routeParams.loop);
-  Core_HMAC.key = 'nook123';   
+  Core_HMAC.key = 'RimbrpN1979';   
   console.time('atime');
   for (var i=1; i<max; i++) {
     var timest = ''+(new Date()).getTime();
