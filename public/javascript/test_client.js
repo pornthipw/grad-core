@@ -13,12 +13,12 @@ app.config(function($routeProvider) {
   });
 });
 
-//app.config(function($routeProvider) {
-  //$routeProvider.when('/faculty/:id/programs/test/:loop', {
-    //controller:TestdbController,
-    //templateUrl:'static/faculty/program_list_test.html'
-  //});
-//});
+app.config(function($routeProvider) {
+  $routeProvider.when('/faculty/:id/programs/test/:loop', {
+    controller:TestProgramController,
+    templateUrl:'static/faculty/program_list_test.html'
+  });
+});
 
 function TestController($scope,$http,$rootScope,$routeParams,Test) {
   var count=0;
@@ -77,13 +77,13 @@ function TestdbController($scope,$http,$rootScope,$routeParams,Test2) {
     }
 };
 
-function ProgramListByFacultyController($scope, Student, 
+function TestProgramController($scope, Student, 
   Faculty, Program, $routeParams, Level, GradDB, RegDB,$rootScope){
   var count=0;
   var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
   var max=parseInt($routeParams.loop);
   console.time('atime');
-  for (var i=1; i<max; i++) {
+  //for (var i=1; i<max; i++) {
     var timest = ''+(new Date()).getTime();
 
 
@@ -248,10 +248,10 @@ function ProgramListByFacultyController($scope, Student,
            p_obj.active += program['active'];
          });
           //nook
-          count++;   
-            if (count==max-1) {
+          //count++;   
+            //if (count==max-1) {
               console.timeEnd('atime');
-          }
+          //}
           //endnook
         });
         p_list.push(p_obj);
@@ -259,5 +259,5 @@ function ProgramListByFacultyController($scope, Student,
      $scope.program_list = p_list;
    });
   });
-  }
+  //}
 } 
