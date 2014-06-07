@@ -16,7 +16,7 @@ app.config(function($routeProvider) {
 app.config(function($routeProvider) {
   $routeProvider.when('/faculty/:id/programs/test/:loop', {
     controller:TestProgramController,
-    templateUrl:'static/faculty/program_list_test.html'
+    templateUrl:'static/faculty/program_list_new.html'
   });
 });
 
