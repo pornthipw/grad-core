@@ -212,7 +212,7 @@ function TestProgramController($scope, Student,
       //}
   //faculty_model.get(Faculty, faculty_id, function(faculty){
     $scope.level_list = {};
-    $scope.faculty = faculty;
+    $scope.faculty = faculty[0];
     $scope.faculty.status = f_status;
     $scope.retrieved_program = 0;
     $scope.total_program=0;
