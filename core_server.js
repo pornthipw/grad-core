@@ -10,7 +10,7 @@ var gradnu = require('./db/gradnu');
 var app = express();
 
 var regnudb = new regnu.regnu(config);
-var regnudbtest = new regnutest.regnutest(config);
+var regnudbtest = new regnutest.regnu(config);
 var hrnudb = new hrnu.hrnu(config);
 var gradnudb = new gradnu.gradnu(config);
 
