@@ -197,6 +197,7 @@ function TestProgramController($scope, Student,
   
   var faculty_id = $routeParams.id; 
   var faculty_model = new FacultyModel();
+  var json = null;
 
     //Test2.get({'num':i},
   //var where_json = {'str':'FACULTYID = ?','json':[faculty_id]};
