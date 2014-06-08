@@ -70,7 +70,8 @@ app.factory('Faculty', function($resource) {
 });
 
 app.factory('RegDBTest', function($resource) {
-  var RegDBTest = $resource(prefix + '/regnu/:table/', {},{}); 
+  //var RegDBTest = $resource(prefix + '/regnu/:table/', {},{}); 
+  var RegDBTest = $resource(prefix + '/reg/:table/', {},{}); 
   return RegDBTest;    
 });
 
