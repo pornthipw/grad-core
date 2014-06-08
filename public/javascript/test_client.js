@@ -14,7 +14,7 @@ app.config(function($routeProvider) {
 });
 
 app.config(function($routeProvider) {
-  $routeProvider.when('/faculty/new/test/:loop', {
+  $routeProvider.when('/faculty/new/test', {
     controller:TestdbController,
     templateUrl:'static/faculty/list_new.html'
   });
@@ -67,17 +67,17 @@ function TestdbController($scope,$http,
   var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
   var max=parseInt($routeParams.loop);
   console.time('atime');
-  for (var i=1; i<max; i++) {
+  //for (var i=1; i<max; i++) {
     var timest = ''+(new Date()).getTime();
     RegDBTest.get({'table':'faculty','num':i},
       function(result){
       $scope.faculty_list = result;
-        count++;   
-        if (count==max-1) {
-          console.timeEnd('atime');
-        }
+        //count++;   
+        //if (count==max-1) {
+          //console.timeEnd('atime');
+        //}
      }); 
-    }
+    //}
 };
 
 function TestProgramController($scope, Student, 
