@@ -62,6 +62,7 @@ function TestNosecureController($scope,$http,$rootScope,$routeParams,Test2) {
 
 function TestdbController($scope,$http,
  $rootScope,$routeParams,RegDBTest) {
+  console.log("test");
   var count=0;
   var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
   var max=parseInt($routeParams.loop);
