@@ -205,7 +205,7 @@ function TestProgramController($scope, Student,
       'str':'FACULTYID = ?',
       'json':[faculty_id]
     });
-  RegDBTest.get({'table':'faculty',where:where_str},function(faculty){
+  RegDB.get({'table':'faculty',where:where_str},function(faculty){
   //var where_json = {'str':'FACULTYID = ?','json':[faculty_id]};
     //console.log(faculty);
     //if (faculty.length == 1) {
