@@ -71,7 +71,7 @@ function TestdbController($scope,$http,
     var timest = ''+(new Date()).getTime();
     RegDBTest.get({'table':'faculty','num':i},
       function(result){
-      $scope.faculty)list = result;
+      $scope.faculty_list = result;
         count++;   
         if (count==max-1) {
           console.timeEnd('atime');
