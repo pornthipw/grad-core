@@ -223,7 +223,7 @@ function TestProgramController($scope, Student,
       'str':'FACULTYID = ?',
       'json':[faculty.id]
     });
-    RegDB.query({'table':'program_new',where:where_str2, function(program_list) {
+    RegDB.query({'table':'program_new',where:where_str2}, function(program_list) {
       var p_dict = {};
       angular.forEach(program_list, function(program) {
         var p_name = program.json.PROGRAMNAME;
