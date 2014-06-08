@@ -10,7 +10,7 @@ var gradnu = require('./db/gradnu');
 var app = express();
 
 var regnudb = new regnu.regnu(config);
-var regnudbtest = new regnutest.regnu(config);
+var regnutestdb = new regnutest.regnutest(config);
 var hrnudb = new hrnu.hrnu(config);
 var gradnudb = new gradnu.gradnu(config);
 
@@ -113,7 +113,7 @@ app.get('/auth',queryString, function(req,res) {
 //app.get('/reg/:table',queryString, regnudb.list_table);
 
 app.get('/reg/:table',regnudb.list_table);
-app.get('/regnutest/:table',regnudbtest.list_table);
+app.get('/regnutest/:table',regnutestdb.list_table);
 
 //app.get('/reg/:id',regnudb.get_table);
 app.get('/hrnu/:table', hrnudb.list_table);
