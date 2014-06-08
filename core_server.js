@@ -113,7 +113,7 @@ app.get('/auth',queryString, function(req,res) {
 //app.get('/reg/:table',queryString, regnudb.list_table);
 
 app.get('/reg/:table',regnudb.list_table);
-app.get('/regnu/:table/:num',regnudbtest.list_table);
+app.get('/regnu/:table',regnudbtest.list_table);
 
 //app.get('/reg/:id',regnudb.get_table);
 app.get('/hrnu/:table', hrnudb.list_table);
