@@ -69,7 +69,7 @@ function TestdbController($scope,$http,
   console.time('atime');
   //for (var i=1; i<max; i++) {
     var timest = ''+(new Date()).getTime();
-    RegDBTest.get({'table':'faculty','num':i},
+    RegDBTest.get({'table':'faculty'},
       function(result){
       $scope.faculty_list = result;
         //count++;   
