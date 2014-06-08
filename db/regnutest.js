@@ -3,7 +3,7 @@ var generic_pool = require('generic-pool');
 
 var RegnuTest = function(config) {
   var pool = generic_pool.Pool({
-    name:'regnu_pool',
+    name:'regnutest_pool',
     max:config.regnu_config.max_connection||1,
     create: function(callback) {
       new oracle.Database({
