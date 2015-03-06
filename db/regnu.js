@@ -27,6 +27,7 @@ var Regnu = function(config) {
     pool.acquire(function(err, db) {
     //  console.log(req.query.select);
       var ret = {'value':0};
+      console.log(req.params.num);
       var c_db =  db.query()
       if(req.query.select) {
         c_db.select(JSON.parse(req.query.select));
@@ -46,10 +47,13 @@ var Regnu = function(config) {
           res.json([]);
         } else {
          
+          //res.json(rows);
           if(req.params.num) {
             ret['value']=parseInt(req.params.num)+1;
           }
-          res.json({'rows':rows,'ret':ret});
+          res.json(rows);
+          //res.json({'rows':rows,'ret':ret});
+          
         }
       });
     });

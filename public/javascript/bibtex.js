@@ -330,7 +330,8 @@ function BibTexListController($scope,GradDB,RegDB, BibTex, HMAC, GradStaff) {
   $scope.entrytype_list = [
     {'name':'article', 'display':'วารสาร'},
     {'name':'inproceedings','display':'นำเสนอที่ประชุมวิชาการ'},
-    {'name':'book','display':'หนังสือ/ตำรา'}
+    {'name':'book','display':'หนังสือ/ตำรา'},
+    {'name':'techreport','display':'รายงานวิจัย'}
   ]; 
 
   $scope.limit = 20;
@@ -383,7 +384,8 @@ function BibTexCreateController($scope,GradDB,RegDB,
   $scope.entrytype_list = [
     {'name':'article', 'display':'วารสาร'},
     {'name':'inproceedings','display':'นำเสนอที่ประชุมวิชาการ'},
-    {'name':'book','display':'หนังสือ/ตำรา'}
+    {'name':'book','display':'หนังสือ/ตำรา'},
+    {'name':'techreport','display':'รายงานวิจัย'}
   ]; 
 
   entry_fields_default =  {
@@ -405,7 +407,9 @@ function BibTexCreateController($scope,GradDB,RegDB,
     'keyword':JSON.stringify({'display':{'th':'คำค้น คำสำคัญ','en':'KeyWord'}}),
     'month':JSON.stringify({'display':{'th':'เดือนที่เผยแพร่','en':'Month'}}),
     'publisher':JSON.stringify({'display':
-      {'th':'หน่วยงานเจ้าของวารสาร','en':'Publisher'}}),
+      {'th':'หน่วยงานเจ้าของวารสาร','en':'Publication'}}),
+    'institution':JSON.stringify({'display':
+      {'th':'หน่วยงาน','en':'Institution'}}),
   };
 
   $scope.form = {};
@@ -448,6 +452,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
         //,'keyword'
         ,'edition'
         ,'series'
+        ,'institution'
     ]); 
     
     var values = JSON.stringify([
@@ -469,6 +474,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
         //,$scope.form['keyword']
         ,$scope.form['edition']
         ,$scope.form['series']
+        ,$scope.form['institution']
     ]);
    
     //  $scope.entry.id,$scope.staff_selected.STAFFID]);
@@ -548,6 +554,20 @@ function BibTexCreateController($scope,GradDB,RegDB,
         //$scope.entry_fields['volume'].selected = true;
         //$scope.entry_fields['number'].selected = true;
         $scope.entry_fields['note'].selected = true;
+      } else {
+
+          if(type == 'techreport') {  
+              $scope.entry_fields['author'].selected = true;
+              $scope.entry_fields['title'].selected = true;
+              $scope.entry_fields['publisher'].selected = true;
+              $scope.entry_fields['institution'].selected = true;
+              $scope.entry_fields['address'].selected = true;
+              $scope.entry_fields['type'].selected = true;
+              $scope.entry_fields['year'].selected = true;
+              $scope.entry_fields['month'].selected = true;
+              $scope.entry_fields['number'].selected = true;
+              $scope.entry_fields['note'].selected = true;
+          }
       }
      }
 

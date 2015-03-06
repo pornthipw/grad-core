@@ -18,6 +18,30 @@ app.factory('SharedService', function($rootScope) {
 });
 */
 
+app.filter('skip', function() {
+  return function(input, start) {
+    start=+start;
+    if(input) {
+      return input.slice(parseInt(start));
+    }
+  }
+});
+
+app.filter('hide', function() {
+  return function(input, key) {
+    if(input) {
+      var result = [];
+      angular.forEach(input, function(v) {
+        if(!v.hide) {
+          result.push(v);
+        }
+      });
+      return result;
+    }
+  }
+});
+
+
 app.config(function($routeProvider) {
   $routeProvider.when('/', {
     controller:MainController, 

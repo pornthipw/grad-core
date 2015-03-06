@@ -12,6 +12,16 @@ function StaffModel() {
       callback(str+' '+self.json.FNAME+' '+self.json.LNAME);
     });
   }
+
+  this.display_name_test = function(HrDB,num,callback) {
+    self.education_list_test(HrDB, num,function(education_list) {
+      var str = self.json.POSITION;
+      if(self.phd) {
+        str+=' ดร.';
+      }
+      callback(str+' '+self.json.FNAME+' '+self.json.LNAME);
+    });
+  }
   
   this.name = function() {
     return self.json.FNAME+' '+self.json.LNAME;
@@ -20,6 +30,19 @@ function StaffModel() {
   this.education_list = function(HrDB,callback) {
     var e_model = new EducationModel();
     e_model.get_by_staff(HrDB,self,function(education_list) {
+      angular.forEach(education_list, function(education) {
+      //  console.log($.tis620.encode(education.json.COUNTRYNAME));
+        if(education.json.BYTEDES == 'ปริญญาเอก') {
+          self.phd=true;
+        }
+      });
+      callback(education_list);
+    });
+  };
+
+  this.education_list_test = function(HrDB,num,callback) {
+    var e_model = new EducationModel();
+    e_model.get_by_staff_test(HrDB,self,num,function(education_list) {
       angular.forEach(education_list, function(education) {
       //  console.log($.tis620.encode(education.json.COUNTRYNAME));
         if(education.json.BYTEDES == 'ปริญญาเอก') {
@@ -96,6 +119,19 @@ StaffModel.get = function(HrDB, id, callback) {
   });
 };
 
+StaffModel.get_test = function(HrDB, id,num, callback) {
+  var where_str = JSON.stringify({
+    'str':'STAFFID = ?',
+    'json':[id]
+  });
+  HrDB.query({table:'pundit',where:where_str,num:num}, function(res) {
+    var model = new StaffModel();
+    if(res.length==1) {
+      model.json=res[0];
+    }
+    callback(model);
+  });
+};
 
 
 function EducationModel() {
@@ -109,6 +145,23 @@ function EducationModel() {
     });
 
     HrDB.query({table:'educationhis',where:where_str}, function(res){    
+     var education_list = []; 
+     angular.forEach(res, function(education) {
+       var tmp = new EducationModel(); 
+       tmp.json = education; 
+       education_list.push(tmp);
+     });
+     callback(education_list);
+    });
+  };
+
+  this.get_by_staff_test = function(HrDB, staff,num, callback) {
+    var where_str = JSON.stringify({
+      'str':'STAFFID = ?',
+      'json':[staff.json.STAFFID]
+    });
+
+    HrDB.query({table:'educationhis',where:where_str,num:num}, function(res){    
      var education_list = []; 
      angular.forEach(res, function(education) {
        var tmp = new EducationModel(); 

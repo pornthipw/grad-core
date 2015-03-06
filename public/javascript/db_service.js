@@ -3,6 +3,38 @@ var app = angular.module('db_service', ['ngResource']);
 var prefix = '/apps/core';
 //var prefix = '';
 
+app.factory('HrDB', function($resource) {
+  var HrDB = $resource(prefix + '/hrnu/:table', {},{}); 
+  //var HrDB = $resource(prefix + '/hrnu/:table/:num', {},{}); 
+  return HrDB;    
+});
+
+app.factory('RegDB', function($resource) {
+  var RegDB = $resource(prefix + '/reg/:table', {},{}); 
+  //var RegDB = $resource(prefix + '/reg/:table/:num', {},{}); 
+  return RegDB;    
+});
+
+app.factory('GradDB', function($resource) {
+  var GradDB = $resource(
+    //prefix + '/gradnu/:table/:num/:mode',
+    prefix + '/gradnu/:table/:mode',
+    {},{
+     'save':{method:'POST'},
+     'update':{method:'PUT'},
+     'remove':{method:'POST'},
+    }
+  );
+  return GradDB;
+});
+
+/*
+app.factory('GradDB', function($resource) {
+  var GradDB = $resource(prefix + '/gradnu/:table', {},{}); 
+  //var GradDB = $resource(prefix + '/gradnu/:table/:num', {},{}); 
+  return GradDB;    
+});
+*/
 app.factory('HMAC', function() {
   var generate = {
     run : function(req) {
@@ -68,12 +100,13 @@ app.factory('Faculty', function($resource) {
       {},{});                         
     return Faculty;    
 });
-
+/*
 app.factory('RegDBTest', function($resource) {
   //var RegDBTest = $resource(prefix + '/regnu/:table/', {},{}); 
-  var RegDBTest = $resource(prefix + '/reg/:table/', {},{}); 
+  var RegDBTest = $resource(prefix + '/reg/:table/:num', {},{}); 
   return RegDBTest;    
 });
+*/
 
 app.factory('TestFaculty', function($resource) {
     var TestFaculty = $resource(
@@ -130,17 +163,6 @@ app.factory('Staff', function($resource) {
       {},{});                         
     return Staff;    
 });
-
-app.factory('HrDB', function($resource) {
-  var HrDB = $resource(prefix + '/hrnu/:table/', {},{}); 
-  return HrDB;    
-});
-
-app.factory('RegDB', function($resource) {
-  var RegDB = $resource(prefix + '/reg/:table/', {},{}); 
-  return RegDB;    
-});
-
 
 app.factory('Education', function($resource) {
     var Education = $resource(
@@ -208,10 +230,10 @@ app.factory('GradStaffPublicationDB', function($resource) {
   );                         
   return GradStaffPublicationDB;
 });
-
+/*
 app.factory('GradDB', function($resource) {
   var GradDB = $resource(
-    prefix + '/gradnu/:table/:mode', 
+    prefix + '/gradnu/:table/:num/:mode', 
     {},{
      'save':{method:'POST'},
      'update':{method:'PUT'},
@@ -220,7 +242,7 @@ app.factory('GradDB', function($resource) {
   );                         
   return GradDB;
 });
-
+*/
 
 app.factory('QualifyingExam', function($resource) {
     var QualifyingExam = $resource(

@@ -30,12 +30,12 @@ app.configure(function () {
 
 var time = process.hrtime();
 
-//setInterval(tick1, 2000);
+//setInterval(tick1, 20);
 //setInterval(tick, 2000);
 
-console.log(os.type());
-console.log(os.arch());
-console.log(os.release());
+//console.log(os.type());
+//console.log(os.arch());
+//console.log(os.release());
 
 console.log(process.version);
 
@@ -53,32 +53,14 @@ function tick1() {
       console.log("Got error: " + e.message);
     });
     var diff = process.hrtime(time);  
-    //var stream = fs.createWriteStream("my_file.txt");
-    //stream.once('open', function(fd) {
-        //stream.write("My first row\n");
-        //stream.write("My second row\n");
-        //stream.write(" diff[0] " + diff[0] + "  -   " + diff[1] + " diff[1] ");
-        //stream.end();
-    //});
-    //console.log(Date.now());
     var str = diff[0] + "  -   " + diff[1] + " \n";
-    fs.open('my_file.txt', 'a', 666, function( e, id ) {
-      //fs.write( id, 'string to append to file', null, 'utf8', function(){
-      fs.write(id,str,null,'utf8',function(){
-        fs.close(id, function(){
-          //console.log('file closed');
-        });
-      });
-    });
 
-    console.log(" diff[0] " + diff[0] + "  -   " + diff[1] + " diff[1] ");
+    //console.log(" diff[0] " + diff[0] + "  -   " + diff[1] + " diff[1] ");
     time = process.hrtime();  
 };
 
-      //time = (stop[0]*1e9 + stop[1])/1e6;
-      //console.log(res.headers);
-      //console.dir(res);
-      
+  
+function tick2() {
   var pool = require('generic-pool').Pool({
         name     : 'http_request',
         create   : function(callback) {
@@ -116,13 +98,11 @@ function tick1() {
                    });
               });
               
-              //console.log(now);
-              //console.log(" diff[0] " + diff[0] + "  -   " + diff[1]/1e9 + " diff[1] ");
-              //time = process.hrtime();  
-              //pool.release(client);
          });
     });
   }
+  
+}
     
 app.listen(config.site.port||4001);
 

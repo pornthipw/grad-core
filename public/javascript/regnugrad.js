@@ -274,7 +274,9 @@ function FacultyListController($scope, Faculty ,HMAC){
 } 
 
 function FacultyController($scope, $routeParams, RegDB, HMAC){
+    console.log("n");
   FacultyModel.get(RegDB, $routeParams.id, function(faculty) {
+    console.log("nook");
     $scope.faculty = faculty;
   });
 }
@@ -817,16 +819,19 @@ function ProgramListByFacultyController($scope, Student,
 } 
 
 function ProgramController($scope, $routeParams, Student, Program, GradDB,
-  Staff,HrDB,Education){
+  Staff,HrDB,Faculty,RegDB,Education){
   var program_model = new ProgramModel();
+  var faculty_model = new FacultyModel();
   program_model.get(Program,$routeParams.id,function(program_obj) {
     $scope.program = program_obj;
     program_obj.list_by_name(Program, function(program_list) {
       var student_active = [];
       var student_finish = [];
       angular.forEach(program_list, function(program) {
+        faculty_model.get(Faculty, program.json.FACULTYID,function(facname) {
+          $scope.program.faculty = facname.json.FACULTYNAME;
+        });
         program.students(Student, function(student_list) {
-          //console.log(student_list);
           angular.forEach(student_list, function(student){
             if(student.active()){
               student.get_assign(GradDB, function(a_res){
@@ -853,10 +858,19 @@ function ProgramController($scope, $routeParams, Student, Program, GradDB,
                     student.exam = e_res;
                     student.is_qeExam(GradDB,function(q_res){
                       student.qeExam = q_res;
+                      if (q_res==true){
+                        student.qeExam_p = "pass";
+                      }
                       student.is_engresult(GradDB,function(eng_res){
                         student.engresult = eng_res;
+                        if (eng_res==true){
+                          student.engresult_p = "pass";
+                        }
                         student.get_thesiscomplete(GradDB,function(t_res){
                           student.thesiscomplete = t_res;
+                            student.get_publication(GradDB,function(pb_res){
+                              student.publication = pb_res;
+                            });
                         });
                       });
                     });
@@ -864,14 +878,24 @@ function ProgramController($scope, $routeParams, Student, Program, GradDB,
                 });
               });
               student_active.push(student);
+
+              //console.log(student)
             } else {
               student_finish.push(student);
             }     
           });
         });
       });
+      console.log(student_active);
       $scope.program.student_active_list = student_active;
     });
   });
+    $scope.exportData = function () {
+        var blob = new Blob([document.getElementById('exportable').innerHTML], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        saveAs(blob, "Report.xls");
+    };
+
 }
 

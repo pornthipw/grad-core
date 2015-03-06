@@ -78,7 +78,8 @@ var Gradnu = function(config) {
   this.list_table = function(req, res) {
     pool.acquire(function(err, db) {
       db.query('SET names utf8').execute(function(err) {
-        var c_db =  db.query()
+        var c_db =  db.query();
+        var ret = {'value':0};
         if(req.query.select) {
           c_db.select(JSON.parse(req.query.select));
         } else {
@@ -98,7 +99,15 @@ var Gradnu = function(config) {
           } else {
             //Start process
             //End Process
+            //res.json(rows);
+            
+            if(req.params.num) {
+              ret['value']=parseInt(req.params.num)+1;
+            }
             res.json(rows);
+            /*
+            res.json({'rows':rows,'ret':ret});
+            */
           }
         });
      });

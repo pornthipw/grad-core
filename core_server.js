@@ -3,14 +3,12 @@ var Hashes = require("jshashes");
 var handlebars = require('hbs');
 var config = require('./config');
 var regnu = require('./db/regnu');
-var regnutest = require('./db/regnutest');
 var hrnu = require('./db/hrnu');
 var gradnu = require('./db/gradnu');
 
 var app = express();
 
 var regnudb = new regnu.regnu(config);
-var regnutestdb = new regnutest.regnutest(config);
 var hrnudb = new hrnu.hrnu(config);
 var gradnudb = new gradnu.gradnu(config);
 
@@ -27,7 +25,12 @@ app.configure(function() {
   //app.use(express.session({ secret: 'keyboard cat' }));
   app.use(app.router);
 });
-
+/*
+require('nodetime').profile({
+    accountKey: '3c34de0c09f99931aaf6cfa3c07e95351bb2fb96', 
+    appName: 'Node.js Application'
+  });
+*/
 
 var queryString = function(req, res, next) {
   var salt_key = 'RimbrpN1979';
@@ -111,13 +114,19 @@ app.get('/auth',queryString, function(req,res) {
 });
 
 //app.get('/reg/:table',queryString, regnudb.list_table);
+//app.get('/reg/:id',regnudb.get_table);
+
+//app.get('/reg/:table/:num',regnudb.list_table);
+//app.get('/hrnu/:table/:num',hrnudb.list_table);
+//app.get('/gradnu/:table/:num', gradnudb.list_table);
+
+
 
 app.get('/reg/:table',regnudb.list_table);
-app.get('/regnutest/:table',regnutestdb.list_table);
-
-//app.get('/reg/:id',regnudb.get_table);
 app.get('/hrnu/:table', hrnudb.list_table);
 app.get('/gradnu/:table', gradnudb.list_table);
+
+
 app.post('/gradnu/:table', queryString, gradnudb.insert_table);
 app.put('/gradnu/:table', queryString, gradnudb.update_table);
 

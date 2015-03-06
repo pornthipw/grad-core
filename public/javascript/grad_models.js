@@ -20,9 +20,33 @@ function GradStaffModel() {
     });
   };
 
+  this.get_test = function(GradDB,id,num,callback) {
+    var where_str = JSON.stringify({
+     'str':'id = ?',
+     'json':[id]
+    });
+    GradDB.query({table:'hrnu_grad_gradstaff',where:where_str,num:num},
+      function(response) {
+      if(response.length == 1) {
+        self.json = response[0];
+      }
+     callback(self);
+    });
+  };
+
   this.nustaff_info = function(HrDB,callback) {
     if(self.json) {
       StaffModel.get(HrDB, self.json.nu_staff, function(staff_model) {
+        callback(staff_model);
+      });
+    } else {
+      callback(null);
+    }
+  };
+
+  this.nustaff_info_test = function(HrDB,num,callback) {
+    if(self.json) {
+      StaffModel.get_test(HrDB, self.json.nu_staff ,num, function(staff_model) {
         callback(staff_model);
       });
     } else {
@@ -113,6 +137,23 @@ AdvisorAssignmentModel.get_by_student = function(GradDB,
   });
 
   GradDB.query({table:'regnu_grad_advisorassignment',where:where_str}, 
+    function(res) {
+    var model = new AdvisorAssignmentModel();
+    if(res.length == 1) {
+      model.json=res[0];
+    }
+    callback(model);
+  });
+};
+
+AdvisorAssignmentModel.get_by_student_test = function(GradDB, 
+  studentModel,num , callback) {
+  var where_str = JSON.stringify({
+    'str':'student = ?',
+    'json':[studentModel.json.STUDENTCODE]
+  });
+
+  GradDB.query({table:'regnu_grad_advisorassignment',where:where_str,num:num}, 
     function(res) {
     var model = new AdvisorAssignmentModel();
     if(res.length == 1) {

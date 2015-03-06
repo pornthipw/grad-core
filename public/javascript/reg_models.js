@@ -19,6 +19,12 @@ function StudentModel() {
     });
   };
 
+  this.get_assign_test = function(GradDB, num,callback) {
+    AdvisorAssignmentModel.get_by_student_test(GradDB, self,num, function(model) {
+      callback(model);
+    });
+  };
+
   this.is_assign = function(GradDB, callback) {
     AdvisorAssignmentModel.get_by_student(GradDB, self, function(model) {
       if(model.json) {
@@ -235,6 +241,19 @@ function StudentModel() {
       callback(res);
     });
   }
+
+  this.list_by_program_test = function(RegDB, program, num, callback){
+    //console.log(program);
+    var where_str = JSON.stringify({
+      'str':'PROGRAMID = ?',
+      'json':[program.json.PROGRAMID]
+    });
+    RegDB.query({table:'studentinfo',where:where_str,num:num}, function(res) {
+      //console.log(res);
+      callback(res);
+    });
+  }
+
 }
 
 StudentModel.active_students = function(RegDB, callback) {
@@ -384,6 +403,8 @@ function ProgramModel(){
       callback(self);
     });
   };
+
+
   
   /*
   this.list_by_faculty = function(Program, faculty, callback){
@@ -448,6 +469,49 @@ function ProgramModel(){
       callback(program_list);
     });
   };
+
+  this.list_by_name_test = function(RegDB, num,callback) {
+    var where_str = JSON.stringify({
+      'str':'PROGRAMNAME = ?',
+      'json':[self.json.PROGRAMNAME]
+    });
+    RegDB.query({table:'program_new',where:where_str,num:num},function(res) {
+      var program_list = [];
+      angular.forEach(res,function(program){
+        var tmp = new ProgramModel();
+        tmp.json = program;
+        program_list.push(tmp);      
+      });
+      callback(program_list);
+    });
+  };
+
+  this.students_test = function(RegDB, num,callback) {
+    var s_model = new StudentModel();
+    s_model.list_by_program_test(RegDB, self, num,function(res) {
+      var student_list = [];
+      angular.forEach(res,function(student){
+        var tmp = new StudentModel();
+        tmp.json = student;
+        student_list.push(tmp);      
+      });
+      callback(student_list);
+    });
+  };
+  this.get_program_test = function(RegDB, id, num, callback) {
+    var where_str = JSON.stringify({
+      'str':'PROGRAMID = ?',
+      'json':[id]
+    });
+    RegDB.query({table:'program_new',where:where_str,num:num}, function(res){
+      //var model = new ProgramModel();
+      if (res.length == 1) {
+        self.json = res[0];
+      }
+      callback(self);
+    });
+  };
+
 };
 
 ProgramModel.get_program = function(RegDB, id, callback) {
@@ -464,6 +528,19 @@ ProgramModel.get_program = function(RegDB, id, callback) {
   });
 };
 
+ProgramModel.get_program_test = function(RegDB, id, i, callback) {
+  var where_str = JSON.stringify({
+    'str':'PROGRAMID = ?',
+    'json':[id]
+  });
+  RegDB.query({table:'program_new',where:where_str,num:num}, function(res){
+    var model = new ProgramModel();
+    if (res.length == 1) {
+      model.json = res[0];
+    }
+    callback(model);
+  });
+};
 
 ProgramModel.list_by_faculty = function(RegDB, faculty_id, callback) {
   var where_str = JSON.stringify({

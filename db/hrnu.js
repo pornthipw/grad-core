@@ -28,6 +28,7 @@ var Hrnu = function(config) {
   this.list_table = function(req, res) {
     pool.acquire(function(err, db) {
       //console.log(req.query.select);
+      var ret = {'value':0};
       var c_db =  db.query();
       if(req.query.select) {
         c_db.select(JSON.parse(req.query.select));
@@ -47,7 +48,14 @@ var Hrnu = function(config) {
           res.json([]);
         } else {
 
+          //res.json(rows);
+          if(req.params.num) {
+            ret['value']=parseInt(req.params.num)+1;
+          }
           res.json(rows);
+          /*
+          res.json({'rows':rows,'ret':ret});
+          */
         }
       });
     });
