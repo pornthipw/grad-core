@@ -397,6 +397,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
     'volume':JSON.stringify({'display':{'th':'เล่มที่','en':'Volume'},'num':6}),
     'number':JSON.stringify({'display':{'th':'เลขประจำฉบับ','en':'Number'},'num':7}),
     'address':JSON.stringify({'display':{'th':'สถานที่ตีพิมพ์','en':'Address'}}),
+    'type':JSON.stringify({'display':{'th':'ชนิดของผลงานวิจัย','en':'Type'}}),
     'organization':JSON.stringify({'display':
       {'th':'หน่วยงานจัดประชุม','en':'Organization'}}),
     'dateconference':JSON.stringify({'display':
@@ -449,6 +450,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
         ,'organization'
         ,'booktitle'
         ,'address'
+        ,'type'
         //,'keyword'
         ,'edition'
         ,'series'
@@ -471,6 +473,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
         ,$scope.form['organization']
         ,$scope.form['booktitle']
         ,$scope.form['addrerss']
+        ,$scope.form['type']
         //,$scope.form['keyword']
         ,$scope.form['edition']
         ,$scope.form['series']
