@@ -45,24 +45,22 @@ app.config(function($routeProvider) {
 function BibTexController($http,$scope,$routeParams,$location,
   GradDB,RegDB,Staff,GradStaff, $rootScope, HrDB) {
  entry_fields_default =  {
-  'author':JSON.stringify({'display':{'th':'ผู้แต่ง','en':'Author'}}),
+  'author':JSON.stringify({'display':{'th':'ผู้แต่ง/หีวหน้าโครงการ','en':'Author'}}),
   'title':JSON.stringify({'display':{'th':'ชื่อบทความ','en':'Title'}}),
   'journal':JSON.stringify({'display':{'th':'ชื่อวารสาร','en':'Journal'}}),
   'pages':JSON.stringify({'display':{'th':'เลขหน้าที่ตีพิมพ์','en':'Pages'}}),
   'year':JSON.stringify({'display':{'th':'ปีที่เผยแพร่','en':'Year'}}),
   'volume':JSON.stringify({'display':{'th':'เล่มที่','en':'Volume'}}),
   'number':JSON.stringify({'display':{'th':'เลขประจำฉบัับ','en':'Number'}}),
-  'organization':JSON.stringify({
-    'display':{'th':'หน่วยงานจัดประชุม','en':'Organization'}}),
-  'dateconference':JSON.stringify({
-    'display':{'th':'วันที่นำเสนอ (จัดประชุม)','en':'dateconference'}}),
-  'booktitle':JSON.stringify({
-    'display':{'th':'ชื่อนำเสนอที่ประชุมวิชาการ','en':'Booktitle'}}),
+  'organization':JSON.stringify({'display':{'th':'หน่วยงานจัดประชุม','en':'Organization'}}),
+  'dateconference':JSON.stringify({'display':{'th':'วันที่นำเสนอ (จัดประชุม)','en':'dateconference'}}),
+  'booktitle':JSON.stringify({'display':{'th':'ชื่อนำเสนอที่ประชุมวิชาการ','en':'Booktitle'}}),
   'note':JSON.stringify({'display':{'th':'หมายเหตุ','en':'Note'}}),
   'keyword':JSON.stringify({'display':{'th':'คำค้น คำสำคัญ','en':'KeyWord'}}),
   'month':JSON.stringify({'display':{'th':'เดือนที่เผยแพร่','en':'Month'}}),
-  'publisher':JSON.stringify({
-    'display':{'th':'หน่วยงานเจ้าของวารสาร','en':'Publisher'}}),
+  'type':JSON.stringify({'display':{'th':'ชนิดของผลงานวิจัย','en':'Type'}}),
+  'publisher':JSON.stringify({'display':{'th':'หน่วยงานเจ้าของวารสาร','en':'Publisher'}}),
+  'institution':JSON.stringify({'display':{'th':'หน่วยงาน','en':'Institution'}}),
   };
   
   Core_HMAC.authenticated($http,{
@@ -331,7 +329,7 @@ function BibTexListController($scope,GradDB,RegDB, BibTex, HMAC, GradStaff) {
     {'name':'article', 'display':'วารสาร'},
     {'name':'inproceedings','display':'นำเสนอที่ประชุมวิชาการ'},
     {'name':'book','display':'หนังสือ/ตำรา'},
-    {'name':'techreport','display':'รายงานวิจัย'}
+    {'name':'techreport','display':'รายงานวิจัย/โครงการวิจัย'}
   ]; 
 
   $scope.limit = 20;
@@ -385,11 +383,11 @@ function BibTexCreateController($scope,GradDB,RegDB,
     {'name':'article', 'display':'วารสาร'},
     {'name':'inproceedings','display':'นำเสนอที่ประชุมวิชาการ'},
     {'name':'book','display':'หนังสือ/ตำรา'},
-    {'name':'techreport','display':'รายงานวิจัย'}
+    {'name':'techreport','display':'รายงานวิจัย/โครงการวิจัย'}
   ]; 
 
   entry_fields_default =  {
-    'author':JSON.stringify({'display':{'th':'ผู้แต่ง','en':'Author'},'num':1}),
+    'author':JSON.stringify({'display':{'th':'ผู้แต่ง/หัวหน้าโครงการ','en':'Author'},'num':1}),
     'title':JSON.stringify({'display':{'th':'ชื่อบทความ','en':'Title'},'num':2}),
     'journal':JSON.stringify({'display':{'th':'ชื่อวารสาร','en':'Journal'},'num':3}),
     'pages':JSON.stringify({'display':{'th':'เลขหน้าที่ตีพิมพ์','en':'Pages'},'num':4}),
@@ -562,13 +560,13 @@ function BibTexCreateController($scope,GradDB,RegDB,
           if(type == 'techreport') {  
               $scope.entry_fields['author'].selected = true;
               $scope.entry_fields['title'].selected = true;
-              $scope.entry_fields['publisher'].selected = true;
+              //$scope.entry_fields['publisher'].selected = true;
               $scope.entry_fields['institution'].selected = true;
-              $scope.entry_fields['address'].selected = true;
+              //$scope.entry_fields['address'].selected = true;
               $scope.entry_fields['type'].selected = true;
               $scope.entry_fields['year'].selected = true;
               $scope.entry_fields['month'].selected = true;
-              $scope.entry_fields['number'].selected = true;
+              //$scope.entry_fields['number'].selected = true;
               $scope.entry_fields['note'].selected = true;
           }
       }
