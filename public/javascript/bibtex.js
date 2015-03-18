@@ -434,6 +434,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
   $scope.form = {};
 
   $scope.add = function() {
+    console.log("test");
     $scope.entry = null;
     var ignore_list = ['id','$$hashKey',
       'selected','student_map','staff_map'];
