@@ -419,10 +419,10 @@ function BibTexCreateController($scope,GradDB,RegDB,
     'dateconference':JSON.stringify({'display':{'th':'วันที่นำเสนอ (จัดประชุม)','en':'dateconference'},'num':11}),
     'publisher':JSON.stringify({'display':{'th':'หน่วยงานเจ้าของวารสาร','en':'Publication'},'num':12}),
     'institution':JSON.stringify({'display':{'th':'หน่วยงาน','en':'Institution'},'num':13}),
-    'month':JSON.stringify({'display':{'th':'เดือนที่เผยแพร่','en':'Month'},'num':14}),
+    'month':JSON.stringify({'display':{'th':'เดือนที่เผยแพร่/ระยะเวลาดำเนินการ','en':'Month'},'num':14}),
     'keyword':JSON.stringify({'display':{'th':'คำค้น คำสำคัญ','en':'KeyWord'},'num':16}),
     'note':JSON.stringify({'display':{'th':'หมายเหตุ','en':'Note'},'num':17}),
-    'type':JSON.stringify({'display':{'th':'ชนิดของผลงานวิจัย','en':'Type'},'num':15}),
+    'type':JSON.stringify({'display':{'th':'แหล่งทุนวิจัย','en':'Type'},'num':15}),
   };
 
   $scope.form = {};
@@ -577,9 +577,9 @@ function BibTexCreateController($scope,GradDB,RegDB,
               //$scope.entry_fields['publisher'].selected = true;
               $scope.entry_fields['institution'].selected = true;
               //$scope.entry_fields['address'].selected = true;
-              //$scope.entry_fields['type'].selected = true;
+              $scope.entry_fields['type'].selected = true;
               $scope.entry_fields['year'].selected = true;
-              //$scope.entry_fields['month'].selected = true;
+              $scope.entry_fields['month'].selected = true;
               //$scope.entry_fields['number'].selected = true;
               $scope.entry_fields['note'].selected = true;
           }
