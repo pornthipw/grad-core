@@ -406,11 +406,11 @@ function BibTexCreateController($scope,GradDB,RegDB,
 
 
   entry_fields_default =  {
-    'title':JSON.stringify({'display':{'th':'ชื่อบทความ','en':'Title'},'num':1}),
-    'author':JSON.stringify({'display':{'th':'ผู้แต่ง/หัวหน้าโครงการ','en':'Author'},'num':2}),
+    'author':JSON.stringify({'display':{'th':'ผู้แต่ง/หัวหน้าโครงการ','en':'Author'},'num':1}),
+    'title':JSON.stringify({'display':{'th':'ชื่อบทความ','en':'Title'},'num':2}),
     'journal':JSON.stringify({'display':{'th':'ชื่อวารสาร','en':'Journal'},'num':3}),
-    'booktitle':JSON.stringify({'display':{'th':'ชื่อนำเสนอที่ประชุมวิชาการ','en':'Booktitle'},'num':4}),
-    'year':JSON.stringify({'display':{'th':'ปีที่เผยแพร่','en':'Year'},'num':5}),
+    'year':JSON.stringify({'display':{'th':'ปีที่เผยแพร่','en':'Year'},'num':4}),
+    'booktitle':JSON.stringify({'display':{'th':'ชื่อนำเสนอที่ประชุมวิชาการ','en':'Booktitle'},'num':5}),
     'pages':JSON.stringify({'display':{'th':'เลขหน้าที่ตีพิมพ์','en':'Pages'},'num':6}),
     'volume':JSON.stringify({'display':{'th':'เล่มที่','en':'Volume'},'num':7}),
     'number':JSON.stringify({'display':{'th':'เลขประจำฉบับ','en':'Number'},'num':8}),
