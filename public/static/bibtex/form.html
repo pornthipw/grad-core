@@ -53,7 +53,7 @@
 
    <div class="span4">
     <div class="row-fluid well">
-     <span ng-repeat="field in entry_fields">
+     <span ng-repeat="field in entry_fields| orderObjectBy:orderByAttribute='num'">
        <span ng-hide="field.selected">
        <li>
          <a href="" ng-click="field.selected=true">
