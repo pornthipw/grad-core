@@ -35,7 +35,7 @@
         ng-show="value.selected">
       <label class="control-label">
        <span ng-show="value.display.th"> {{order[value.display.th]}}</span>
-       <span ng-hide="value.display.th">{{key}}</span>
+       <span ng-hide="value.display.th">{{order[key]}}</span>
       </label>
       <div class="controls controls-row">
        <input class="span7" type="text"  ng-model="form[key]">
