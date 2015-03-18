@@ -548,7 +548,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
        $scope.entry_fields['author'].selected = true;
        $scope.entry_fields['title'].selected = true;
        $scope.entry_fields['booktitle'].selected = true;
-       $scope.entry_fields['organization'].selected = true;
+       //$scope.entry_fields['organization'].selected = true;
        $scope.entry_fields['dateconference'].selected = true;
        //$scope.entry_fields['address'].selected = true;
        $scope.entry_fields['year'].selected = true;
@@ -577,9 +577,9 @@ function BibTexCreateController($scope,GradDB,RegDB,
               //$scope.entry_fields['publisher'].selected = true;
               $scope.entry_fields['institution'].selected = true;
               //$scope.entry_fields['address'].selected = true;
-              $scope.entry_fields['type'].selected = true;
+              //$scope.entry_fields['type'].selected = true;
               $scope.entry_fields['year'].selected = true;
-              $scope.entry_fields['month'].selected = true;
+              //$scope.entry_fields['month'].selected = true;
               //$scope.entry_fields['number'].selected = true;
               $scope.entry_fields['note'].selected = true;
           }
