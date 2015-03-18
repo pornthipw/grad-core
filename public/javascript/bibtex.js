@@ -360,6 +360,7 @@ function BibTexListController($scope,GradDB,RegDB, BibTex, HMAC, GradStaff) {
   });
 
   $scope.add = function() {
+    console.log("test");
     var fields = JSON.stringify(['author','jounal','year',
       'month','volume','number','entry_type','note','pages',
       'title','publisher','entry_type']);
