@@ -31,7 +31,7 @@
 
      <div class="control-group" 
         ng-repeat=
-          "(key,value) in entry_fields"
+          "(key,value) in entry_fields | orderBy:'value.num[key]'"
         ng-show="value.selected">
       <label class="control-label">
        <span ng-show="value.display.th"> {{value.display.th}}</span>
