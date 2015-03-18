@@ -528,6 +528,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
       },function(response) {
       //console.log(response);
       $location.path('/create');
+      $scope.entry = null;
       //$location.path('/bibtex');
     });
   } 
