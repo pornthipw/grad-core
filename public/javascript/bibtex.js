@@ -399,6 +399,7 @@ function BibTexListController($scope,GradDB,RegDB, BibTex, HMAC, GradStaff) {
 
 function BibTexCreateController($scope,GradDB,RegDB, 
   BibTex, HMAC, GradStaff,$location) {
+  
   $scope.entrytype_list = [
     {'name':'article', 'display':'วารสาร'},
     {'name':'inproceedings','display':'นำเสนอที่ประชุมวิชาการ'},
@@ -523,7 +524,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
     BibTex.save({'fields':fields,'values':values
       },function(response) {
       console.log(response);
-      $location.path('/bibtex');
+      //$location.path('/bibtex');
     });
   } 
 
