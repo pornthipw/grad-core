@@ -77,6 +77,8 @@ function BibTexController($http,$scope,$routeParams,$location,
   'keyword':JSON.stringify({'display':{'th':'คำค้น คำสำคัญ','en':'KeyWord'}}),
   'month':JSON.stringify({'display':{'th':'เดือนที่เผยแพร่','en':'Month'}}),
   'type':JSON.stringify({'display':{'th':'ชนิดของผลงานวิจัย','en':'Type'}}),
+  'budget':JSON.stringify({'display':{'th':'งบประมาณ','en':'Type'}}),
+  'period_date':JSON.stringify({'display':{'th':'ระยะเวลาดำนเินการ','en':'Type'}}),
   'publisher':JSON.stringify({'display':{'th':'หน่วยงานเจ้าของวารสาร','en':'Publisher'}}),
   'institution':JSON.stringify({'display':{'th':'หน่วยงาน','en':'Institution'}}),
   };
@@ -419,10 +421,12 @@ function BibTexCreateController($scope,GradDB,RegDB,
     'dateconference':JSON.stringify({'display':{'th':'วันที่นำเสนอ (จัดประชุม)','en':'dateconference'},'num':11}),
     'publisher':JSON.stringify({'display':{'th':'หน่วยงานเจ้าของวารสาร','en':'Publication'},'num':12}),
     'institution':JSON.stringify({'display':{'th':'หน่วยงาน','en':'Institution'},'num':13}),
-    'month':JSON.stringify({'display':{'th':'เดือนที่เผยแพร่/ระยะเวลาดำเนินการ','en':'Month'},'num':14}),
-    'keyword':JSON.stringify({'display':{'th':'คำค้น คำสำคัญ','en':'KeyWord'},'num':16}),
-    'note':JSON.stringify({'display':{'th':'หมายเหตุ','en':'Note'},'num':17}),
-    'type':JSON.stringify({'display':{'th':'แหล่งทุนวิจัย','en':'Type'},'num':15}),
+    'type':JSON.stringify({'display':{'th':'แหล่งทุนวิจัย','en':'Type'},'num':14}),
+    'budget':JSON.stringify({'display':{'th':'งบประมาณ','en':'Type'},'num':15}),
+    'period_date':JSON.stringify({'display':{'th':'ระยะเวลาดำนเินการ','en':'Type'},'num':16}),
+    'month':JSON.stringify({'display':{'th':'เดือนที่เผยแพร่','en':'Month'},'num':17}),
+    'keyword':JSON.stringify({'display':{'th':'คำค้น คำสำคัญ','en':'KeyWord'},'num':18}),
+    'note':JSON.stringify({'display':{'th':'หมายเหตุ','en':'Note'},'num':19}),
   };
 
   $scope.form = {};
@@ -463,6 +467,8 @@ function BibTexCreateController($scope,GradDB,RegDB,
         ,'booktitle'
         ,'address'
         ,'type'
+        ,'period_date'
+        ,'budget'
         //,'keyword'
         ,'edition'
         ,'series'
@@ -486,6 +492,8 @@ function BibTexCreateController($scope,GradDB,RegDB,
         ,$scope.form['booktitle']
         ,$scope.form['addrerss']
         ,$scope.form['type']
+        ,$scope.form['period_date']
+        ,$scope.form['budget']
         //,$scope.form['keyword']
         ,$scope.form['edition']
         ,$scope.form['series']
@@ -576,11 +584,11 @@ function BibTexCreateController($scope,GradDB,RegDB,
               $scope.entry_fields['title'].selected = true;
               //$scope.entry_fields['publisher'].selected = true;
               $scope.entry_fields['institution'].selected = true;
-              //$scope.entry_fields['address'].selected = true;
+              $scope.entry_fields['budget'].selected = true;
               $scope.entry_fields['type'].selected = true;
               $scope.entry_fields['year'].selected = true;
               $scope.entry_fields['month'].selected = true;
-              //$scope.entry_fields['number'].selected = true;
+              $scope.entry_fields['period_date'].selected = true;
               $scope.entry_fields['note'].selected = true;
           }
       }
