@@ -526,7 +526,8 @@ function BibTexCreateController($scope,GradDB,RegDB,
     //});
     BibTex.save({'fields':fields,'values':values
       },function(response) {
-      console.log(response);
+      //console.log(response);
+      $location.path('/create');
       //$location.path('/bibtex');
     });
   } 
