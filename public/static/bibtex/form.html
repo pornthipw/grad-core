@@ -28,10 +28,9 @@
         </div>
       </p>
      </div>
-<button ng-click="orderByAttribute = 'num'">Order by Position</button>
      <div class="control-group" 
         ng-repeat=
-          "(key,value) in entry_fields | orderObjectBy:orderByAttribute"
+          "(key,value) in entry_fields | orderObjectBy:orderByAttribute='num'"
         ng-show="value.selected">
       <label class="control-label">
        <span ng-show="value.display.th"> {{value.display.th}}</span>
