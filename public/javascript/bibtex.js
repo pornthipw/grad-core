@@ -390,25 +390,24 @@ function BibTexCreateController($scope,GradDB,RegDB,
     'author':JSON.stringify({'display':{'th':'ผู้แต่ง/หัวหน้าโครงการ','en':'Author'},'num':1}),
     'title':JSON.stringify({'display':{'th':'ชื่อบทความ','en':'Title'},'num':2}),
     'journal':JSON.stringify({'display':{'th':'ชื่อวารสาร','en':'Journal'},'num':3}),
-    'pages':JSON.stringify({'display':{'th':'เลขหน้าที่ตีพิมพ์','en':'Pages'},'num':4}),
+    'booktitle':JSON.stringify({'display':{'th':'ชื่อนำเสนอที่ประชุมวิชาการ','en':'Booktitle'},'num':4}),
     'year':JSON.stringify({'display':{'th':'ปีที่เผยแพร่','en':'Year'},'num':5}),
-    'volume':JSON.stringify({'display':{'th':'เล่มที่','en':'Volume'},'num':6}),
-    'number':JSON.stringify({'display':{'th':'เลขประจำฉบับ','en':'Number'},'num':7}),
-    'address':JSON.stringify({'display':{'th':'สถานที่ตีพิมพ์','en':'Address'}}),
-    'type':JSON.stringify({'display':{'th':'ชนิดของผลงานวิจัย','en':'Type'}}),
+    'pages':JSON.stringify({'display':{'th':'เลขหน้าที่ตีพิมพ์','en':'Pages'},'num':6}),
+    'volume':JSON.stringify({'display':{'th':'เล่มที่','en':'Volume'},'num':7}),
+    'number':JSON.stringify({'display':{'th':'เลขประจำฉบับ','en':'Number'},'num':8}),
+    'address':JSON.stringify({'display':{'th':'สถานที่ตีพิมพ์','en':'Address'},'num':9}),
+    'type':JSON.stringify({'display':{'th':'ชนิดของผลงานวิจัย','en':'Type'},'num':15}),
     'organization':JSON.stringify({'display':
-      {'th':'หน่วยงานจัดประชุม','en':'Organization'}}),
+      {'th':'หน่วยงานจัดประชุม','en':'Organization'},'num':10}),
     'dateconference':JSON.stringify({'display':
-      {'th':'วันที่นำเสนอ (จัดประชุม)','en':'dateconference'}}),
-    'booktitle':JSON.stringify({'display':
-      {'th':'ชื่อนำเสนอที่ประชุมวิชาการ','en':'Booktitle'}}),
-    'note':JSON.stringify({'display':{'th':'หมายเหตุ','en':'Note'},'num':15}),
-    'keyword':JSON.stringify({'display':{'th':'คำค้น คำสำคัญ','en':'KeyWord'}}),
-    'month':JSON.stringify({'display':{'th':'เดือนที่เผยแพร่','en':'Month'}}),
+      {'th':'วันที่นำเสนอ (จัดประชุม)','en':'dateconference'},'num':11}),
+    'note':JSON.stringify({'display':{'th':'หมายเหตุ','en':'Note'},'num':17}),
+    'keyword':JSON.stringify({'display':{'th':'คำค้น คำสำคัญ','en':'KeyWord'},'num':16}),
+    'month':JSON.stringify({'display':{'th':'เดือนที่เผยแพร่','en':'Month'},'num':14}),
     'publisher':JSON.stringify({'display':
-      {'th':'หน่วยงานเจ้าของวารสาร','en':'Publication'}}),
+      {'th':'หน่วยงานเจ้าของวารสาร','en':'Publication'},'num':12}),
     'institution':JSON.stringify({'display':
-      {'th':'หน่วยงาน','en':'Institution'}}),
+      {'th':'หน่วยงาน','en':'Institution'},'num':13}),
   };
 
   $scope.form = {};
