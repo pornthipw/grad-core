@@ -477,7 +477,7 @@ function BibTexCreateController($scope,GradDB,RegDB,
         ,$scope.form['month']
         ,$scope.form['volume']
         ,$scope.form['number']
-        ,$scope.selected_type.name
+        //,$scope.selected_type.name
         ,$scope.form['note']
         ,$scope.form['pages']
         ,$scope.form['publisher']
