@@ -406,8 +406,8 @@ function BibTexCreateController($scope,GradDB,RegDB,
 
 
   entry_fields_default =  {
-    'author':JSON.stringify({'display':{'th':'ผู้แต่ง/หัวหน้าโครงการ','en':'Author'},'num':1}),
-    'title':JSON.stringify({'display':{'th':'ชื่อบทความ','en':'Title'},'num':2}),
+    'title':JSON.stringify({'display':{'th':'ชื่อบทความ','en':'Title'},'num':1}),
+    'author':JSON.stringify({'display':{'th':'ผู้แต่ง/หัวหน้าโครงการ','en':'Author'},'num':2}),
     'journal':JSON.stringify({'display':{'th':'ชื่อวารสาร','en':'Journal'},'num':3}),
     'booktitle':JSON.stringify({'display':{'th':'ชื่อนำเสนอที่ประชุมวิชาการ','en':'Booktitle'},'num':4}),
     'year':JSON.stringify({'display':{'th':'ปีที่เผยแพร่','en':'Year'},'num':5}),
