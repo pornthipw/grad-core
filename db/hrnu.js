@@ -1,4 +1,4 @@
-var oracle = require('db-oracle');
+var oracle = require('oracledb');
 var generic_pool = require('generic-pool');
 
 var Hrnu = function(config) {
@@ -6,57 +6,60 @@ var Hrnu = function(config) {
     name:'hrnu_pool',
     max:config.hrnu_config.max_connection||1,
     create: function(callback) {
-      new oracle.Database({
-       hostname: config.hrnu_config.hostname,
+      oracle.getConnection({
+       connectString: 
+         config.hrnu_config.hostname+":"+
+         config.hrnu_config.port+"/"+
+         config.hrnu_config.database, 
        user: config.hrnu_config.user,
        password: config.hrnu_config.password,
-       database: config.hrnu_config.database,
        //charset: 'TH8TISASCII',
        //ncharset: 'AL32UTF8'
-      }).connect(function(error) {
-        if(error) {
+      },
+      function(err, connection) {
+        if(err) {
           console.log("CONNECTION ERROR: " + error);
         } else {
-          callback(error,this);
+          callback(err,connection);
         }
       });
     },
     destroy:function(db) {
     }
   });
+
   
   this.list_table = function(req, res) {
     pool.acquire(function(err, db) {
-      //console.log(req.query.select);
+      console.log(req.query.select);
+      console.log(req.params.table);
       var ret = {'value':0};
-      var c_db =  db.query();
+      var select_fields = '';
       if(req.query.select) {
-        c_db.select(JSON.parse(req.query.select));
       } else {
-        c_db.select('*');
       }
-      c_db.from('PROMIS.V_NU_'+req.params.table.toUpperCase());
+      select_fields = '*';
+      var from_table = 'PROMIS.V_NU_'+req.params.table.toUpperCase();
       if(req.query.where) {
-        var where_obj = JSON.parse(req.query.where);
-        c_db.where(where_obj.str,where_obj.json);
+       // var where_obj = JSON.parse(req.query.where);
+       // c_db.where(where_obj.str,where_obj.json);
       }
-      //console.log(c_db.sql());
-      c_db.execute(function(error, rows) {
-        pool.release(db);
-        if (error) {
-          console.log(error);
-          res.json([]);
-        } else {
-
-          //res.json(rows);
-          if(req.params.num) {
-            ret['value']=parseInt(req.params.num)+1;
-          }
-          res.json(rows);
-          /*
-          res.json({'rows':rows,'ret':ret});
-          */
-        }
+    
+      // query for each 10 rows
+      db.execute('SELECT '+select_fields+
+       ' FROM '+from_table+
+       ' WHERE ROWNUM <= 10',
+      // ' WHERE ROWNUM <= 20'
+       [],
+       {outFormat: oracle.OBJECT},
+       function(err, result) {
+         pool.release(db);
+         if (err) {
+           console.error(err.message);
+           return res.json([]);
+         }
+         res.json(result.rows);
+       
       });
     });
   };

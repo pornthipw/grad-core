@@ -8,7 +8,8 @@
     "generic-pool" : "*",    
     "db-oracle" : "*",    
     "jshashes" : "*",    
-    "db-mysql" : "*"    
+    "db-mysql" : "*",    
+    "mysql":"*"
   },
   "keywords": [
     "fs",
