@@ -1,8 +1,7 @@
 var oracledb = require('oracledb');
  //var where_params = {'str':'STUDENTSTATUS = ? AND ADMITACADYEAR = ? ','json':[40,2556]}; 
 //var where_params = {'str':'STAFFID = ? OR STAFFID = ? ','json':[16363,16363]}; 
-//var where_params = {"str":"PROGRAMID = ? or PROGRAMID = ? and (STUDENTSTATUS = 10 or STUDENTSTATUS = 11)","json":[330275845,330275845]}
-var where_params = {"str":"PROGRAMID = ? and (STUDENTSTATUS = 10 or STUDENTSTATUS = 11)","json":[330275845,]}
+var where_params = {"str":"PROGRAMID = ? and (STUDENTSTATUS = 10 or STUDENTSTATUS = 11)","json":[330275845]}
 //var where_params = {'str':'STUDENTCODE = ? OR STUDENTCODE = ?','json':[54030867,54030867]}; 
 //var select_params = ["FNAME"];
 oracledb.getConnection(
@@ -26,41 +25,13 @@ oracledb.getConnection(
     var fetch_size = 90;
     var nook_key = 'nookep'
     var arr = where_params.str.split("?");
-    var str_wh = JSON.stringify(where_params.json); 
     var where_clause = '';
     var variable = {skip:0,top:0};
     var idx = 0;
 
-    if (str_wh.search(',')) {
-      var arr1 = str_wh.split(",");
-        console.log(arr1);
-        var num = arr1.length;
-        console.log(num); 
-    }else{
-      var num = str_wh.length;
-    } 
-
-    for(var i=0;i<num;i++) {
-      if(arr[i].indexOf("=") > -1) {
-        var key_idx=nook_key+idx;     
-        console.log(key_idx);
-        where_clause += arr[i]+':'+key_idx;     
-        variable[key_idx]=where_params.json[idx];
-        idx++;
-      }
-    }
-    for(var j=num;j<arr.length;j++) {
-      var where_o = where_clause+" "+arr[j];
-      console.log(where_o);
-    }
-    //for(var i=0;i<arr1.length;i++) {
-    //  if(arr1[i].indexOf("=") > -1) {
-    //  }
-    //}
-    /*
     for(var i=0;i<arr.length;i++) {
       if(arr[i].indexOf("=") > -1) {
-        //console.log(arr[i]);
+        console.log(arr[i]);
         var key_idx=nook_key+idx;     
         where_clause += arr[i]+':'+key_idx;     
         variable[key_idx]=where_params.json[idx];
@@ -69,7 +40,7 @@ oracledb.getConnection(
       }
   
     }
-    */
+    console.log("test");
     console.log(where_clause);
     console.log(variable);
 
@@ -77,12 +48,10 @@ oracledb.getConnection(
     + "FROM (SELECT a.*, ROWNUM AS rnum "
     //+ " FROM (SELECT * FROM PROMIS.V_NU_PUNDIT "
     + " FROM (SELECT * FROM "+from_table
-    //+ " WHERE "+where_clause
-    + " WHERE "+where_o
+    + " WHERE "+where_clause
     + " ) a "
     + "WHERE ROWNUM <= :top) "
     + "WHERE rnum > :skip";
-    console.log(query);
     var query_result = [];
 
     var i_query = function(query,variable) {

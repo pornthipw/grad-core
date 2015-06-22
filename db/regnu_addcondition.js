@@ -40,40 +40,22 @@ var Regnu = function(config) {
       var nook_key = 'nookep';
       var variable = {skip:0,top:0};
       console.log(variable);
-
       if (req.query.select){
         var selected_fields = JSON.parse(req.query.select);
         console.log(selected_fields);
-
         if (req.query.where){
           var where_obj = JSON.parse(req.query.where);
           var arr = where_obj.str.split("?");
-          var str_wh = JSON.stringify(where_obj.json);//nook add
           var where_clause = '';
           var idx = 0;
-
-          if (str_wh.search(',')) {
-            var arr1 = str_wh.split(",");
-            var num = arr1.length;
-          }else{
-            var num = str_wh.length;
-          }
-
-          for(var i=0;i<num;i++) {
-
+          for(var i=0;i<arr.length;i++) {
             if(arr[i].indexOf("=") > -1) {
               var key_idx=nook_key+idx;
-              console.log(key_idx);
               where_clause += arr[i]+':'+key_idx;
               variable[key_idx]=where_obj.json[idx];
               idx++;
             }
           }
-          for(var j=num;j<arr.length;j++) {
-            var where_o = where_clause+" "+arr[j];
-            console.log(where_o);
-          }
-
           if (where_obj.json == '') {
             var query = "SELECT "+selected_fields
             + " FROM (SELECT a.*, ROWNUM AS rnum "
@@ -86,7 +68,7 @@ var Regnu = function(config) {
             var query = "SELECT "+selected_fields
             + " FROM (SELECT a.*, ROWNUM AS rnum "
             + " FROM (SELECT * FROM "+from_table
-            + " WHERE "+where_o
+            + " WHERE "+where_clause
             + " ) a "
             + "WHERE ROWNUM <= :top) "
             + "WHERE rnum > :skip";
@@ -104,38 +86,19 @@ var Regnu = function(config) {
         }
 
       } else {
-
         if (req.query.where){
           var where_obj = JSON.parse(req.query.where);
           var arr = where_obj.str.split("?");
-          var str_wh = JSON.stringify(where_obj.json);
           var where_clause = '';
           var idx = 0;
-
-          if (str_wh.search(',')) {
-            var arr1 = str_wh.split(",");
-            console.log(arr1);
-            var num = arr1.length;
-            console.log(num);
-           }else{
-             var num = str_wh.length;
-           }
-
-          for(var i=0;i<num;i++) {
+          for(var i=0;i<arr.length;i++) {
             if(arr[i].indexOf("=") > -1) {
               var key_idx=nook_key+idx;
-              console.log(key_idx);
               where_clause += arr[i]+':'+key_idx;
               variable[key_idx]=where_obj.json[idx];
               idx++;
             }
           }
-
-          for(var j=num;j<arr.length;j++) {
-            var where_o = where_clause+" "+arr[j];
-            console.log(where_o);
-          }
-
            //console.log(where_clause);
           if (where_obj.json == '') {
             query = "SELECT * "
@@ -149,7 +112,7 @@ var Regnu = function(config) {
             query = "SELECT * "
             + " FROM (SELECT a.*, ROWNUM AS rnum "
             + " FROM (SELECT * FROM "+from_table
-            + " WHERE "+where_o
+            + " WHERE "+where_clause
             + " ) a "
             + "WHERE ROWNUM <= :top) "
             + "WHERE rnum > :skip";
