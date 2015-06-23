@@ -2,14 +2,15 @@
   "name" : "grad-core",
   "version" : "0.0.1",
   "user": "pornthipw",
+  "private": true,
   "dependencies" : {
-    "express" : "*",    
-    "hbs" : "*",    
-    "generic-pool" : "*",    
-    "db-oracle" : "*",    
-    "jshashes" : "*",    
-    "db-mysql" : "*",    
-    "mysql":"*"
+    "express" :  "*.*.*",    
+    "hbs" :  "*.*.*",    
+    "generic-pool" :  "*.*.*",     
+    "oracledb" :  "*.*.*",     
+    "jshashes" :  "*.*.*",     
+    "mysql":  "*.*.*",  
+    "underscore":  "*.*.*"  
   },
   "keywords": [
     "fs",

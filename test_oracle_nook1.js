@@ -6,12 +6,9 @@ var where_params = {"str":"PROGRAMID = ? and (STUDENTSTATUS = 10 or STUDENTSTATU
 //var select_params = ["FNAME"];
 oracledb.getConnection(
   {
-    user: 'GRAD_USER01',
-    password: 'rimbrpN1979',
-    connectString : "nuregist02.nu.local:1521/NUREG"
-    //user          : "d_pundit",
-    //password      : "123456",
-    //connectString : "10.20.10.116:1521/HRNU"
+    user: 'user',
+    password: 'pass',
+    connectString : "host:port/dbname"
   },
   function(err, connection)
   {

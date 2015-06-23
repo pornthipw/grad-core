@@ -2,10 +2,10 @@ var oracledb = require('oracledb');
 
 oracledb.getConnection(
   {
-    user          : "d_pundit",
-    password      : "123456",
+    user          : "user",
+    password      : "pass",
     //connectString : "localhost/XE"
-    connectString : "10.20.10.116:1521/HRNU"
+    connectString : "host:port/databasename"
   },
   function(err, connection)
   {

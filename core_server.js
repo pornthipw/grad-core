@@ -4,13 +4,13 @@ var handlebars = require('hbs');
 var config = require('./config');
 var regnu = require('./db/regnu');
 var hrnu = require('./db/hrnu');
-//var gradnu = require('./db/gradnu');
+var gradnu = require('./db/gradnu');
 
 var app = express();
 
 var regnudb = new regnu.regnu(config);
 var hrnudb = new hrnu.hrnu(config);
-//var gradnudb = new gradnu.gradnu(config);
+var gradnudb = new gradnu.gradnu(config);
 
 app.configure(function() {
   //app.use(express.cookieParser());
@@ -124,7 +124,7 @@ app.get('/auth',queryString, function(req,res) {
 
 app.get('/reg/:table',regnudb.list_table);
 app.get('/hrnu/:table', hrnudb.list_table);
-//app.get('/gradnu/:table', gradnudb.list_table);
+app.get('/gradnu/:table', gradnudb.list_table);
 
 
 //app.post('/gradnu/:table', queryString, gradnudb.insert_table);
@@ -132,8 +132,8 @@ app.get('/hrnu/:table', hrnudb.list_table);
 
 //app.post('/gradnu/:table/delete', queryString, gradnudb.delete_table ); 
 
-//app.post('/bibtex/create',gradnudb.insert_bibtex);
-//app.get('/bibtex/:id',gradnudb.get_bibtex);
+app.post('/bibtex/create',gradnudb.insert_bibtex);
+app.get('/bibtex/:id',gradnudb.get_bibtex);
 
 
 app.get('/test/:num',queryString, function(req, res) {
