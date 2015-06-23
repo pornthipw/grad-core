@@ -3,9 +3,9 @@ var mysqlDriver = require('db-mysql');
 var mysql = require('db-mysql');
 new mysql.Database({
     hostname: 'localhost',
-    user: 'pornthip',
-    password: 'mypass',
-    database: 'grad_office'
+    user: 'user',
+    password: 'pass',
+    database: 'mydb'
 }).connect(function(error) {
     if (error) {
         return console.log("CONNECTION ERROR: " + error);
