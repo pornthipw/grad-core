@@ -1,16 +1,19 @@
 {
-  "name" : "grad-core",
-  "version" : "0.0.1",
+  "name": "grad-core",
+  "version": "0.0.1",
   "user": "pornthipw",
   "private": true,
-  "dependencies" : {
-    "express" :  "*.*.*",    
-    "hbs" :  "*.*.*",    
-    "generic-pool" :  "*.*.*",     
-    "oracledb" :  "*.*.*",     
-    "jshashes" :  "*.*.*",     
-    "mysql":  "*.*.*",  
-    "underscore":  "*.*.*"  
+  "dependencies": {
+    "body-parser": "*.*.*",
+    "db-mysql": "0.7.6",
+    "express": "3.0.x",
+    "generic-pool": "*.*.*",
+    "hbs": "*.*.*",
+    "jshashes": "*.*.*",
+    "method-override": "*.*.*",
+    "oracledb": "*.*.*",
+    "serve-favicon": "^2.3.0",
+    "underscore": "*.*.*"
   },
   "keywords": [
     "fs",
@@ -35,6 +38,6 @@
     "output"
   ],
   "scripts": {
-    "start":"core_server.js"
-  } 
+    "start": "core_server.js"
+  }
 }

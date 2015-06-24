@@ -26,6 +26,7 @@ var Gradnu = function(config) {
   this.get_bibtex = function(req, res) {
     pool.acquire(function(err, db) {
       var callback_fn = req.query.callback;
+      console.log(db);
       db.query('SET names utf8').execute(function(err) {
         var c_db =  db.query()
         c_db.select('*').from('hrnu_grad_gradstaffpublication')
@@ -215,6 +216,57 @@ var Gradnu = function(config) {
      });
     });
   };
+
+  //test external 
+  
+  this.get_assign = function(req, res) {
+    pool.acquire(function(err, db) {
+      console.log(req.query.callback);
+      var callback_fn = req.query.callback;
+      console.log(callback_fn);
+      db.query('SET names utf8').execute(function(err) {
+        var c_db =  db.query()
+        console.log("test");
+        console.log(c_db);
+        c_db.select('*').from('regnu_grad_advisorassignment')
+        .where('advisor_id = ?',[req.params.id]);
+        var bibtex_list = [];
+        c_db.execute(function(err, rows) {
+          console.log(rows.length);
+          if(err) { 
+
+          } else {
+
+            if (rows.length > 0 ) {
+              rows.forEach(function(mapping) {
+                console.log(mapping);
+                //bibtex_list.push(mapping);
+                var b_db=db.query('SET name utf');
+                b_db.select('*').from('regnu_grad_permit')
+                   .where('student = ?',[mapping.student]);
+                b_db.execute(function(b_err, b_entry) {
+                  if(bibtex_list.length == rows.length) {
+                    bibtex_list.push(b_entry[0]);
+                     pool.release(db);
+                     if(callback_fn) {
+                       //res.send(callback_fn+'('+JSON.stringify(bibtex_list)+');');
+                       console.log(bibtex_list);
+                     } else {
+                       console.log("err");
+                       console.log(bibtex_list);
+                       //res.json(bibtex_list);
+                     }
+                  }
+                });
+               ///////////
+              });
+            }
+          }
+        });
+      });
+    });
+  }
+  
 
 };
 

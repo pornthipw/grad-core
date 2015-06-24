@@ -5,26 +5,36 @@ var config = require('./config');
 var regnu = require('./db/regnu');
 var hrnu = require('./db/hrnu');
 var gradnu = require('./db/gradnu');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var favicon = require('serve-favicon');
+var path = require('path');
+var http = require('http');
 
 var app = express();
+var router = express.Router();
+
+/*var server = app.listen(config.site.port||30001,function() {
+  console.log('Listening :)');
+  server.close(function() { console.log('Doh :('); });
+});
+*/
 
 var regnudb = new regnu.regnu(config);
 var hrnudb = new hrnu.hrnu(config);
 var gradnudb = new gradnu.gradnu(config);
 
-app.configure(function() {
-  //app.use(express.cookieParser());
-  app.use(express.bodyParser());
-  //app.use(express.logger());
-  app.use(express.favicon());
-  app.use(express.static(__dirname + '/public'));
-  app.set('views', __dirname + '/views');
-  app.engine('html', handlebars.__express);
-  app.set('view engine', 'html');
-  app.use(express.methodOverride());
-  //app.use(express.session({ secret: 'keyboard cat' }));
-  app.use(app.router);
-});
+//for express version 4
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(methodOverride());
+//app.use(favicon(__dirname + '/public/images/favicon.ico'));
+app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(__dirname + '/public'));
+
+app.set('views', path.join(__dirname, 'views'));
+app.engine('html', handlebars.__express);
+app.set('view engine', 'html');
 /*
 require('nodetime').profile({
     accountKey: '3c34de0c09f99931aaf6cfa3c07e95351bb2fb96', 
@@ -104,12 +114,12 @@ var queryString = function(req, res, next) {
 
 
 
-app.get('/',function(req, res) {
+router.get('/',function(req, res) {
   res.render('index', {baseHref:config.site.baseUrl});
 });
 
 
-app.get('/auth',queryString, function(req,res) {
+router.get('/auth',queryString, function(req,res) {
   res.json({'success':true,'error':null});
 });
 
@@ -134,10 +144,9 @@ app.get('/gradnu/:table', gradnudb.list_table);
 
 app.post('/bibtex/create',gradnudb.insert_bibtex);
 app.get('/bibtex/:id',gradnudb.get_bibtex);
-app.get('/assign/:id',gradnudb.get_assign);
 
 
-app.get('/test/:num',queryString, function(req, res) {
+router.get('/test/:num',queryString, function(req, res) {
   var ret = {'value':0};
   if(req.params.num) {
     ret['value']=parseInt(req.params.num)+1;
@@ -145,7 +154,7 @@ app.get('/test/:num',queryString, function(req, res) {
   res.json(ret);
 });
 
-app.get('/test/noauth/:num',function(req, res) {
+router.get('/test/noauth/:num',function(req, res) {
   
   var ret = {'value':0};
   if(req.params.num) {
@@ -155,5 +164,12 @@ app.get('/test/noauth/:num',function(req, res) {
   res.json(ret);
 });
 
-app.listen(config.site.port||30001);
-console.log("Mongo Express server listening on port " + (config.site.port||30001));
+var server = http.createServer(app).listen(config.site.port||30001, function() {
+    console.log("Mongo Express server listening on port " + (config.site.port||30001));
+});
+app.listen();
+/*
+server.listen(app.get(config.site.port||30001), function(){
+  console.log("Mongo Express server listening on port " + app.get(config.site.port||30001));
+});
+*/
