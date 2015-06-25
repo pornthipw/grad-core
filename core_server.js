@@ -135,6 +135,7 @@ app.get('/gradnu/:table', gradnudb.list_table);
 app.post('/bibtex/create',gradnudb.insert_bibtex);
 app.get('/bibtex/:id',gradnudb.get_bibtex);
 app.get('/assign/:id',gradnudb.get_assign);
+app.get('/permit/:id',gradnudb.get_permit);
 
 
 app.get('/test/:num',queryString, function(req, res) {
