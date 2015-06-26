@@ -224,7 +224,8 @@ var Gradnu = function(config) {
       var callback_fn = req.query.callback;
       db.query('SET names utf8').execute(function(err) {
         var c_db =  db.query()
-        c_db.select('*').from('regnu_grad_advisorassignment')
+        //db.select('*').from('regnu_grad_advisorassignment')
+        c_db.select('*').from(req.params.table)
         .where('advisor_id = ?',[req.params.id]);
         var bibtex_list = [];
         c_db.execute(function(err, rows) {
@@ -264,14 +265,66 @@ var Gradnu = function(config) {
     });
   }
 
-  this.get_permit = function(req, res) {
+  this.get_englishdb = function(req, res) {
     pool.acquire(function(err, db) {
       var callback_fn = req.query.callback;
       //console.log(callback_fn);
       db.query('SET names utf8').execute(function(err) {
         var c_db =  db.query()
         console.log(c_db);
-        c_db.select('*').from('regnu_grad_permit')
+        c_db.select('*').from(req.params.table)
+        //c_db.select('*').from('regnu_grad_permit')
+        .where('STUDENTCODE = ? AND pass_test = 1 ',[req.params.id]);
+        var object_list = [];
+        c_db.execute(function(err, rows) {
+          //console.log(rows.length);
+          if(err) {
+            pool.release(db);
+            if(callback_fn) {
+              res.send(callback_fn+'([]);');
+            } else {
+              res.json([]);
+            }
+          } else {
+            if (rows.length > 0 ) {
+              rows.forEach(function(mapping) {
+                object_list.push(rows[0]);
+                console.log(object_list.length);
+                if(object_list.length == rows.length) {
+                    pool.release(db);
+                    if(callback_fn) {
+                     res.send(callback_fn+'('+JSON.stringify(object_list)+');');
+                     console.log("n");
+                    } else {
+                     res.json(object_list);
+                    }
+                }
+              });
+            }else {
+              pool.release(db);
+              if(callback_fn) {
+               //res.send(callback_fn+'([]);');
+               var a = [{'STUDENTCODE':req.params.id,'pass_test':0}];
+               res.send(callback_fn+'('+JSON.stringify(a)+');');
+              } else {
+               res.json([]);
+              }
+             //});
+            }
+          }
+        });
+      });
+    });
+  }
+
+  this.get_graddb = function(req, res) {
+    pool.acquire(function(err, db) {
+      var callback_fn = req.query.callback;
+      //console.log(callback_fn);
+      db.query('SET names utf8').execute(function(err) {
+        var c_db =  db.query()
+        console.log(c_db);
+        c_db.select('*').from(req.params.table)
         .where('student = ?',[req.params.id]);
         var object_list = [];
         c_db.execute(function(err, rows) {
@@ -287,12 +340,12 @@ var Gradnu = function(config) {
             if (rows.length > 0 ) {
               //rows.forEach(function(mapping) {
                 object_list.push(rows[0]);
-                console.log(object_list.length);
+                //console.log(object_list.length);
                 if(object_list.length == rows.length) {
                     pool.release(db);
                     if(callback_fn) {
                      res.send(callback_fn+'('+JSON.stringify(object_list)+');');
-                     console.log("n");
+                     console.log(object_list);
                     } else {
                      res.json(object_list);
                     }
@@ -301,7 +354,9 @@ var Gradnu = function(config) {
             }else {
               pool.release(db);
               if(callback_fn) {
-               res.send(callback_fn+'([]);');
+               var a = [{'student':req.params.id,'permit_date':'','exam_date':'','thesiscomplete_date':'','publication_date':''}]
+               res.send(callback_fn+'('+JSON.stringify(a)+');');
+               //res.send(callback_fn+'([]);');
               } else {
                res.json([]);
               }
@@ -312,8 +367,52 @@ var Gradnu = function(config) {
     });
   }
 
-
-
+  this.get_qedb = function(req, res) {
+    pool.acquire(function(err, db) {
+      var callback_fn = req.query.callback;
+      console.log(db);
+      db.query('SET names utf8').execute(function(err) {
+        var c_db =  db.query()
+        c_db.select('*').from('regnu_grad_groupqualifyingexamination')
+        .where('student = ? AND result = 1' ,[req.params.id]);
+        var qe_list = [];
+        c_db.execute(function(err, rows) {
+          if(err) {
+            pool.release(db);
+            if(callback_fn) {
+             res.send(callback_fn+'([]);');
+            } else {
+             res.json([]);
+            }
+          } else {
+            if(rows.length > 0) {
+              //rows.forEach(function(mapping) {
+                  qe_list.push(rows[0]);
+                  if(qe_list.length == rows.length) {
+                    pool.release(db);
+                    if(callback_fn) {
+                     res.send(callback_fn+'('+JSON.stringify(qe_list)+');');
+                    } else {
+                     res.json(qe_list);
+                    }
+                  }
+              //});
+            } else {
+              pool.release(db);
+              if(callback_fn) {
+               var a = [{'student':req.params.id,'result':0}]
+               res.send(callback_fn+'('+JSON.stringify(a)+');');
+               //res.send(callback_fn+'([]);');
+              } else {
+               res.json([]);
+              }
+            }
+          }
+        });
+      });
+    });
+  }
+  
 
 };
 

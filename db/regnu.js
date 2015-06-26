@@ -190,20 +190,103 @@ var Regnu = function(config) {
             }
           });
       };
-
-      
       var add_result = function(result) {
         for(var i=0;i<result.length;i++) {
           query_result.push(result[i]);
         }
         //console.log(query_result.length);
       }
-      console.log(query);
+      //console.log(query);
       i_query(query,variable);
     });
  
   };
-// Report an error
+  // Report an error
+  this.get_student = function(req, res) {
+    var query = '';
+    pool.acquire(function(err, db) {
+    var callback_fn = req.query.callback;
+        //console.log(req.query.select);
+      console.log(req.params.id);
+      var from_table = 'AVSREG.GRAD_STUDENTINFO';
+
+      if (err) {
+        console.error(err.message);
+        return;
+      }
+      var fetch_size = 90;
+      var variable = {skip:0,top:0};
+
+      var query = "SELECT * "
+      + "FROM (SELECT a.*, ROWNUM AS rnum "
+      + " FROM (SELECT * FROM "+from_table
+      + " WHERE STUDENTCODE = "+req.params.id
+      //+ " AND (STUDENTSTATUS = 11 OR STUDENTSTATUS = 10) " 
+      + " ) a "
+      + "WHERE ROWNUM <= :top) "
+      + "WHERE rnum > :skip";
+
+      console.log(query);
+      var query_result = []; 
+      var i_query = function(query,variable) {
+      variable.top += fetch_size;
+      console.log(variable);
+      db.execute(
+        query,
+        variable,
+        {outFormat: oracle.OBJECT},
+        function(err, result) {
+          pool.release(db);
+          if (err) {
+            pool.release(db);
+            if(callback_fn) {
+              add_result([]);
+              res.send(callback_fn+'([]);');
+            } else {
+              add_result([]);
+              res.json([]); 
+            }
+          } else {
+            if (result.rows.length > 0) {          
+              add_result(result.rows);
+              if(result.rows.length == fetch_size) {
+                variable.skip += fetch_size;
+                i_query(query,variable);
+              } else {
+                //result
+                if(callback_fn) {
+                  res.send(callback_fn+'('+JSON.stringify(query_result)+');');
+                  console.log(query_result); 
+                } else {
+                  res.json(query_result);
+                }
+              }
+            } else {
+              pool.release(db);
+              if(callback_fn) {
+               res.send(callback_fn+'([]);');
+              } else {
+               res.json([]);
+              }
+
+            }
+
+          }
+
+        });
+       }
+       
+       var add_result = function(result) {
+         for(var i=0;i<result.length;i++) {
+           query_result.push(result[i]);
+         }
+         //console.log(query_result.length);
+       }
+       //console.log(query);
+       i_query(query,variable);
+    });
+  };
+
 
 };
 

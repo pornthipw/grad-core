@@ -132,10 +132,14 @@ app.get('/gradnu/:table', gradnudb.list_table);
 
 //app.post('/gradnu/:table/delete', queryString, gradnudb.delete_table ); 
 
+app.get('/gradreg/:id',regnudb.get_student);
 app.post('/bibtex/create',gradnudb.insert_bibtex);
 app.get('/bibtex/:id',gradnudb.get_bibtex);
-app.get('/assign/:id',gradnudb.get_assign);
-app.get('/permit/:id',gradnudb.get_permit);
+app.get('/assign/:id/:table',gradnudb.get_assign);
+//app.get('/assign/:id',gradnudb.get_assign);
+app.get('/gradqe/:id',gradnudb.get_qedb);
+app.get('/grad/:id/:table',gradnudb.get_graddb);
+app.get('/english/:id/:table',gradnudb.get_englishdb);
 
 
 app.get('/test/:num',queryString, function(req, res) {
